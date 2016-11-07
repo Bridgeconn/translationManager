@@ -1,3 +1,2 @@
-
 # translationManager
 Translation mangement plugin
