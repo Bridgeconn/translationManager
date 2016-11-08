@@ -1,0 +1,68 @@
+[
+        {
+            "id":"1",
+            "teamSize" : "4",
+            "milestone" : "MAST",
+            "unit" : "Chunk",
+            "name" : "Mario Myers",
+            "startDate":"05-11-2016",
+            "endData":"05-11-2016"
+        },
+        {
+            "id":"2",
+            "teamSize" : "3",
+            "milestone" : "Self Checking",
+            "unit" : "Chapter",
+            "name" : "Myrtie Underwood",
+            "startDate":"01-12-2016",
+            "endData":"01-12-2016"
+        },{
+            "id":"3",
+            "teamSize" : "3",
+            "milestone" : "Community Check",
+            "unit" : "Chunk",
+            "name" : "Caroline Aguilar",
+            "startDate":"12-18-2016",
+            "endData":"12-18-2016"
+        },{
+            "id":"4",
+            "teamSize" : "2",
+            "milestone" : "Stage 1",
+            "unit" : "Stage 4",
+            "name" : "Lelia Schultz",
+            "startDate":"01-24-2016",
+            "endData":"01-24-2016"
+        },{
+            "id":"5",
+            "teamSize" : "5",
+            "milestone" : "MAST",
+            "unit" : "Community Check",
+            "name" : "Micheal Terry",
+            "startDate":"07-07-2016",
+            "endData":"07-07-2016"
+        },{
+            "id":"6",
+            "teamSize" : "3",
+            "milestone" : "Stage 3",
+            "unit" : "Chunk",
+            "name" : "Scott Duncan",
+            "startDate":"08-15-2016",
+            "endData":"08-15-2016"
+        },{
+            "id":"7",
+            "teamSize" : "2",
+            "milestone" : "MAST",
+            "unit" : "Stage 4",
+            "name" : "Ora Reid",
+            "startDate":"02-19-2016",
+            "endData":"02-19-2016"
+        },{
+            "id":"8",
+            "teamSize" : "4",
+            "milestone" : "MAST",
+            "unit" : "Stage 1",
+            "name" : "Jose Wong",
+            "startDate":"06-06-2016",
+            "endData":"06-06-2016"
+        }
+]
