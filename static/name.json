@@ -1,12 +1,17 @@
-{
-      "Name":{
-            "1":"Mario Myers",
-            "2":"Myrtie Underwood",
-            "3":"Caroline Aguilar",
-            "4":"Lelia Schultz",
-            "5":"Micheal Terry",
-            "6":"Scott Duncan",
-            "7":"Ora Reid",
-            "8":"Jose Wong"
-      }
-}
+[{
+      "name": "Mario Myers"
+}, {
+      "name1": "Myrtie Underwood"
+}, {
+      "name2": "Caroline Aguilar"
+}, {
+      "name3": "Lelia Schultz"
+}, {
+      "name4": "Micheal Terry"
+}, {
+      "name5": "Scott Duncan"
+}, {
+      "name6": "Ora Reid"
+}, {
+      "name7": "Jose Wong"
+}]
