@@ -8,7 +8,7 @@ class Table extends React.Component {
   render() {
     return (
        <div>
-      <BootstrapTable data={customData}>
+       <BootstrapTable data={customData}>
           <TableHeaderColumn dataField="id" isKey={true}>S.no</TableHeaderColumn>
           <TableHeaderColumn dataField="teamSize">Team Size</TableHeaderColumn>
           <TableHeaderColumn dataField="milestone">Milestone</TableHeaderColumn>
@@ -16,7 +16,7 @@ class Table extends React.Component {
           <TableHeaderColumn dataField="name">Name</TableHeaderColumn>
           <TableHeaderColumn dataField="startDate">Start Date</TableHeaderColumn>
           <TableHeaderColumn dataField="endData">End Date</TableHeaderColumn>
-        </BootstrapTable></div>
+      </BootstrapTable></div>
     );
   }
 }
