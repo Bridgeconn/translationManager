@@ -6,8 +6,7 @@
   const ReactDOM = require('react-dom');
   const React = require('react');
   const remote = require('electron').remote;
-  //const MenuBar = require('../components/core/MenuBar');
-
+  
   var App = {
     init: function() {
      
@@ -17,4 +16,5 @@
   };
   window.App = App;
 })();
+
 document.addEventListener('DOMContentLoaded', App.init);
