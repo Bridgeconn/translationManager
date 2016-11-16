@@ -12,7 +12,7 @@
     init: function() {
      
       var Application = require("./require");
-      ReactDOM.render(Application, document.getElementById('content'));
+      //ReactDOM.render(Application, document.getElementById('content'));
     }
   };
   window.App = App;

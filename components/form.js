@@ -2,12 +2,34 @@ const React = require('react');
 const ReactDOM = require('react-dom');
 const bootstrap = require('react-bootstrap');
 const Button = require('react-bootstrap/lib/Button');
+const _ = require('lodash');
 const ListGroupItem = require('react-bootstrap/lib/ListGroupItem');
-//const options = require('./../static/name.json');
-const sizeData = require('../static/teamsize.json');
+const FormGroup = require('react-bootstrap/lib/FormGroup');
+const DatePicker = require("react-bootstrap-date-picker");
+const Panel = require("react-bootstrap/lib/Panel");
+const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
+const unitData = require('../static/unit.json');
+const nameData = require('../static/name.json');
+const milestoneData = require('../static/milestone.json');
+const startdateData = require('../static/startdate.json');
+const enddateData = require('../static/enddate.json');
+const teamsizeData = require('../static/teamsize.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
+
+class Form extends React.Component {
+    render() {
+        return <div className="container fluid" style={{ marginLeft: '90px' }}>    
+            <Panel header= "Assign" bsStyle="info">
+            <ButtonToolbar>
+                <Button bsStyle="primary" bsSize="small">Delete</Button>
+                <Button bsStyle="primary" bsSize="small">Edit</Button>
+                <Button bsStyle="default" bsSize="small">Add</Button>
+            </ButtonToolbar></Panel>
+        </div>
+    }
+};
 
 class NameDropdown extends React.Component {
     // render :: a -> ReactElement
@@ -19,7 +41,7 @@ class NameDropdown extends React.Component {
                     value: name
                 }
             });
-        return <div><label> Team Name(S) </label><MultiSelect 
+        return <div className="container fluid" style={{ marginLeft: '90px' }}><label> Team Name(S) </label><MultiSelect 
         placeholder = "Select Name"
         options = {
             options
@@ -27,13 +49,14 @@ class NameDropdown extends React.Component {
 
         filterOptions = {
             function(options, values, search) {
+                console.log(options);
                 return _.chain(options)
                     .filter(function(option) {
                         return option.label.indexOf(search) > -1;
                     })
                     .map(function(option) {
                         option.selectable = values.map(function(item) {
-                            return item.value;
+                          return item.value;
                         }).indexOf(option.value) == -1
                         return option;
                     })
@@ -47,92 +70,108 @@ class NameDropdown extends React.Component {
 
 class UnitDropdown extends React.Component {
     // render :: a -> ReactElement
-
+    constructor(props) {
+        super(props);
+        this.state = { makes: unitData  };
+    }
     render() {
-       var self = this,
-            options = ["Chunk","Chapter","Chapter","Book","Verse","Chapter","Verse","Book"].map(function(milestone){
-                return {label: milestone, value: milestone}
-            }); 
-        return <div><label>Milestone</label><SimpleSelect options={options} 
-                             placeholder="Select" restoreOnBackspace={function(item){
-                                 return item.label.substr(0, item.label.length - 1)
-                             }}>
-        </SimpleSelect></div>
-    
+       var unit = this;
+        return <div className = "container fluid"
+        style = {{ marginLeft: '90px' }} ><label>Unit</label>
+            <SimpleSelect
+        placeholder = "Select a Unit"
+        options = {
+            this.state.makes.map(function(make) {
+                return { label: make, value: make };
+            })
+        }  
+        value = { this.state.make }    onValueChange = { function(make) {
+                    unit.setState ({make: make, model: undefined}
+                    )
+                }}
+        /> </div>
     }
 };
+
 class TeamsizeDropdown extends React.Component {
-    // render :: a -> ReactElement
+    constructor(props) {
+        super(props);
+        this.state = { makes: teamsizeData };
+    }
     render() {
-       var self = this, 
-            options = ["2","4","5","3","2","5","4","6"].map(function(teamSize){
-                return {label: teamSize, value: teamSize}
-            }); 
-        return <div><label> Teamsize Dropdown </label><SimpleSelect options={options} 
-                             placeholder="Select" restoreOnBackspace={function(item){
-                                 return item.label.substr(0, item.label.length - 1)
-                             }}>
-        </SimpleSelect></div>
-    
+        var teamsize = this;
+        return <div className = "container fluid"
+        style = {{ marginLeft: '90px' }} ><label> Teamsize </label>
+            <SimpleSelect
+        placeholder = "Select Teamsize"
+        options = {
+            this.state.makes.map(function(make) {
+                return { label: make, value: make };
+            })
+        }
+        value = { this.state.make }  
+        onValueChange = { function(make) {
+                teamsize.setState ({make: make, model: undefined}
+                )
+            }}
+        /> </div>
     }
 };
-class StartdateDropdown extends React.Component {
-    // render :: a -> ReactElement
 
-    render() {
-       var self = this,        
-            options = ["05-11-2016","01-12-2016","12-18-2016","01-24-2016","07-07-2016","08-15-2016","02-19-2016","06-06-2016"].map(function(startdate){
-                return {label: startdate, value: startdate}
-            }); 
-        return <div><label> Start Date Dropdown </label><SimpleSelect options={options} 
-                             placeholder="Select" restoreOnBackspace={function(item){
-                               return item.label.substr(0, item.label.length - 1)
-                             }}>
-        </SimpleSelect></div>
-    
-    }
-};
-class EnddateDropdown extends React.Component {
-    // render :: a -> ReactElement
-
-    render() {
-       var self = this,         
-            options = ["05-11-2016","01-12-2016","12-18-2016","01-24-2016","07-07-2016","08-15-2016","02-19-2016","06-06-2016"].map(function(enddate){
-                return {label: enddate, value: enddate}
-            }); 
-        return <div><label> End Date Dropdown </label><SimpleSelect options={options} placeholder="Select" restoreOnBackspace={function(item){
-                             return item.label.substr(0, item.label.length - 1)
-                             }}>
-        </SimpleSelect></div>
-    
-    }
-};
 class MilestoneDropdown extends React.Component {
-    // render :: a -> ReactElement
-
+   constructor(props) {
+        super(props);
+        this.state = { makes: milestoneData };
+    }
     render() {
-       var self = this,
-            options = ["MAST","Self-checking","Community-Check","Stage 1","MAST","Stage 3","MAST","MAST"].map(function(milestone){
-                return {label: milestone, value: milestone}
-            }); 
-        return <div><label>Milestone Dropdown </label>
-        <SimpleSelect options={options} placeholder="Select" restoreOnBackspace={function(item){
-                      return item.label.substr(0, item.label.length - 1)
-                    }}>
-        </SimpleSelect></div>
-    
+         var milesstone = this;
+        return <div className = "container fluid"
+        style = {{ marginLeft: '90px' }} ><label> Milestone </label>
+        <SimpleSelect
+        placeholder = "Select Milestone"
+        options = {
+            this.state.makes.map(function(make) {
+                return { label: make, value: make };
+            })
+        }
+        value = { this.state.make } 
+        onValueChange = { function(make) {
+                milesstone.setState ({make: make, model: undefined}
+                )
+            }}
+        /> </div>
     }
 };
-class Form extends React.Component {
-    // render :: a -> ReactElement
 
-    render() {
-        return <div>    
-        <ListGroupItem header="ASSIGN"></ListGroupItem>
-        <Button bsStyle="primary" bsSize="small">Delete</Button>
-        <Button bsStyle="primary" bsSize="small">Edit</Button>
-        <Button bsStyle="default" bsSize="small" >Add</Button></div>
-    
+class StartdateDropdown extends React.Component {
+  constructor(props) {
+        super(props);
+        this.state = {value : new Date().toISOString()};       
+    } 
+      handleChange(value) {
+        // value is an ISO String. 
+        this.setState({ value: value });
+    }
+      render(){
+        return <div className="container fluid" style={{ marginLeft: '90px', width:'50%' }}><label>Start Date</label> 
+            <DatePicker value={this.state.value} onChange={this.handleChange} />
+          </div>
+    }
+};
+
+class EnddateDropdown extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {value : new Date().toISOString()};       
+      } 
+      handleChange(value) {
+        // value is an ISO String. 
+        this.setState({ value: value });
+      }
+      render(){
+        return <div className="container fluid" style={{ marginLeft: '90px', width:'50%'}}> <label>End Date</label>
+            <DatePicker value={this.state.value} onChange={this.handleChange} />
+          </div>
     }
 };
 

@@ -1,6 +1,6 @@
 {
-  "name": "translation_core",
-  "productName": "translationCore",
+  "name": "translationManager",
+  "productName": "Translation Manager",
   "version": "0.1.2",
   "description": "A bridge between TS and TM",
   "main": "main.js",
@@ -32,6 +32,7 @@
     "react-addons-css-transition-group": "^15.3.2",
     "react-addons-shallow-compare": "^15.3.2",
     "react-bootstrap": "^0.29.5",
+    "react-bootstrap-date-picker": "^3.7.0",
     "react-bootstrap-table": "^2.5.7",
     "react-dom": "15.1.0",
     "react-dropzone": "^3.5.1",
