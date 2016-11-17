@@ -1,5 +1,4 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
 const bootstrap = require('react-bootstrap');
 const Button = require('react-bootstrap/lib/Button');
 const _ = require('lodash');
@@ -11,8 +10,6 @@ const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
 const unitData = require('../static/unit.json');
 const nameData = require('../static/name.json');
 const milestoneData = require('../static/milestone.json');
-const startdateData = require('../static/startdate.json');
-const enddateData = require('../static/enddate.json');
 const teamsizeData = require('../static/teamsize.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
@@ -31,45 +28,7 @@ class Form extends React.Component {
     }
 };
 
-class NameDropdown extends React.Component {
-    // render :: a -> ReactElement
-    render() {
-        var self = this,
-            options = ["Mario Myers", "Myrtie Underwood", "Caroline Aguilar", "Lelia Schultz", "Micheal Terry", "Scott Duncan", "Ora Reid", "Jose Wong"].map(function(name) {
-                return {
-                    label: name,
-                    value: name
-                }
-            });
-        return <div className="container fluid" style={{ marginLeft: '90px' }}><label> Team Name(S) </label><MultiSelect 
-        placeholder = "Select Name"
-        options = {
-            options
-        }
-
-        filterOptions = {
-            function(options, values, search) {
-                console.log(options);
-                return _.chain(options)
-                    .filter(function(option) {
-                        return option.label.indexOf(search) > -1;
-                    })
-                    .map(function(option) {
-                        option.selectable = values.map(function(item) {
-                          return item.value;
-                        }).indexOf(option.value) == -1
-                        return option;
-                    })
-                    .value()
-            }
-        }
-        /></div >
-    }
-
-};
-
 class UnitDropdown extends React.Component {
-    // render :: a -> ReactElement
     constructor(props) {
         super(props);
         this.state = { makes: unitData  };
@@ -82,7 +41,7 @@ class UnitDropdown extends React.Component {
         placeholder = "Select a Unit"
         options = {
             this.state.makes.map(function(make) {
-                return { label: make, value: make };
+                return { label: make.label, value: make.id };
             })
         }  
         value = { this.state.make }    onValueChange = { function(make) {
@@ -106,7 +65,7 @@ class TeamsizeDropdown extends React.Component {
         placeholder = "Select Teamsize"
         options = {
             this.state.makes.map(function(make) {
-                return { label: make, value: make };
+                return { label: make.label, value: make.id };
             })
         }
         value = { this.state.make }  
@@ -131,7 +90,7 @@ class MilestoneDropdown extends React.Component {
         placeholder = "Select Milestone"
         options = {
             this.state.makes.map(function(make) {
-                return { label: make, value: make };
+                return { label: make.label, value: make.id };
             })
         }
         value = { this.state.make } 
@@ -140,6 +99,40 @@ class MilestoneDropdown extends React.Component {
                 )
             }}
         /> </div>
+    }
+};
+
+class NameDropdown extends React.Component {
+    render() {
+        var self = this,
+            options = ["Mario Myers", "Myrtie Underwood", "Caroline Aguilar", "Lelia Schultz", "Micheal Terry", "Scott Duncan", "Ora Reid", "Jose Wong"].map(function(name) {
+                return {
+                    label: name,
+                    value: name
+                }
+            });
+        return <div className="container fluid" style={{ marginLeft: '90px' }}><label> Team Name(S) </label><MultiSelect 
+        placeholder = "Select Name"
+        options = {
+            options
+        }
+
+        filterOptions = {
+            function(options, values, search) {
+                return _.chain(options)
+                .filter(function(option) {
+                    return option.label.indexOf(search) > -1;
+                })
+                .map(function(option) {
+                    option.selectable = values.map(function(item) {
+                      return item.value;
+                    }).indexOf(option.value) == -1
+                    return option;
+                })
+                .value()
+            }
+        }
+        /> </div >
     }
 };
 
@@ -153,7 +146,7 @@ class StartdateDropdown extends React.Component {
         this.setState({ value: value });
     }
       render(){
-        return <div className="container fluid" style={{ marginLeft: '90px', width:'50%' }}><label>Start Date</label> 
+        return <div className="container fluid" style={{ marginLeft: '90px', width:'30%' }}><label>Start Date</label> 
             <DatePicker value={this.state.value} onChange={this.handleChange} />
           </div>
     }
@@ -169,7 +162,7 @@ class EnddateDropdown extends React.Component {
         this.setState({ value: value });
       }
       render(){
-        return <div className="container fluid" style={{ marginLeft: '90px', width:'50%'}}> <label>End Date</label>
+        return <div className="container fluid" style={{ marginLeft: '90px', width:'30%'}}> <label>End Date</label>
             <DatePicker value={this.state.value} onChange={this.handleChange} />
           </div>
     }

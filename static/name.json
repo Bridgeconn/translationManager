@@ -1,1 +1,25 @@
- ["Mario Myers", "Myrtie Underwood", "Caroline Aguilar", "Lelia Schultz", "Micheal Terry", "Scott Duncan", "Ora Reid", "Jose Wong"]
+ [{
+	"id":"1",
+	"label": "Mario Myers"
+}, {
+	"id":"2",
+	"label":"Myrtie Underwood"
+}, {
+	"id":"3",
+	"label": "Caroline Aguilar"
+}, {
+	"id":"4",
+	"label": "Lelia Schultz"
+}, {
+	"id":"5",
+	"label": "Micheal Terry"
+}, {
+	"id":"6",
+	"label": "Scott Duncan"
+}, {
+	"id":"7",
+	"label": "Ora Reid"
+}, {
+	"id":"8",
+	"label": "Jose Wong"
+}]

@@ -1,5 +1,4 @@
 const React = require('react');
-const ReactDOM = require('react-dom');
 const customData = require('./../static/table.json');
 const ReactBsTable = require("react-bootstrap-table");
 
