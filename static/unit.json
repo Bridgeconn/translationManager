@@ -1,1 +1,25 @@
-["Chunk","Chapter","Chapter","Book","Verse","Chapter","Verse","Book"]
+[{
+	"id":"1",
+	"label": "Chunk"
+}, {
+	"id":"2",
+	"label":"Chapter"
+}, {
+	"id":"3",
+	"label": "Chapter"
+}, {
+	"id":"4",
+	"label": "Book"
+}, {
+	"id":"5",
+	"label": "Verse"
+}, {
+	"id":"6",
+	"label": "Chapter"
+}, {
+	"id":"7",
+	"label": "Verse"
+}, {
+	"id":"8",
+	"label": "Book"
+}]

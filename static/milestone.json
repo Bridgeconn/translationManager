@@ -1,1 +1,25 @@
-["MAST", "Self Checking","Community Check","Stage 1", "Stage 4",  "Community Check", "Stage 3", "Stage 4"]
+[{
+	"id":"1",
+	"label": "MAST"
+}, {
+	"id":"2",
+	"label":"Self Checking"
+}, {
+	"id":"3",
+	"label": "Community Check"
+}, {
+	"id":"4",
+	"label": "Stage 1"
+}, {
+	"id":"5",
+	"label": "Stage 4"
+}, {
+	"id":"6",
+	"label": "Community Check"
+}, {
+	"id":"7",
+	"label": "Stage 3"
+}, {
+	"id":"8",
+	"label": "Stage 4"
+}]
