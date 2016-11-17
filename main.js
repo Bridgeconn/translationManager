@@ -20,7 +20,7 @@ app.on('window-all-closed', () => {
 app.on('ready', function() {
   // Create the browser window.
   mainWindow = new BrowserWindow({icon:'images/TC_Icon_logo.png',width: 800, height: 600});
-  mainWindow.toggleDevTools();
+  //mainWindow.toggleDevTools();
   // and load the index.html of the app.
   mainWindow.loadURL('file://' + __dirname + '/index.html');
 
