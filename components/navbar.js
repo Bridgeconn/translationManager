@@ -9,7 +9,7 @@ const MenuItem = require('react-bootstrap/lib/MenuItem');
 class NavBar extends React.Component {
   render() {
     return (
-        <div>
+          <div>
             <Navbar inverse collapseOnSelect>
               <Navbar.Header>
                 <Navbar.Brand>
@@ -30,7 +30,7 @@ class NavBar extends React.Component {
                 </NavDropdown>
               </Nav>
             </Navbar>
-        </div>
+          </div>
     )}       
 };
 

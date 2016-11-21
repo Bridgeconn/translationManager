@@ -2,6 +2,7 @@ const React = require('react');
 const bootstrap = require('react-bootstrap');
 const style = require("./Style");
 const Table = require('./table');
+const Progressbar = require('./progress');
 const { NameDropdown,UnitDropdown,MilestoneDropdown,TeamsizeDropdown,StartdateDropdown,EnddateDropdown,Form } = require('./form.js');
 
 class Sidebar extends React.Component {
@@ -9,18 +10,27 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>}
         }
+        
         showViewPage(){
-            console.log('showing Table');
+            console.log('showing Form');
             this.setState({
                 component: <Table />
             });
         }
+
         showAssignPage(){
             console.log('showing Table');
             this.setState({
                 component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>
             });
-    }
+        }
+
+       showProgressPage(){
+            console.log('showing Progress');
+            this.setState({
+                component: <div><Progressbar /></div>
+            });
+        }
 
     render() {
         var component = this.state.component;
@@ -31,7 +41,7 @@ class Sidebar extends React.Component {
               <ul style={style.ul}>
                 <li style={style.li} onClick={() => this.showAssignPage()}>Assign</li>
                 <li style={style.li} onClick={() => this.showViewPage()}>View</li>
-                <li style={style.li}>Progress</li>
+                <li style={style.li} onClick={() => this.showProgressPage()}>Progress</li>
               </ul></div>
             {component}          
           </div>
