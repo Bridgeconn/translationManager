@@ -26,13 +26,13 @@ class Form extends React.Component {
             </ButtonToolbar></Panel>
         </div>
     }
-};
+};  
 
 class UnitDropdown extends React.Component {
     constructor(props) {
         super(props);
         this.state = { makes: unitData  };
-    }
+    }   
     render() {
        var unit = this;
         return <div className = "container fluid"
@@ -61,8 +61,7 @@ class TeamsizeDropdown extends React.Component {
         var teamsize = this;
         return <div className = "container fluid"
         style = {{ marginLeft: '90px' }} ><label> Teamsize </label>
-            <SimpleSelect
-        placeholder = "Select Teamsize"
+        <SimpleSelect placeholder = "Select Teamsize"
         options = {
             this.state.makes.map(function(make) {
                 return { label: make.label, value: make.id };
@@ -113,11 +112,7 @@ class NameDropdown extends React.Component {
             });
         return <div className="container fluid" style={{ marginLeft: '90px' }}><label> Team Name(S) </label><MultiSelect 
         placeholder = "Select Name"
-        options = {
-            options
-        }
-
-        filterOptions = {
+        options = { options } filterOptions = {
             function(options, values, search) {
                 return _.chain(options)
                 .filter(function(option) {

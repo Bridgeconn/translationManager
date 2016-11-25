@@ -3,6 +3,7 @@ const bootstrap = require('react-bootstrap');
 const style = require("./Style");
 const Table = require('./table');
 const Progressbar = require('./progress');
+const TeamManagement = require('./team_management');
 const { NameDropdown,UnitDropdown,MilestoneDropdown,TeamsizeDropdown,StartdateDropdown,EnddateDropdown,Form } = require('./form.js');
 
 class Sidebar extends React.Component {
@@ -10,7 +11,7 @@ class Sidebar extends React.Component {
         super(props);
         this.state = {component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>}
         }
-        
+
         showViewPage(){
             console.log('showing Form');
             this.setState({
@@ -32,6 +33,13 @@ class Sidebar extends React.Component {
             });
         }
 
+        showTeamManagement(){
+            console.log('Showing Team Management');
+            this.setState({
+                component: <div><TeamManagement /></div>
+            })
+        }
+
     render() {
         var component = this.state.component;
         return (
@@ -42,6 +50,7 @@ class Sidebar extends React.Component {
                 <li style={style.li} onClick={() => this.showAssignPage()}>Assign</li>
                 <li style={style.li} onClick={() => this.showViewPage()}>View</li>
                 <li style={style.li} onClick={() => this.showProgressPage()}>Progress</li>
+                <li style={style.li} onClick={() => this.showTeamManagement()}>Team Management</li>
               </ul></div>
             {component}          
           </div>
