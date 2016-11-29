@@ -37,7 +37,9 @@
     "react-dom": "15.1.0",
     "react-dropzone": "^3.5.1",
     "react-remarkable": "^1.1.1",
+    "react-select": "^1.0.0-rc.2",
     "react-selectize": "^2.0.3",
+    "react-super-select": "^0.5.7",
     "simple-git": "^1.43.0"
   }
 }

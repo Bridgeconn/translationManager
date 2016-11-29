@@ -1,25 +1,25 @@
  [{
-	"id":"1",
+	"value":"one",
 	"label": "Mario Myers"
 }, {
-	"id":"2",
+	"value":"two",
 	"label":"Myrtie Underwood"
 }, {
-	"id":"3",
+	"value":"3",
 	"label": "Caroline Aguilar"
 }, {
-	"id":"4",
+	"value":"4",
 	"label": "Lelia Schultz"
 }, {
-	"id":"5",
+	"value":"5",
 	"label": "Micheal Terry"
 }, {
-	"id":"6",
+	"value":"6",
 	"label": "Scott Duncan"
 }, {
-	"id":"7",
-	"label": "Ora Reid"
+	"value":"7",
+	"label": "Ora Revalue"
 }, {
-	"id":"8",
+	"value":"8",
 	"label": "Jose Wong"
 }]
