@@ -15,7 +15,6 @@ class Progressbar extends React.Component {
   	const label= progressData; 
     const books = booksData;
     console.log(books);
-
     return (
     	<div className="container fluid" style={{ marginLeft: '90px' }}>
 	        <Grid>
