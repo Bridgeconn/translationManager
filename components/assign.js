@@ -5,6 +5,7 @@ const moment = require('moment');
 const Button = require('react-bootstrap/lib/Button');
 const _ = require('lodash');
 const ListGroupItem = require('react-bootstrap/lib/ListGroupItem');
+const ReactBsTable = require("react-bootstrap-table");
 const FormGroup = require('react-bootstrap/lib/FormGroup');
 const DatePicker = require("react-bootstrap-date-picker");
 const Panel = require("react-bootstrap/lib/Panel");
@@ -13,6 +14,7 @@ const unitData = require('../static/unit.json');
 const nameData = require('../static/name.json');
 const milestoneData = require('../static/milestone.json');
 const teamsizeData = require('../static/teamsize.json');
+const assignmentData = require('../static/assignment.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
@@ -40,15 +42,13 @@ class Form extends React.Component {
         let obj4 = this.state.teamName.label;
         //let obj5 = this.state.startDate;
         //console.log(obj5);
-        obj = ({ id: obj1 , unit: obj2, Teamsize:obj2, Milestones:obj3, Names:obj4 });
+        obj = ({ id: obj4 , unit: obj1, Teamsize:obj2, Milestones:obj3 });
         console.log(obj);
-           /* let obj2 = multiselect;
-            obj =({ id: obj1 , unit: obj2, Teamsize:obj2, Milestones:obj3 });
-            var result = this.refs.table.handleAddRow(obj);
+           var result = this.refs.table.handleAddRow(obj);
             if(result){  
               alert(result);
             }
-            else{*/
+            else{
                 fs.readFile(file, (err, data) => {
                     if (err) throw err;
                     let filedata = JSON.parse(data);
@@ -58,7 +58,8 @@ class Form extends React.Component {
                         console.log('The "data to append" was appended to file!');
                     }); 
                     //setTimeout(function() {this.setState({input1 : ''});}.bind(this), 3000);  
-                })               
+                })
+            }               
         };
 
     render() {
@@ -68,6 +69,9 @@ class Form extends React.Component {
         var milesstone = this;
         var startDate = this;
         var endDate = this;
+            const selectRow = {
+            mode: 'radio' //radio or checkbox
+        };
 
         return <div className="container fluid" style={{ marginLeft: '90px' }}>    
             <Panel header= "Assign" bsStyle="info">
@@ -137,6 +141,12 @@ class Form extends React.Component {
            <div> <label>End Date</label>
             <DatePicker value={this.state.value} onChange={this.handleChange} />
           </div>
+             <BootstrapTable data={assignmentData} ref="table" selectRow={ selectRow } deleteRow>
+                    <TableHeaderColumn dataField="id" isKey={true}>Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Teamsize">Team Size</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Milestones">Milestone</TableHeaderColumn>
+                    <TableHeaderColumn dataField="unit">Unit</TableHeaderColumn>
+                </BootstrapTable>
           </div>
     }
 };  
