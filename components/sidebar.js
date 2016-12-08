@@ -4,12 +4,12 @@ const style = require("./Style");
 const Table = require('./table');
 const Progressbar = require('./progress');
 const TeamManagement = require('./team_management');
-const { NameDropdown,UnitDropdown,MilestoneDropdown,TeamsizeDropdown,StartdateDropdown,EnddateDropdown,Form } = require('./form.js');
+const { Form } = require('./assign.js');
 
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>}
+        this.state = {component: <div><Form /></div>}
         }
 
         showViewPage(){
@@ -22,7 +22,7 @@ class Sidebar extends React.Component {
         showAssignPage(){
             console.log('showing Table');
             this.setState({
-                component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>
+                component: <div><Form /></div>
             });
         }
 
