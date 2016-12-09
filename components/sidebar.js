@@ -12,13 +12,6 @@ class Sidebar extends React.Component {
         this.state = {component: <div><Form /></div>}
         }
 
-        showViewPage(){
-            console.log('showing Form');
-            this.setState({
-                component: <Table />
-            });
-        }
-
         showAssignPage(){
             console.log('showing Table');
             this.setState({
@@ -48,7 +41,6 @@ class Sidebar extends React.Component {
              <img src="images/TC_Icon_logo.png" style={style.logo}/>
               <ul style={style.ul}>
                 <li style={style.li} onClick={() => this.showAssignPage()}>Assign</li>
-                <li style={style.li} onClick={() => this.showViewPage()}>View</li>
                 <li style={style.li} onClick={() => this.showProgressPage()}>Progress</li>
                 <li style={style.li} onClick={() => this.showTeamManagement()}>Team Management</li>
               </ul></div>
