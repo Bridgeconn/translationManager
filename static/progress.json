@@ -1,12 +1,18 @@
 {
 	"Team1": {
-		"completed": "33",
-		"unassigned": "33",
-		"assigned": "33"
+		"Genesiscompleted": "80",
+		"Genesisassigned": "100",
+		"Genesisunassigned": "20",
+		"Exoduscompleted": "70",
+		"Exodusassigned": "30",
+		"Exodusunassigned": "25"
 	},
 	"Team2": {
-		"completed": "33",
-		"unassigned": "33",
-		"assigned": "33"
+		"Leviticuscompleted": "30",
+		"Leviticusassigned": "10",
+		"Leviticusunassigned": "40",
+		"Deutronomycompleted": "90",
+		"Deutronomyassigned": "40",
+		"Deutronomyunassigned": "80"
 	}
 }

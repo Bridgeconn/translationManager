@@ -45,8 +45,7 @@ class UnitDropdown extends React.Component {
             })
         }  
         value = { this.state.make }    onValueChange = { function(make) {
-                    unit.setState ({make: make, model: undefined}
-                    )
+                    unit.setState ({make: make, model: undefined})
                 }}
         /> </div>
     }

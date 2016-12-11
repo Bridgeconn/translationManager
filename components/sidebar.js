@@ -4,25 +4,18 @@ const style = require("./Style");
 const Table = require('./table');
 const Progressbar = require('./progress');
 const TeamManagement = require('./team_management');
-const { NameDropdown,UnitDropdown,MilestoneDropdown,TeamsizeDropdown,StartdateDropdown,EnddateDropdown,Form } = require('./form.js');
+const { Form } = require('./assign.js');
 
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>}
-        }
-
-        showViewPage(){
-            console.log('showing Form');
-            this.setState({
-                component: <Table />
-            });
+        this.state = {component: <div><Form /></div>}
         }
 
         showAssignPage(){
             console.log('showing Table');
             this.setState({
-                component: <div><Form /><NameDropdown /><UnitDropdown /><EnddateDropdown /><StartdateDropdown /><TeamsizeDropdown /><MilestoneDropdown /><Table /></div>
+                component: <div><Form /></div>
             });
         }
 
@@ -48,7 +41,6 @@ class Sidebar extends React.Component {
              <img src="images/TC_Icon_logo.png" style={style.logo}/>
               <ul style={style.ul}>
                 <li style={style.li} onClick={() => this.showAssignPage()}>Assign</li>
-                <li style={style.li} onClick={() => this.showViewPage()}>View</li>
                 <li style={style.li} onClick={() => this.showProgressPage()}>Progress</li>
                 <li style={style.li} onClick={() => this.showTeamManagement()}>Team Management</li>
               </ul></div>

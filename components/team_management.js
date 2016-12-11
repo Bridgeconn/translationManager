@@ -18,8 +18,8 @@ const teamData = require('../static/team.json');
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {};
-}
+        this.state = {teamData:teamData};
+    }
 
 
     handleInputChange(name, e) {
@@ -60,15 +60,16 @@ class TeamManagement extends React.Component {
                     //setTimeout(function() {this.setState({input1 : ''});}.bind(this), 3000);  
                 });
             }
-            
         }    
     };
 
     render() {
+
         return  (
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div >
                     <Form>
+                        <ControlLabel>Members Name</ControlLabel>
                         <ReactSuperSelect placeholder="Select the name" 
                           dataSource={teamnameData} 
                           onChange={this.handlerDropdown} 
@@ -77,18 +78,15 @@ class TeamManagement extends React.Component {
                           keepOpenOnSelection={true}
                           clearSearchOnSelection = {true}
                           />
-
                         <FormGroup controlId="formInlineName">
                         <ControlLabel>Team Name</ControlLabel>
-                        {' '}
                         <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} onChange={this.handleInputChange.bind(this, 'input1')}/>
                         </FormGroup>
-                            {' '} 
                     </Form>
                 </div>
 
                 <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={teamData} >
+                <BootstrapTable ref="table" data={this.state.teamData}>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Names</TableHeaderColumn>    
                 </BootstrapTable>                 
