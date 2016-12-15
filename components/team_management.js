@@ -13,12 +13,15 @@ const ReactBsTable = require("react-bootstrap-table");
 const ReactSuperSelect = require('react-super-select');
 const file = ('./static/team.json');
 const teamnameData = require('../static/teamname.json');
+const teamsizeData = require('../static/teamsize.json');
 const teamData = require('../static/team.json');
+const ReactSelectize = require("react-selectize");
+const SimpleSelect = ReactSelectize.SimpleSelect;
 
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {teamData:teamData};
+        this.state = {teamData:teamData , teams: teamsizeData};
     }
 
 
@@ -32,17 +35,17 @@ class TeamManagement extends React.Component {
       let output = [];
       _.map(options, function(option){
         output = output.concat([option.name]);
-        global.multiselect = output
+        global.multiselectName = output
       })
     };
 
     handleSubmit(e) {
         let obj =  [{table:{}}];                   
         let obj1 = this.state.input1;
-        if ( typeof multiselect === 'undefined'){
+        if ( typeof multiselectName === 'undefined'){
             alert("Please select the name");
         }else{
-            let obj2 = multiselect;
+            let obj2 = multiselectName;
             obj =({id: obj1 , membername: obj2});
             var result = this.refs.table.handleAddRow(obj);
             if(result){  
@@ -80,8 +83,22 @@ class TeamManagement extends React.Component {
                           />
                         <FormGroup controlId="formInlineName">
                         <ControlLabel>Team Name</ControlLabel>
-                        <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} onChange={this.handleInputChange.bind(this, 'input1')}/>
+                        <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
+                        onChange={this.handleInputChange.bind(this, 'input1')}/>
                         </FormGroup>
+                         <div><label> Teamsize </label>
+                            <SimpleSelect placeholder = "Select Teamsize"
+                            options = {
+                                this.state.teams.map(function(teamsizes) {
+                                    return { label: teamsizes.label, value: teamsizes.id };
+                                })
+                            }
+                            value = { this.state.teamsizes }  
+                            onValueChange = { function(teamsizes) {
+                                    teamsize.setState ({teamsizes: teamsizes, model: undefined}
+                                )
+                            }}
+                        /> </div>
                     </Form>
                 </div>
 
