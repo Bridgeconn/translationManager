@@ -42,11 +42,12 @@ class TeamManagement extends React.Component {
     handleSubmit(e) {
         let obj =  [{table:{}}];                   
         let obj1 = this.state.input1;
+        let obj3 = this.state.teamsizes.label;
         if ( typeof multiselectName === 'undefined'){
             alert("Please select the name");
         }else{
             let obj2 = multiselectName;
-            obj =({id: obj1 , membername: obj2});
+            obj =({id: obj1 , membername: obj2 , teamsize: obj3});
             var result = this.refs.table.handleAddRow(obj);
             if(result){  
               alert(result);
@@ -66,7 +67,54 @@ class TeamManagement extends React.Component {
         }    
     };
 
+    afterSaveCell(row, cellName, cellValue) {
+        console.log(row.id);
+          fs.readFile(file, (err, data) => {
+            var filedata = JSON.parse(data);
+            for (var n = 0 ; n < filedata.length ; n++) {
+            if (filedata[n].id == row.id) {
+              var removedObject = filedata.splice(n,1);
+              console.log(removedObject);
+              removedObject = null;
+              break;
+            }
+        }
+           if (err) throw err;
+            console.log(filedata);            
+            fs.writeFile(file, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            }); 
+    })
+    setTimeout(function() {
+        let obj =  [{table:{}}];           
+        obj = row;
+        console.log(obj);
+                fs.readFile(file, (err, data) => {
+                    if (err) throw err;
+                    let filedata = JSON.parse(data);
+                    filedata.push(obj);
+                    fs.writeFile(file, JSON.stringify(filedata), function(err){
+                        if (err) throw err;
+                        console.log('The "data to append" was appended to file!');
+                    }); 
+                      
+                })}, 100);
+    };
+
     render() {
+        var teamsize = this;
+
+        const cellEdit = {
+            mode: 'dbclick',
+            blurToSave: true,
+            afterSaveCell: this.afterSaveCell
+        };  
+
+        const selectRow = {
+            mode: 'radio',
+            clickToSelect: true
+        };
 
         return  (
             <div className="container fluid" style={{ marginLeft: '90px' }}>
@@ -103,9 +151,10 @@ class TeamManagement extends React.Component {
                 </div>
 
                 <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={this.state.teamData}>
+                <BootstrapTable ref="table" data={this.state.teamData} cellEdit={ cellEdit }>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="membername">Names</TableHeaderColumn>    
+                    <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn>        
                 </BootstrapTable>                 
             </div>
         );
