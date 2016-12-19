@@ -1,7 +1,6 @@
 const electron = require('electron');
 const fs = require('fs');
 const path = require('path');
-var p = ( __dirname + '/static/unit.json');
 var q = ( __dirname + '/static');
 const {app, BrowserWindow, Menu} = require('electron');
 
@@ -33,15 +32,7 @@ app.on('ready', function() {
       console.log("The file content is : " + data);
   });
    
-  fs.readFile(p, 'utf-8', function (err, data) {
-    if(err){
-      console.log("An error ocurred reading the file :" + err.message);
-      return;
-    }
-    // Change how to handle the file content
-    console.log("The file content is : " + data);
-  });
- 
+   
   // Emitted when the window is closed.
   mainWindow.on('closed', function() {
     // Dereference the window object, usually you would store windows

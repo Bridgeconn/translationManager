@@ -1,14 +1,1 @@
-{
-	"books": {
-		"book1": "Genesis",
-		"book2": "Exodus",
-		"book3": "Leviticus",
-		"book4": "Deutronomy"
-	},
-	"chapters": {
-		"genesis": "50",
-		"exodus": "50",
-		"leviticus": "50",
-		"deutronomy": "50"
-	}
-}
+["Genesis", "Exodus", "Leviticus", "Numbers", "Deuteronomy","Joshua","Judges","Ruth"]
