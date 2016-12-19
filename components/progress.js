@@ -7,13 +7,12 @@ const Grid = require('react-bootstrap/lib/Grid');
 const Row = require('react-bootstrap/lib/Row');
 const Col = require('react-bootstrap/lib/Col');
 const progressData = require('../static/progress.json');
-const booksData = require('../static/books.json')
+const booksData = require('../static/books_progress.json')
 
 class Progressbar extends React.Component {
   render() {
   	const label= progressData; 
     const books = booksData;
-    console.log(books);
     return (
     	<div className="container fluid" style={{ marginLeft: '90px' }}>
 	        <Grid>

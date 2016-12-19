@@ -5,9 +5,21 @@ const NavItem = require('react-bootstrap/lib/NavItem');
 const Navbar = require('react-bootstrap/lib/Navbar');
 const NavDropdown = require('react-bootstrap/lib/NavDropdown');
 const MenuItem = require('react-bootstrap/lib/MenuItem');
+const MilestoneManagement = require('./milestone_management');
 
 class NavBar extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {component: <div><NavBar /></div>}
+    }
+    showMilestoneManagement(){
+        console.log('Showing Milestone Management');
+        this.setState({
+            component: <div><MilestoneManagement /></div>
+        })
+    }
   render() {
+    
     return (
           <div>
             <Navbar inverse collapseOnSelect>
@@ -22,11 +34,8 @@ class NavBar extends React.Component {
                 <NavItem eventKey={2} href="#">Settings</NavItem>
                 <NavItem eventKey={2} href="#">Package Manager</NavItem>
                 <NavDropdown eventKey={3} title="Account" id="basic-nav-dropdown">
-                  <MenuItem eventKey={3.1}>Action</MenuItem>
+                  <MenuItem eventKey={3.1} onClick={() => this.showMilestoneManagement()}>Milestone Management</MenuItem>
                   <MenuItem eventKey={3.2}>Another action</MenuItem>
-                  <MenuItem eventKey={3.3}>Something else here</MenuItem>
-                  <MenuItem divider />
-                  <MenuItem eventKey={3.3}>Separated link</MenuItem>
                 </NavDropdown>
               </Nav>
             </Navbar>

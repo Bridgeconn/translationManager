@@ -13,22 +13,23 @@ const DatePicker = require('react-datepicker');
 const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
 const unitData = require('../static/chapters.json');
-const bookData = require('../static/book.json');
 const nameData = require('../static/name.json');
 const milestoneData = require('../static/milestone.json');
 const assignmentData = require('../static/assignment.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
-const ReactSuperSelect = require('react-super-select');
+const MultiSelect = ReactSelectize.MultiSelect;
 const file = ('./static/assignment.json');
 const teamData = require('../static/team.json');
+const bookData = require('../static/books.json');
+var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {names:teamData, books: bookData, milestones: milestoneData, startDate: moment(),
-      endDate: moment(), assignmentData:assignmentData,
-        selected: [], showModal: false};
+        this.state = {names:teamData, milestones: milestoneData, startDate: moment(),
+      endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
+      chapters:chapters};
         console.log(assignmentData);
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         //this.close = this.close.bind(this);
@@ -36,6 +37,7 @@ class Form extends React.Component {
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.afterSaveCell = this.afterSaveCell.bind(this);
+        this.priorityValidator = this.priorityValidator.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -88,28 +90,27 @@ class Form extends React.Component {
     }
 
     afterSaveCell(row, cellName, cellValue) {
-        console.log(row.id);
-          fs.readFile(file, (err, data) => {
+        fs.readFile(file, (err, data) => {
             var filedata = JSON.parse(data);
-            for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].id == row.id) {
-              var removedObject = filedata.splice(n,1);
-              console.log(removedObject);
-              removedObject = null;
-              break;
+                for (var n = 0 ; n < filedata.length ; n++) {
+                if (filedata[n].id == row.id) {
+                  var removedObject = filedata.splice(n,1);
+                  console.log(removedObject);
+                  removedObject = null;
+                  break;
+                }
             }
-        }
-           if (err) throw err;
-            console.log(filedata);            
+            if (err) throw err;
             fs.writeFile(file, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
             }); 
-    })
-    setTimeout(function() {
-        let obj =  [{table:{}}];           
-        obj = row;
-        console.log(obj);
+        })
+          
+        setTimeout(function() {
+            let obj =  [{table:{}}];           
+            obj = row;
+            console.log(obj);
                 fs.readFile(file, (err, data) => {
                     if (err) throw err;
                     let filedata = JSON.parse(data);
@@ -117,64 +118,80 @@ class Form extends React.Component {
                     fs.writeFile(file, JSON.stringify(filedata), function(err){
                         if (err) throw err;
                         console.log('The "data to append" was appended to file!');
-                    }); 
-                      
-                })}, 100);
+                    });                           
+                })
+        }, 100);
     };
 
     /*close() {
         this.setState({ showModal: false });
     }*/
 
-    handlerDropdown(options) {
-          let output = [];
-          _.map(options, function(option){
-            output = output.concat([option.name]);
-            global.multiselectUnit = output
-            console.log(multiselectUnit)
-          })
-        };
+    priorityValidator(value) {
+        const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
+        if (!value) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must be inserted';
+            response.notification.title = 'Requested Value';
+        } else if (value.length < 5) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must have 5+ characters';
+            response.notification.title = 'Invalid Value';
+        }
+        return response;           
+    }
+
+    integerValidator(value) {
+        const nan = isNaN(parseInt(value, 10));
+        if (nan) {
+        return 'Must be a integer!';
+        }
+        else if (!value) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must be inserted';
+            response.notification.title = 'Requested Value';
+            }
+        return true;
+    }
 
     handleSubmit(e) {
         let obj =  [{table:{}}];           
-        let obj1 = this.state.bookdata.label;        
-        //let obj2 = this.state.teamsizes.label;
-        let obj3 = this.state.make.label;
+        let obj1 = this.state.book.label;        
+        let obj2 = this.state.chapter.label;
+        let obj3 = this.state.mile.label;
         let obj4 = this.state.teamName.label;
         let obj5 = this.state.startDate;
-        let obj6 = this.state.endDate;
-        if ( typeof multiselectUnit === 'undefined'){
-            alert("Please select the name");
-        }else{
-            let obj7 = multiselectUnit;
-            obj = ({ id: obj4 , book: obj1, chapters:obj7, Milestones:obj3, StartDate: obj5 , Enddate: obj6 });
-           var result = this.refs.table.handleAddRow(obj);
-            if(result){  
-              alert(result);
-            }
-            else{
-                fs.readFile(file, (err, data) => {
+        let obj6 = this.state.endDate; 
+        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , Enddate: obj6 });
+       var result = this.refs.table.handleAddRow(obj);
+        if(result){  
+          alert(result);
+        }
+        else{
+            fs.readFile(file, (err, data) => {
+                if (err) throw err;
+                let filedata = JSON.parse(data);
+                filedata.push(obj);
+                fs.writeFile(file, JSON.stringify(filedata), function(err){
                     if (err) throw err;
-                    let filedata = JSON.parse(data);
-                    filedata.push(obj);
-                    fs.writeFile(file, JSON.stringify(filedata), function(err){
-                        if (err) throw err;
-                        console.log('The "data to append" was appended to file!');
-                    }); 
-                })
-            }
+                    console.log('The "data to append" was appended to file!');
+                }); 
+            })     
         }
     };
 
-    render() {
-        var milestone = this;
+    render() {         
         var name = this;
         var book = this;
-        var teamsize = this;
         var milesstone = this;
         var startDate = this;
         var endDate = this;
-       
+        self = this;
+        chapters = !!this.state.book ? this.state.chapters[this.state.book.label] : [];
+
         const options = {
             //onRowDoubleClick: this.onRowDoubleClick,
             onDeleteRow: this.onDeleteRow
@@ -190,80 +207,114 @@ class Form extends React.Component {
             mode: 'radio',
             clickToSelect: true
         };
+
         return( 
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div>
-                <label>Team Name</label>
-                <SimpleSelect
-            placeholder = "Select a Name"
-            options = {
-                this.state.names.map(function(teamName) {
-                    return { label: teamName.id, value: teamName.id };
-                })
-            }  
-            value = { this.state.teamName }    onValueChange = { function(teamName) {
-                        name.setState ({teamName: teamName, model: undefined})
+                    <label>Team Name</label>
+                    <SimpleSelect
+                    placeholder = "Select a Name"
+                    options = {
+                        this.state.names.map(function(teamName) {
+                            return { label: teamName.id, value: teamName.id };
+                        })
+                    }  
+                    value = { this.state.teamName }    onValueChange = { function(teamName) {
+                                name.setState ({teamName: teamName, chapter: undefined})
+                            }}
+                    />
+                </div>
+               
+                <div>
+                    <label>Book</label>
+                    <SimpleSelect
+                    placeholder = "Select a book"
+                    options = {this.state.bookData.map(function(book){
+                        return {label:book, value: book};
+                    })}
+                    value = {this.state.book}
+                    
+                    onValueChange = {function(book) {
+                        self.setState ({book: book, chapter: undefined}, function(){
+                            self.refs.chapters.focus();
+                        });
                     }}
-            />
-            </div>
-            <div>
-                <label>Book</label>
-                <SimpleSelect
-            placeholder = "Select a Book"
-            options = {
-                this.state.books.map(function(bookdata) {
-                    return { label: bookdata.label, value: bookdata.id };
-                })
-            }  
-            value = { this.state.bookdata }    onValueChange = { function(bookdata) {
-                        book.setState ({bookdata: bookdata, model: undefined}
-                        )
+                    
+                    onFocus = {function(item, reason){
+                        self.setState({focused: true});
                     }}
-            />
-            </div>
-            <div>
-            <label> Milestone </label>
-            <SimpleSelect
-            placeholder = "Select Milestone"
-            options = {
-                this.state.milestones.map(function(make) {
-                    return { label: make.label, value: make.id };
-                })
-            }
-            value = { this.state.make } 
-            onValueChange = { function(make) {
-                    milesstone.setState ({make: make, model: undefined}
-                    )
-                }}
-            /> </div>
-            <div>
-                <label>Chapters</label>
+                    
+                    onBlur = {function(item, reason){
+                        self.setState({focused: false});
+                    }}
+                    
+                    onEnter = {function(item){
+                        if (typeof item == "undefined")
+                            alert("you did not select any item");
+                    }}
 
-                 <ReactSuperSelect placeholder="Select the Chapters" dataSource={unitData} 
-                    onChange={this.handlerDropdown} multiple={true} tags={true}
-                    keepOpenOnSelection={true} clearSearchOnSelection = {true} />
+                    style = {this.state.focused ? {color: "#0099ff"} : {}}/>
+                </div>
+
+                <div>
+                    <label> Chapters </label>
+                    <SimpleSelect
+                    ref = "chapters"
+                    placeholder = "Select a chapter"
+                    options = {chapters.map(function(chapter){
+                        return {label: chapter, value: chapter};
+                    })}
+                    value = {this.state.chapter}
+                    
+                    disabled = {typeof this.state.book == "undefined"}
+                    
+                    onValueChange = {function(chapter) {
+                        self.setState({chapter: chapter});
+                    }} 
+                    style = {{
+                        opacity: !!this.state.book ? 1 : 0.5
+                    }}/>        
+                </div>
+                <div>
+                    <label> Milestone </label>
+                    <SimpleSelect
+                    placeholder = "Select Milestone"
+                    options = {
+                        this.state.milestones.map(function(mile) {
+                            return { label: mile.label, value: mile.id };
+                        })
+                    }
+                    value = { this.state.mile } 
+                    onValueChange = { function(mile) {
+                            milesstone.setState ({mile: mile, model: undefined}
+                            )
+                        }} 
+                    />
+                </div>
+                <div>    
+                    <label>Start Date</label>
+                    <DatePicker selected={this.state.startDate} selectsStart  startDate={this.state.startDate}
+                    endDate={this.state.endDate} onChange={this.handleChangeStart} />
+                    <label>End Date</label>
+                    <DatePicker selected={this.state.endDate}  selectsEnd  startDate={this.state.startDate}
+                     endDate={this.state.endDate} onChange={this.handleChangeEnd} />
+                    <Panel >
+                        <ButtonToolbar>
+                            <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
+                        </ButtonToolbar>
+                    </Panel>
+                    <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+                        <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
+                        <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
+                        <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
+                        <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>StartDate</TableHeaderColumn>
+                        <TableHeaderColumn dataField="Enddate" editable={ { validator: this.integerValidator } }>EndDate</TableHeaderColumn>  
+                    </BootstrapTable>
+                </div>
             </div>
-                <label>Start Date</label>
-                  <DatePicker selected={this.state.startDate} selectsStart  startDate={this.state.startDate}
-                endDate={this.state.endDate} onChange={this.handleChangeStart} />
-                <label>End Date</label><DatePicker selected={this.state.endDate}  selectsEnd  startDate={this.state.startDate}
-                 endDate={this.state.endDate} onChange={this.handleChangeEnd} />
-               <Panel >
-                    <ButtonToolbar>
-                        <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
-                    </ButtonToolbar>
-                </Panel>
-                <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                    <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Milestones">Milestone</TableHeaderColumn>
-                    <TableHeaderColumn dataField="chapters">Chapters</TableHeaderColumn>
-                    <TableHeaderColumn dataField="StartDate">StartDate</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Enddate">EndDate</TableHeaderColumn>  
-                </BootstrapTable>
-          </div>
-    )}
+        )
+    }
 };  
 
-module.exports = {
-    Form
-}
+module.exports = Form
+
