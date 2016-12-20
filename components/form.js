@@ -7,7 +7,6 @@ const FormGroup = require('react-bootstrap/lib/FormGroup');
 const DatePicker = require("react-bootstrap-date-picker");
 const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
-const unitData = require('../static/unit.json');
 const nameData = require('../static/name.json');
 const milestoneData = require('../static/milestone.json');
 const teamsizeData = require('../static/teamsize.json');
@@ -28,28 +27,6 @@ class Form extends React.Component {
     }
 };  
 
-class UnitDropdown extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = { makes: unitData  };
-    }   
-    render() {
-       var unit = this;
-        return <div className = "container fluid"
-        style = {{ marginLeft: '90px' }} ><label>Unit</label>
-            <SimpleSelect
-        placeholder = "Select a Unit"
-        options = {
-            this.state.makes.map(function(make) {
-                return { label: make.label, value: make.id };
-            })
-        }  
-        value = { this.state.make }    onValueChange = { function(make) {
-                    unit.setState ({make: make, model: undefined})
-                }}
-        /> </div>
-    }
-};
 
 class TeamsizeDropdown extends React.Component {
     constructor(props) {
