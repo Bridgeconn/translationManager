@@ -38,6 +38,7 @@ class Form extends React.Component {
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.afterSaveCell = this.afterSaveCell.bind(this);
         this.priorityValidator = this.priorityValidator.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -125,7 +126,12 @@ class Form extends React.Component {
 
     /*close() {
         this.setState({ showModal: false });
-    }*/
+    }*/ 
+    handleChange(date) {
+        this.setState({
+          Date: date
+        })
+    }
 
     priorityValidator(value) {
         const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
@@ -164,9 +170,13 @@ class Form extends React.Component {
         let obj3 = this.state.mile.label;
         let obj4 = this.state.teamName.label;
         let obj5 = this.state.startDate;
-        let obj6 = this.state.endDate; 
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , Enddate: obj6 });
-       var result = this.refs.table.handleAddRow(obj);
+        let obj6 = this.state.endDate;
+        let obj7 = this.state.Date;
+        if (typeof obj7 === 'undefined'){
+             obj7 = "";
+        }   
+        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7 });
+        var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
         }
@@ -295,10 +305,12 @@ class Form extends React.Component {
                     <label>Start Date</label>
                     <DatePicker selected={this.state.startDate} selectsStart  startDate={this.state.startDate}
                     endDate={this.state.endDate} onChange={this.handleChangeStart} />
-                    <label>End Date</label>
+                    <label>Target Date</label>
                     <DatePicker selected={this.state.endDate}  selectsEnd  startDate={this.state.startDate}
                      endDate={this.state.endDate} onChange={this.handleChangeEnd} />
-                    <Panel >
+                    <label>Complete Date</label>
+                    <DatePicker selected={this.state.Date} onChange={this.handleChange} />
+                    <Panel>
                         <ButtonToolbar>
                             <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
                         </ButtonToolbar>
@@ -307,8 +319,9 @@ class Form extends React.Component {
                         <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
                         <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
-                        <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>StartDate</TableHeaderColumn>
-                        <TableHeaderColumn dataField="Enddate" editable={ { validator: this.integerValidator } }>EndDate</TableHeaderColumn>  
+                        <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
+                        <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
+                        <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
                     </BootstrapTable>
                 </div>
             </div>
@@ -317,4 +330,3 @@ class Form extends React.Component {
 };  
 
 module.exports = Form
-
