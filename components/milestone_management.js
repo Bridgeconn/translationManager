@@ -6,6 +6,8 @@ class MilestoneManagement extends React.Component {
         return (
             <div className="container fluid" style={{ marginLeft: '90px' }}>
             Milestone Mangement
+            <div>
+            </div>
             </div>
         )
     }       
