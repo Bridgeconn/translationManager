@@ -14,7 +14,7 @@ const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
 const unitData = require('../static/chapters.json');
 const nameData = require('../static/name.json');
-const milestoneData = require('../static/milestone.json');
+const milestoneData = require('../static/milestones.json');
 const assignmentData = require('../static/assignment.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
@@ -30,7 +30,6 @@ class Form extends React.Component {
         this.state = {names:teamData, milestones: milestoneData, startDate: moment(),
       endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
       chapters:chapters};
-        console.log(assignmentData);
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         //this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -291,7 +290,7 @@ class Form extends React.Component {
                     placeholder = "Select Milestone"
                     options = {
                         this.state.milestones.map(function(mile) {
-                            return { label: mile.label, value: mile.id };
+                            return { label: mile.name, value: mile.name };
                         })
                     }
                     value = { this.state.mile } 

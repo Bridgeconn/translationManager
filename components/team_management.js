@@ -68,7 +68,6 @@ class TeamManagement extends React.Component {
     };
 
     afterSaveCell(row, cellName, cellValue) {
-        console.log(row.id);
           fs.readFile(file, (err, data) => {
             var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
@@ -80,7 +79,6 @@ class TeamManagement extends React.Component {
             }
         }
            if (err) throw err;
-            console.log(filedata);            
             fs.writeFile(file, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
@@ -89,18 +87,36 @@ class TeamManagement extends React.Component {
     setTimeout(function() {
         let obj =  [{table:{}}];           
         obj = row;
-        console.log(obj);
-                fs.readFile(file, (err, data) => {
-                    if (err) throw err;
-                    let filedata = JSON.parse(data);
-                    filedata.push(obj);
-                    fs.writeFile(file, JSON.stringify(filedata), function(err){
-                        if (err) throw err;
-                        console.log('The "data to append" was appended to file!');
-                    }); 
-                      
-                })}, 100);
+        fs.readFile(file, (err, data) => {
+            if (err) throw err;
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(file, JSON.stringify(filedata), function(err){
+                if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            });        
+        })}, 100);
     };
+
+    onDeleteRow(rows) {
+        fs.readFile(file, (err, data) => {
+        var filedata = JSON.parse(data);
+            for (var n = 0 ; n < filedata.length ; n++) {
+            if (filedata[n].id == rows) {
+              var removedObject = filedata.splice(n,1);
+              removedObject = null;
+              break;
+            }
+        }
+        if (err) throw err;
+        console.log(filedata);            
+        fs.writeFile(file, JSON.stringify(filedata), function(err){
+        if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+        }); 
+        })
+    }
+
 
     render() {
         var teamsize = this;
@@ -114,6 +130,11 @@ class TeamManagement extends React.Component {
         const selectRow = {
             mode: 'radio',
             clickToSelect: true
+        };
+
+        const options = {
+            //onRowDoubleClick: this.onRowDoubleClick,
+            onDeleteRow: this.onDeleteRow
         };
 
         return  (
@@ -151,7 +172,7 @@ class TeamManagement extends React.Component {
                 </div>
 
                 <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={this.state.teamData} cellEdit={ cellEdit }>
+                <BootstrapTable ref="table" data={this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn>        
