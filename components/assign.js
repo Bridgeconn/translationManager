@@ -3,12 +3,7 @@ const bootstrap = require('react-bootstrap');
 const fs = require('fs');
 const moment = require('moment');
 const Button = require('react-bootstrap/lib/Button');
-const Modal = require('react-bootstrap/lib/Modal');
-const OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
-const _ = require('lodash');
-const ListGroupItem = require('react-bootstrap/lib/ListGroupItem');
 const ReactBsTable = require("react-bootstrap-table");
-const FormGroup = require('react-bootstrap/lib/FormGroup');
 const DatePicker = require('react-datepicker');
 const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
@@ -22,14 +17,16 @@ const MultiSelect = ReactSelectize.MultiSelect;
 const file = ('./static/assignment.json');
 const teamData = require('../static/team.json');
 const bookData = require('../static/books.json');
+const projectData = require('../static/projects.json');
+
 var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {names:teamData, milestones: milestoneData, startDate: moment(),
+        this.state = { names:teamData, milestones: milestoneData, startDate: moment(),
       endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
-      chapters:chapters};
+      chapters:chapters, projectData:projectData };
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         //this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -173,8 +170,9 @@ class Form extends React.Component {
         let obj7 = this.state.Date;
         if (typeof obj7 === 'undefined'){
              obj7 = "";
-        }   
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7 });
+        }
+        let obj8 = this.state.project.label; 
+        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8 });
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -198,6 +196,7 @@ class Form extends React.Component {
         var milesstone = this;
         var startDate = this;
         var endDate = this;
+        var projects = this;
         self = this;
         chapters = !!this.state.book ? this.state.chapters[this.state.book.label] : [];
 
@@ -232,6 +231,20 @@ class Form extends React.Component {
                                 name.setState ({teamName: teamName, chapter: undefined})
                             }}
                     />
+                </div>
+                <div>
+                    <label>Project Name</label>
+                    <SimpleSelect placeholder = "Select Project "
+                        options = {
+                            this.state.projectData.map(function(project) {
+                                return { label: project.name, value: project.name };
+                            })
+                        }
+                        value = { this.state.project }  
+                        onValueChange = { function(project) {
+                                projects.setState ({project: project, model: undefined}
+                            )
+                        }}/> 
                 </div>
                
                 <div>
@@ -321,6 +334,7 @@ class Form extends React.Component {
                         <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
                         <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
                         <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
+                        <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
                     </BootstrapTable>
                 </div>
             </div>
