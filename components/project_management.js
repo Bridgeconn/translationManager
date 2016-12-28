@@ -7,16 +7,16 @@ const ControlLabel = require('react-bootstrap/lib/ControlLabel');
 const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const ReactBsTable = require("react-bootstrap-table");
-const file = ('./static/projects.json');
-const milestoneData = require('../static/milestones.json');
-const projectData = require('../static/projects.json');
+var file = ('./static/projects.json');
+var milestoneData = require('../static/milestones.json');
+var projectData = require('../static/projects.json');
 
 class ProjectManagement extends React.Component {
 	constructor(props) {
 	    super(props);
 	    this.state = {projectData:projectData};
 	}
-	        
+      
 	handleInputChange(name, e) {
 		let change = {};
 		change[name] = e.target.value;
@@ -30,7 +30,6 @@ class ProjectManagement extends React.Component {
 	    let obj3 = this.state.input2;
    	    let obj4 = this.state.input3;    
 	    let obj5 = this.state.input4;    
-    
 	    obj =({name: obj3, language: obj1, version:obj3, organization:obj4});
 	    var result = this.refs.table.handleAddRow(obj);
 	    if(result){  
@@ -46,9 +45,10 @@ class ProjectManagement extends React.Component {
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
-	    } 
+	    }	
+	    window.location.reload() 
 	};
-	
+
 	afterSaveCell(row, cellName, cellValue) {
 	    fs.readFile(file, (err, data) => {
 	        var filedata = JSON.parse(data);
@@ -128,7 +128,7 @@ class ProjectManagement extends React.Component {
 	                        <ControlLabel>Language</ControlLabel>
 	                        <FormControl type="text" placeholder="Enter the Language" value={this.state.input1} 
 	                        onChange={this.handleInputChange.bind(this, 'input1')}/>
-	                        <ControlLabel>Organiztion</ControlLabel>
+	                        <ControlLabel>Organization</ControlLabel>
 	                        <FormControl type="text" placeholder="Enter the organization" value={this.state.input3} 
 	                        onChange={this.handleInputChange.bind(this, 'input3')}/>
 	                        <ControlLabel>Version</ControlLabel>

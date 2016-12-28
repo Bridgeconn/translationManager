@@ -22,7 +22,9 @@ const SimpleSelect = ReactSelectize.SimpleSelect;
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
+        //console.log(this.teamData);
         this.state = {teamData:teamData, teams: teamsizeData, projectData:projectData};
+        //this.handleChange = this.handleChange.bind(this);
     }
 
     handleInputChange(name, e) {
@@ -63,10 +65,18 @@ class TeamManagement extends React.Component {
                         if (err) throw err;
                         console.log('The "data to append" was appended to file!');
                     }); 
-                    //setTimeout(function() {this.setState({input1 : ''});}.bind(this), 3000);  
                 });
+                setTimeout(function() {
+                    fs.readFile(file, (err, data) => {
+                        if (err) throw err;
+                        global.team = JSON.parse(data);
+                        console.log(team);
+                        //this.setState({teamData: team})
+                    }) 
+                }, 100);
+                window.location.reload();
             }
-        }    
+        } 
     };
 
     afterSaveCell(row, cellName, cellValue) {
@@ -122,7 +132,7 @@ class TeamManagement extends React.Component {
     render() {
         var teamsize = this;
         var projects = this;
-        
+
         const cellEdit = {
             mode: 'dbclick',
             blurToSave: true,
@@ -186,12 +196,14 @@ class TeamManagement extends React.Component {
                 </div>
 
                 <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
+                <div key={teamData.toString()}>
+                <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn> 
                     <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
-                </BootstrapTable>                 
+                </BootstrapTable>   
+                </div>              
             </div>
         );
     }

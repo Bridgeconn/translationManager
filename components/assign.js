@@ -18,15 +18,14 @@ const file = ('./static/assignment.json');
 const teamData = require('../static/team.json');
 const bookData = require('../static/books.json');
 const projectData = require('../static/projects.json');
-
 var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
         this.state = { names:teamData, milestones: milestoneData, startDate: moment(),
-      endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
-      chapters:chapters, projectData:projectData };
+          endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
+          chapters:chapters, projectData:projectData };
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         //this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -235,16 +234,16 @@ class Form extends React.Component {
                 <div>
                     <label>Project Name</label>
                     <SimpleSelect placeholder = "Select Project "
-                        options = {
-                            this.state.projectData.map(function(project) {
-                                return { label: project.name, value: project.name };
-                            })
-                        }
-                        value = { this.state.project }  
-                        onValueChange = { function(project) {
-                                projects.setState ({project: project, model: undefined}
-                            )
-                        }}/> 
+                    options = {
+                        this.state.projectData.map(function(project) {
+                            return { label: project.name, value: project.name };
+                        })
+                    }
+                    value = { this.state.project }  
+                    onValueChange = { function(project) {
+                            projects.setState ({project: project, model: undefined}
+                        )
+                    }}/> 
                 </div>
                
                 <div>

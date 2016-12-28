@@ -55,7 +55,8 @@ class MilestoneManagement extends React.Component {
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
-	    }    
+	    }
+	    window.location.reload()    
 	};
 
 	afterSaveCell(row, cellName, cellValue) {
@@ -141,8 +142,7 @@ class MilestoneManagement extends React.Component {
 	                    }
 	                    value = { this.state.project }  
 	                    onValueChange = { function(project) {
-	                            teamsize.setState ({project: project, model: undefined}
-	                        )
+	                            teamsize.setState ({project: project, model: undefined})
 	                    }}/> 
 	                    <FormGroup controlId="formInlineName">
 	                        <ControlLabel>Milestone Name</ControlLabel>
