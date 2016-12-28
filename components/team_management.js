@@ -14,6 +14,7 @@ const ReactSuperSelect = require('react-super-select');
 const file = ('./static/team.json');
 const teamnameData = require('../static/teamname.json');
 const teamsizeData = require('../static/teamsize.json');
+const projectData = require('../static/projects.json');
 const teamData = require('../static/team.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
@@ -21,33 +22,36 @@ const SimpleSelect = ReactSelectize.SimpleSelect;
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
-        this.state = {teamData:teamData , teams: teamsizeData};
+        //console.log(this.teamData);
+        this.state = {teamData:teamData, teams: teamsizeData, projectData:projectData};
+        //this.handleChange = this.handleChange.bind(this);
     }
-
 
     handleInputChange(name, e) {
       let change = {};
       change[name] = e.target.value;
       this.setState(change);
-    }
+    };
 
     handlerDropdown(options) {
-      let output = [];
-      _.map(options, function(option){
+        let output = [];
+        _.map(options, function(option){
         output = output.concat([option.name]);
         global.multiselectName = output
-      })
+        })
     };
 
     handleSubmit(e) {
         let obj =  [{table:{}}];                   
         let obj1 = this.state.input1;
+        let obj4 = this.state.project.label;
         let obj3 = this.state.teamsizes.label;
         if ( typeof multiselectName === 'undefined'){
             alert("Please select the name");
-        }else{
+        }
+        else{
             let obj2 = multiselectName;
-            obj =({id: obj1 , membername: obj2 , teamsize: obj3});
+            obj =({id: obj1 , membername: obj2 , teamsize: obj3, project: obj4});
             var result = this.refs.table.handleAddRow(obj);
             if(result){  
               alert(result);
@@ -61,28 +65,36 @@ class TeamManagement extends React.Component {
                         if (err) throw err;
                         console.log('The "data to append" was appended to file!');
                     }); 
-                    //setTimeout(function() {this.setState({input1 : ''});}.bind(this), 3000);  
                 });
+                setTimeout(function() {
+                    fs.readFile(file, (err, data) => {
+                        if (err) throw err;
+                        global.team = JSON.parse(data);
+                        console.log(team);
+                        //this.setState({teamData: team})
+                    }) 
+                }, 100);
+                window.location.reload();
             }
-        }    
+        } 
     };
 
     afterSaveCell(row, cellName, cellValue) {
-          fs.readFile(file, (err, data) => {
-            var filedata = JSON.parse(data);
-            for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].id == row.id) {
-              var removedObject = filedata.splice(n,1);
-              console.log(removedObject);
-              removedObject = null;
-              break;
-            }
+        fs.readFile(file, (err, data) => {
+        var filedata = JSON.parse(data);
+        for (var n = 0 ; n < filedata.length ; n++) {
+        if (filedata[n].id == row.id) {
+          var removedObject = filedata.splice(n,1);
+          console.log(removedObject);
+          removedObject = null;
+          break;
         }
-           if (err) throw err;
-            fs.writeFile(file, JSON.stringify(filedata), function(err){
-            if (err) throw err;
-                console.log('The "data to append" was appended to file!');
-            }); 
+    }
+        if (err) throw err;
+        fs.writeFile(file, JSON.stringify(filedata), function(err){
+        if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+        }); 
     })
     setTimeout(function() {
         let obj =  [{table:{}}];           
@@ -115,11 +127,11 @@ class TeamManagement extends React.Component {
             console.log('The "data to append" was appended to file!');
         }); 
         })
-    }
-
+    };
 
     render() {
         var teamsize = this;
+        var projects = this;
 
         const cellEdit = {
             mode: 'dbclick',
@@ -139,8 +151,20 @@ class TeamManagement extends React.Component {
 
         return  (
             <div className="container fluid" style={{ marginLeft: '90px' }}>
-                <div >
+                <div>
                     <Form>
+                      <label> Project </label>
+                        <SimpleSelect placeholder = "Select Project "
+                        options = {
+                            this.state.projectData.map(function(project) {
+                                return { label: project.name, value: project.name };
+                            })
+                        }
+                        value = { this.state.project }  
+                        onValueChange = { function(project) {
+                                projects.setState ({project: project, model: undefined}
+                            )
+                        }}/> 
                         <ControlLabel>Members Name</ControlLabel>
                         <ReactSuperSelect placeholder="Select the name" 
                           dataSource={teamnameData} 
@@ -172,11 +196,14 @@ class TeamManagement extends React.Component {
                 </div>
 
                 <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
+                <div key={teamData.toString()}>
+                <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn>        
-                </BootstrapTable>                 
+                    <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn> 
+                    <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
+                </BootstrapTable>   
+                </div>              
             </div>
         );
     }

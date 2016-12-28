@@ -6,41 +6,31 @@ const Form = require('react-bootstrap/lib/Form');
 const ControlLabel = require('react-bootstrap/lib/ControlLabel');
 const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
-const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
-const file = ('./static/milestones.json');
-const milestoneData = require('../static/milestones.json');
-const projectData = require('../static/projects.json');
-const ReactSelectize = require("react-selectize");
-const SimpleSelect = ReactSelectize.SimpleSelect;
+var file = ('./static/projects.json');
+var milestoneData = require('../static/milestones.json');
+var projectData = require('../static/projects.json');
 
-class MilestoneManagement extends React.Component {
+class ProjectManagement extends React.Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {projectData:projectData, milestoneData:milestoneData};
+	    this.state = {projectData:projectData};
 	}
-	        
+      
 	handleInputChange(name, e) {
 		let change = {};
 		change[name] = e.target.value;
 		this.setState(change);
 	}
 
-	handlerDropdown(options) {
-		let output = [];
-		_.map(options, function(option){
-		output = output.concat([option.name]);
-		global.multiselectName = output
-		})
-	};
-
 	handleSubmit(e) {
 	    let obj =  [{table:{}}];                   
 	    let obj1 = this.state.input1;
-	    let obj2 = this.state.project.label;
+	    //let obj2 = this.state.project.label;
 	    let obj3 = this.state.input2;
-	    
-	    obj =({name: obj3 , project: obj2 , description: obj1});
+   	    let obj4 = this.state.input3;    
+	    let obj5 = this.state.input4;    
+	    obj =({name: obj3, language: obj1, version:obj3, organization:obj4});
 	    var result = this.refs.table.handleAddRow(obj);
 	    if(result){  
 	      alert(result);
@@ -55,8 +45,8 @@ class MilestoneManagement extends React.Component {
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
-	    }
-	    window.location.reload()    
+	    }	
+	    window.location.reload() 
 	};
 
 	afterSaveCell(row, cellName, cellValue) {
@@ -110,8 +100,6 @@ class MilestoneManagement extends React.Component {
 	}
 
 	render() {
-	    var teamsize = this;
-
 	    const cellEdit = {
 	        mode: 'dbclick',
 	        blurToSave: true,
@@ -130,39 +118,36 @@ class MilestoneManagement extends React.Component {
 
 	    return  (
 	        <div className="container fluid" style={{ marginLeft: '90px' }}>
-	        	Milestone Mangement
+	        Project Management
 	            <div >
 	                <Form>
-	                    <label> Project </label>
-	                    <SimpleSelect placeholder = "Select Project "
-	                    options = {
-	                        this.state.projectData.map(function(project) {
-	                            return { label: project.name, value: project.name };
-	                        })
-	                    }
-	                    value = { this.state.project }  
-	                    onValueChange = { function(project) {
-	                            teamsize.setState ({project: project, model: undefined})
-	                    }}/> 
 	                    <FormGroup controlId="formInlineName">
-	                        <ControlLabel>Milestone Name</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Name" ref="table" value={this.state.input2} 
+	                        <ControlLabel>Project Name</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the Project Name" value={this.state.input2} 
 	                        onChange={this.handleInputChange.bind(this, 'input2')}/>
-	                        <ControlLabel>Description</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Description" ref="table" value={this.state.input1} 
+	                        <ControlLabel>Language</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the Language" value={this.state.input1} 
 	                        onChange={this.handleInputChange.bind(this, 'input1')}/>
+	                        <ControlLabel>Organization</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the organization" value={this.state.input3} 
+	                        onChange={this.handleInputChange.bind(this, 'input3')}/>
+	                        <ControlLabel>Version</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the version" value={this.state.input4} 
+	                        onChange={this.handleInputChange.bind(this, 'input4')}/>
 	                    </FormGroup>
 	                </Form>
 	            </div>
-	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Milestone</Button>
-	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-	                <TableHeaderColumn dataField="name" isKey={true}>Team Name</TableHeaderColumn>
-	                <TableHeaderColumn dataField="description">Description</TableHeaderColumn>
-	                <TableHeaderColumn dataField="project">Project</TableHeaderColumn>
+	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Project</Button>
+	            <BootstrapTable ref="table" data={this.state.projectData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+	                <TableHeaderColumn dataField="name" isKey={true}>Project Name</TableHeaderColumn>
+	                <TableHeaderColumn dataField="language">Language</TableHeaderColumn>
+   	                <TableHeaderColumn dataField="organization">Organization</TableHeaderColumn>
+	                <TableHeaderColumn dataField="version">Version</TableHeaderColumn>
+
 	            </BootstrapTable>                 
 	        </div>
 	    );
 	}
 };
 
-module.exports = MilestoneManagement
+module.exports = ProjectManagement
