@@ -33,7 +33,7 @@ class Form extends React.Component {
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.afterSaveCell = this.afterSaveCell.bind(this);
         this.priorityValidator = this.priorityValidator.bind(this);
-        this.handleChange = this.handleChange.bind(this);
+        //this.handleChange = this.handleChange.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -122,6 +122,7 @@ class Form extends React.Component {
     /*close() {
         this.setState({ showModal: false });
     }*/ 
+
     handleChange(date) {
         this.setState({
           Date: date
@@ -329,11 +330,13 @@ class Form extends React.Component {
                     <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
                         <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
                         <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
+                        <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
                         <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
                         <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
                         <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
                         <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
                         <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
+                        <TableHeaderColumn dataField="isCompleted"  dataAlign="center"  editable={ { type: 'checkbox', options: { values: 'Done:Pending' } } }>Status</TableHeaderColumn>  
                     </BootstrapTable>
                 </div>
             </div>
