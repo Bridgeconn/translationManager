@@ -203,7 +203,6 @@ class TeamManagement extends React.Component {
                     <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
                 </BootstrapTable>   
                 </div>              
-            </div>
         );
     }
 };

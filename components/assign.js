@@ -33,7 +33,7 @@ class Form extends React.Component {
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.afterSaveCell = this.afterSaveCell.bind(this);
         this.priorityValidator = this.priorityValidator.bind(this);
-        //this.handleChange = this.handleChange.bind(this);
+        this.handleChangeDate = this.handleChangeDate.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -123,7 +123,7 @@ class Form extends React.Component {
         this.setState({ showModal: false });
     }*/ 
 
-    handleChange(date) {
+    handleChangeDate(date) {
         this.setState({
           Date: date
         })
@@ -172,7 +172,8 @@ class Form extends React.Component {
              obj7 = "";
         }
         let obj8 = this.state.project.label; 
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8 });
+        let obj9 = "Pending";
+        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: "Pending" });
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -321,24 +322,24 @@ class Form extends React.Component {
                     <DatePicker selected={this.state.endDate}  selectsEnd  startDate={this.state.startDate}
                      endDate={this.state.endDate} onChange={this.handleChangeEnd} />
                     <label>Complete Date</label>
-                    <DatePicker selected={this.state.Date} onChange={this.handleChange} />
-                    <Panel>
-                        <ButtonToolbar>
-                            <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
-                        </ButtonToolbar>
-                    </Panel>
-                    <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                        <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
-                        <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
-                        <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
-                        <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
-                        <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
-                        <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
-                        <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
-                        <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
-                        <TableHeaderColumn dataField="isCompleted"  dataAlign="center"  editable={ { type: 'checkbox', options: { values: 'Done:Pending' } } }>Status</TableHeaderColumn>  
-                    </BootstrapTable>
+                    <DatePicker selected={this.state.Date} onChange={this.handleChangeDate} />
                 </div>
+                <Panel>
+                    <ButtonToolbar>
+                        <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
+                    </ButtonToolbar>
+                </Panel>
+                <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+                    <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
+                    <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
+                    <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
+                    <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
+                    <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
+                    <TableHeaderColumn dataField="isCompleted"  dataAlign="center"  editable={ { type: 'checkbox', options: { values: 'Done:Pending' } } }>Status</TableHeaderColumn>  
+                </BootstrapTable>
             </div>
         )
     }

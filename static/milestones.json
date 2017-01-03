@@ -1,1 +1,1 @@
-[{"name":"Stage 2","description":"Community Check","prerequisite":"Stage 1","project":"Project 1"},{"name":"Stage 3","description":"Linguist/Project Manager Check","prerequisite":"Stage 2","project":"Project 1"},{"name":"Bug-fixing","project":"Tmanager","description":"Fixxing Bugs"}]
+[{"name":"Stage 1","project":"tManager ","description":"Development"},{"name":"Stage 2","project":"tManager ","description":"Testing"}]
