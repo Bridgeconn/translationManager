@@ -7,25 +7,27 @@ const ReactBsTable = require("react-bootstrap-table");
 const DatePicker = require('react-datepicker');
 const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
-const unitData = require('../static/chapters.json');
-const nameData = require('../static/name.json');
-const milestoneData = require('../static/milestones.json');
-const assignmentData = require('../static/assignment.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
-const file = ('./static/assignment.json');
-const teamData = require('../static/team.json');
 const bookData = require('../static/books.json');
-const projectData = require('../static/projects.json');
+const projectfile = ('./static/projects.json');
+const teamfile = ('./static/team.json');
+const milestonefile = ('./static/milestones.json');
+const assignmentfile = ('./static/assignment.json');
 var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
-        this.state = { names:teamData, milestones: milestoneData, startDate: moment(),
-          endDate: moment(), assignmentData:assignmentData, selected: [], showModal: false, bookData : bookData,
-          chapters:chapters, projectData:projectData };
+        var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
+        var teamdata = JSON.parse(fs.readFileSync(teamfile, 'utf8'));
+        var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
+        var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
+
+        this.state = { names:teamdata, milestones: milestonedata, startDate: moment(),
+          endDate: moment(), assignmentData:assignmentdata, selected: [], showModal: false, bookData : bookData,
+          chapters:chapters, projectData:projectdata };
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         //this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -67,7 +69,7 @@ class Form extends React.Component {
     }
 */
     onDeleteRow(rows) {
-        fs.readFile(file, (err, data) => {
+        fs.readFile(assignmentfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
             if (filedata[n].id == rows) {
@@ -78,7 +80,7 @@ class Form extends React.Component {
         }
             if (err) throw err;
             console.log(filedata);            
-            fs.writeFile(file, JSON.stringify(filedata), function(err){
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
             }); 
@@ -86,7 +88,7 @@ class Form extends React.Component {
     }
 
     afterSaveCell(row, cellName, cellValue) {
-        fs.readFile(file, (err, data) => {
+        fs.readFile(assignmentfile, (err, data) => {
             var filedata = JSON.parse(data);
                 for (var n = 0 ; n < filedata.length ; n++) {
                 if (filedata[n].id == row.id) {
@@ -97,7 +99,7 @@ class Form extends React.Component {
                 }
             }
             if (err) throw err;
-            fs.writeFile(file, JSON.stringify(filedata), function(err){
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
             }); 
@@ -107,11 +109,11 @@ class Form extends React.Component {
             let obj =  [{table:{}}];           
             obj = row;
             console.log(obj);
-                fs.readFile(file, (err, data) => {
+                fs.readFile(assignmentfile, (err, data) => {
                     if (err) throw err;
                     let filedata = JSON.parse(data);
                     filedata.push(obj);
-                    fs.writeFile(file, JSON.stringify(filedata), function(err){
+                    fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
                         if (err) throw err;
                         console.log('The "data to append" was appended to file!');
                     });                           
@@ -179,11 +181,11 @@ class Form extends React.Component {
           alert(result);
         }
         else{
-            fs.readFile(file, (err, data) => {
+            fs.readFile(assignmentfile, (err, data) => {
                 if (err) throw err;
                 let filedata = JSON.parse(data);
                 filedata.push(obj);
-                fs.writeFile(file, JSON.stringify(filedata), function(err){
+                fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
                     if (err) throw err;
                     console.log('The "data to append" was appended to file!');
                 }); 
@@ -243,8 +245,7 @@ class Form extends React.Component {
                     }
                     value = { this.state.project }  
                     onValueChange = { function(project) {
-                            projects.setState ({project: project, model: undefined}
-                        )
+                            projects.setState ({project: project, model: undefined})
                     }}/> 
                 </div>
                
