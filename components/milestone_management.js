@@ -9,15 +9,19 @@ const Button = require('react-bootstrap/lib/Button');
 const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
 const file = ('./static/milestones.json');
-const milestoneData = require('../static/milestones.json');
-const projectData = require('../static/projects.json');
+const projectfile = ('./static/projects.json');
+const milestonefile = ('./static/milestones.json');
+//const milestoneData = require('../static/milestones.json');
+//const projectData = require('../static/projects.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 
 class MilestoneManagement extends React.Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {projectData:projectData, milestoneData:milestoneData};
+	    var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
+  	    var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
+	    this.state = {projectData:projectdata, milestoneData:milestonedata};
 	}
 	        
 	handleInputChange(name, e) {
@@ -56,7 +60,6 @@ class MilestoneManagement extends React.Component {
 	            }); 
 	        });
 	    }
-	    window.location.reload()    
 	};
 
 	afterSaveCell(row, cellName, cellValue) {
@@ -156,7 +159,7 @@ class MilestoneManagement extends React.Component {
 	            </div>
 	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Milestone</Button>
 	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-	                <TableHeaderColumn dataField="name" isKey={true}>Team Name</TableHeaderColumn>
+	                <TableHeaderColumn dataField="name" isKey={true}>Milestone Name</TableHeaderColumn>
 	                <TableHeaderColumn dataField="description">Description</TableHeaderColumn>
 	                <TableHeaderColumn dataField="project">Project</TableHeaderColumn>
 	            </BootstrapTable>                 

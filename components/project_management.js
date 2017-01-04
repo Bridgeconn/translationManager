@@ -8,13 +8,17 @@ const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const ReactBsTable = require("react-bootstrap-table");
 var file = ('./static/projects.json');
-var milestoneData = require('../static/milestones.json');
-var projectData = require('../static/projects.json');
+//var milestoneData = require('../static/milestones.json');
+//var projectData = require('../static/projects.json');
 
 class ProjectManagement extends React.Component {
 	constructor(props) {
 	    super(props);
-	    this.state = {projectData:projectData};
+	    var json = JSON.parse(fs.readFileSync(file, 'utf8'));
+	    console.log(json);
+	    global.fileData = json
+		console.log(fileData);
+	    this.state = {projectData:fileData};
 	}
       
 	handleInputChange(name, e) {
@@ -30,7 +34,7 @@ class ProjectManagement extends React.Component {
 	    let obj3 = this.state.input2;
    	    let obj4 = this.state.input3;    
 	    let obj5 = this.state.input4;    
-	    obj =({name: obj3, language: obj1, version:obj3, organization:obj4});
+	    obj =({name: obj3, language: obj1, version:obj5, organization:obj4});
 	    var result = this.refs.table.handleAddRow(obj);
 	    if(result){  
 	      alert(result);
@@ -46,7 +50,6 @@ class ProjectManagement extends React.Component {
 	            }); 
 	        });
 	    }	
-	    window.location.reload() 
 	};
 
 	afterSaveCell(row, cellName, cellValue) {

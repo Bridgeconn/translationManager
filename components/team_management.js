@@ -7,23 +7,26 @@ const ControlLabel = require('react-bootstrap/lib/ControlLabel');
 const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const style = require("./Style");
-const Table = require('./table');
 const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
 const ReactSuperSelect = require('react-super-select');
 const file = ('./static/team.json');
 const teamnameData = require('../static/teamname.json');
 const teamsizeData = require('../static/teamsize.json');
-const projectData = require('../static/projects.json');
-const teamData = require('../static/team.json');
+const projectfile = ('./static/projects.json');
+//const projectData = require('../static/projects.json');
+const teamfile = ('./static/team.json');
+//const teamData = require('../static/team.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
+        var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
+        var teamdata = JSON.parse(fs.readFileSync(teamfile, 'utf8'));
         //console.log(this.teamData);
-        this.state = {teamData:teamData, teams: teamsizeData, projectData:projectData};
+        this.state = {teamData:teamdata, teams: teamsizeData, projectData:projectdata};
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -74,7 +77,6 @@ class TeamManagement extends React.Component {
                         //this.setState({teamData: team})
                     }) 
                 }, 100);
-                window.location.reload();
             }
         } 
     };
@@ -203,7 +205,6 @@ class TeamManagement extends React.Component {
                     <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
                 </BootstrapTable>   
                 </div>              
-            </div>
         );
     }
 };
