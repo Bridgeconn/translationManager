@@ -1,18 +1,24 @@
 {
 	"Team1": {
-		"Genesiscompleted": "80",
-		"Genesisassigned": "100",
-		"Genesisunassigned": "20",
-		"Exoduscompleted": "70",
-		"Exodusassigned": "30",
-		"Exodusunassigned": "25"
+		"milestone1":"50",
+		"milestone1genesis": "50",
+		"milestone1leviticus": "100",
+		"milestone1genesisassigned": "20",
+		"milestone1leviticusassigned": "70",
+		"milestone1genesisunassigned":"60",
+		"milestone1leviticusunassigned":"20",
+		"milestone1genesiscompleted":"20",
+		"milestone1leviticuscompleted":"10"
 	},
 	"Team2": {
-		"Leviticuscompleted": "30",
-		"Leviticusassigned": "10",
-		"Leviticusunassigned": "40",
-		"Deutronomycompleted": "90",
-		"Deutronomyassigned": "40",
-		"Deutronomyunassigned": "80"
+		"milestone2":"50",
+		"milestone2genesis": "50",
+		"milestone2leviticus": "100",
+		"milestone2genesisassigned": "20",
+		"milestone2leviticusassigned": "70",
+		"milestone2genesisunassigned":"50",
+		"milestone2leviticusunassigned":"30",
+		"milestone2genesiscompleted":"30",
+	    "milestone2leviticuscompleted":"100"
 	}
 }

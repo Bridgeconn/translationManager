@@ -29,7 +29,6 @@ class Form extends React.Component {
           endDate: moment(), assignmentData:assignmentdata, selected: [], showModal: false, bookData : bookData,
           chapters:chapters, projectData:projectdata };
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
-        //this.close = this.close.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
@@ -57,6 +56,8 @@ class Form extends React.Component {
     handleChangeEnd(endDate) {
         this.handleChange({ endDate })
     }
+
+   // Double click function to get the value of that row. 
 /*
     onRowDoubleClick(row) {
         console.log(row);
@@ -120,10 +121,6 @@ class Form extends React.Component {
                 })
         }, 100);
     };
-
-    /*close() {
-        this.setState({ showModal: false });
-    }*/ 
 
     handleChangeDate(date) {
         this.setState({
