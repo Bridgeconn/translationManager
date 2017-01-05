@@ -15,10 +15,10 @@
 		"milestone2genesis": "50",
 		"milestone2leviticus": "100",
 		"milestone2genesisassigned": "20",
-		"milestone2leviticusassigned": "70",
+		"milestone2leviticusassigned": "20",
 		"milestone2genesisunassigned":"50",
-		"milestone2leviticusunassigned":"30",
+		"milestone2leviticusunassigned":"10",
 		"milestone2genesiscompleted":"30",
-	    "milestone2leviticuscompleted":"100"
+	    "milestone2leviticuscompleted":"70"
 	}
 }

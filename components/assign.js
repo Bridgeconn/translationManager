@@ -15,6 +15,8 @@ const projectfile = ('./static/projects.json');
 const teamfile = ('./static/team.json');
 const milestonefile = ('./static/milestones.json');
 const assignmentfile = ('./static/assignment.json');
+const progfile = ('./static/progress_screen.json');
+
 var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
@@ -159,7 +161,7 @@ class Form extends React.Component {
     }
 
     handleSubmit(e) {
-        let obj =  [{table:{}}];           
+        let obj =  [{table:{}}];
         let obj1 = this.state.book.label;        
         let obj2 = this.state.chapter.label;
         let obj3 = this.state.mile.label;
@@ -172,7 +174,9 @@ class Form extends React.Component {
         }
         let obj8 = this.state.project.label; 
         let obj9 = "Pending";
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: "Pending" });
+        let progressobject =  [{table:{}}];                      
+        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
+        progressobject = ({teamname : obj4,Chapters:obj2, Milestones:obj3, Book:obj1, Project:obj8, isCompleted: obj9  })
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -186,7 +190,16 @@ class Form extends React.Component {
                     if (err) throw err;
                     console.log('The "data to append" was appended to file!');
                 }); 
-            })     
+            })
+            fs.readFile(progfile, (err, data) => {
+                if (err) throw err;
+                let filedata = JSON.parse(data);
+                filedata.push(progressobject);
+                fs.writeFile(progfile, JSON.stringify(filedata), function(err){
+                    if (err) throw err;
+                    console.log('The "data to append" was appended to PROGRESS file!');
+                }); 
+            })
         }
     };
 
