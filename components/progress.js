@@ -11,82 +11,100 @@ const Col = require('react-bootstrap/lib/Col');
 const progressfile = ('./static/progress.json');
 const booksfile = ('./static/books_progress.json');
 const assignmentfile = ('./static/assignment.json');
+const milestonefile = ('./static/milestones.json');
+const chapterfile = ('./static/chapters.json');
 const progfile = ('./static/progress_screen.json');
+const outputfile = ('./static/output.json');
+const resultfile = ('./static/result.json');
+const _ = require('lodash');
 
 class Progressbar extends React.Component {
 	constructor(props) {
         super(props);
-		var progressdata = JSON.parse(fs.readFileSync(progressfile, 'utf8'));
-	    var bookdata = JSON.parse(fs.readFileSync(booksfile, 'utf8'));
-	    var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
-		var prog = JSON.parse(fs.readFileSync(progfile, 'utf8'));
+			    var resultdata = JSON.parse(fs.readFileSync(resultfile, 'utf8'));
 
-	    this.state = { label:progressdata, books: bookdata, progress:prog };
+	    //var bookdata = JSON.parse(fs.readFileSync(booksfile, 'utf8'));
+	    //var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
+		//var prog = JSON.parse(fs.readFileSync(progfile, 'utf8'));
+	    //var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
+	   	this.state = { label:resultdata };
 	}
 
-	componentDidMount() {
-		fs.readFile(progfile, (err, data) => {
-	        var filedata = JSON.parse(data);
-	            for (var n = 0 ; n < filedata.length ; n++) {
-	            if (filedata[n].isCompleted == "Done") {
-					//console.log(filedata[n].chapters);
-					//var percentage = (filedata[n].chapters/100)*50;
-					//console.log(percentage);
-	            }
-	        }	
-	    })
-	}
+	componentWillMount() {
+		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
+	    var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));	
+   	    var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));	    
+    
+		//console.log(assignmentdata);
+		var result1 = assignmentdata.map(function(a) {return a.Project;}); 
+    	//console.log(result1);
+   		var result = 
+   			_.chain(assignmentdata)
+		    .groupBy("Project")
+		    .toPairs()
+		    .map(function (currentItem) {
+		        return _.zipObject(["Project", "details"], currentItem);
+		    })
+		    .value();
+		
 
+		//console.log(result);
+		var finalOutput=[];
+		for (var n = 0 ; n < result.length ; n++) {
+			var output = [];
+			var doneAssignments = _.filter(result[n].details,  { 'isCompleted': 'Done' });
+			var milestones = _.map(result[n].details, 'Milestones');
+			//console.log(doneAssignments);
+			//console.log(milestones);
+
+			for (var i = 0 ; i < doneAssignments.length ; i++){
+				var temp = {};
+				//console.log(doneAssignments[i].Book+'====================='+doneAssignments[i].Milestones);
+				if (typeof doneAssignments[i].Milestones !== 'undefined') {
+
+				temp['BookName'] = doneAssignments[i].Book;
+				temp['Milestone'] = doneAssignments[i].Milestones;
+				var book = doneAssignments[i].Book;
+				var bookChapters = chaptersdata[book];
+				temp['progress'] = 1/bookChapters*100;
+				output.push(temp);
+				//console.log(output);
+			}		
+		}
+		
+			finalOutput[result[n].Project] = output;
+			console.log(finalOutput);
+	}
+		/*fs.writeFileSync(outputfile, JSON.stringify(obj), function(err){
+            if (err) throw err;
+            console.log('The "data to append" was appended to PROGRESS file!');
+        });*/
+		//var data = JSON.parse(fs.readFileSync(outputfile, 'utf8'));
+
+}
 	render() {
+		   var progressComponents = this.state.label.map(function(item){
+		   	//console.log(item);
+            return <div><Grid>
+				    <Row className="show-grid">
+				      	<Col sm={2} md={2}> 
+						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}><h4>{item.Project}&nbsp;</h4></Col>
+						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.details[0].Book}&nbsp;</Col>
+						</Col>
+				      	<Col sm={10} md={5}>{item.details[0].Milestones}
+					    <ProgressBar active bsStyle="success" now={item.details[0].ProjectProgress} key={9} label={`${item.details[0].ProjectProgress}%`}></ProgressBar>					 
+						<ProgressBar bsStyle="success" now={item.details[0].PercentProgress} key={1} label={`${item.details[0].PercentProgress}%`}></ProgressBar>
+				       </Col>
+				       <Col sm={10} md={5}>{item.details[0].Milestones}
+					    <ProgressBar active bsStyle="success" now={item.details[0].ProjectProgress} key={9} label={`${item.details[0].ProjectProgress}%`}></ProgressBar>					 
+						<ProgressBar bsStyle="success" now={item.details[0].PercentProgress} key={1} label={`${item.details[0].PercentProgress}%`}></ProgressBar>
+				       </Col>
+				    </Row>
+					</Grid></div>;
+        	})
 		return (
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
-                <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Calculate Progress</Button>
-		        <Grid>
-				    <Row className="show-grid">
-					  	<h4>Team 1</h4>
-				      	<Col sm={2} md={2}>Unit 
-						  	<Col sm={12} md={12}>{this.state.books.books.book1}&nbsp;50</Col>
-				  			<Col sm={12} md={12} style={{ marginTop: '20px' }}>{this.state.books.books.book3}&nbsp;27</Col>
-						</Col>
-				      	<Col sm={10} md={10}>Stage 1 -{this.state.label.Team1.milestone1}
-				      	<ProgressBar>
-						    <ProgressBar bsStyle="success" now={this.state.label.Team1.milestone1genesiscompleted} key={1} label={`${this.state.label.Team1.milestone1genesiscompleted}%`}/>
-						    <ProgressBar bsStyle="warning" now={this.state.label.Team1.milestone1genesisassigned} key={2} label={`${this.state.label.Team1.milestone1genesisassigned}%`}/>
-						    <ProgressBar active bsStyle="info" now={this.state.label.Team1.milestone1genesisunassigned} key={3} label={`${this.state.label.Team1.milestone1genesisunassigned}%`}/>
-					    </ProgressBar>
-					    <ProgressBar>
-				      	    <ProgressBar bsStyle="success" now={this.state.label.Team1.milestone1leviticuscompleted} key={4} label={`${this.state.label.Team1.milestone1leviticuscompleted}%`}/> 
-						    <ProgressBar bsStyle="warning" now={this.state.label.Team1.milestone1leviticusassigned} key={5} label={`${this.state.label.Team1.milestone1leviticusassigned}%`}/>
-							<ProgressBar active bsStyle="info" now={this.state.label.Team1.milestone1leviticusunassigned} key={6} label={`${this.state.label.Team1.milestone1leviticusunassigned}%`}/> 	
-						</ProgressBar>
-						</Col>
-					      	
-					    <Col sm={3} md={9}>
-					  	</Col>
-				    </Row>
-
-				     <Row className="show-grid">
-		  			  	<h4>Team 2</h4>
-				      	<Col sm={2} md={2}>Unit 
-							  	<Col sm={12} md={12}>{this.state.books.books.book1}&nbsp; 50</Col>
-					  			<Col sm={12} md={12} style={{ marginTop: '20px' }}>{this.state.books.books.book3}&nbsp; 27</Col>
-						</Col>
-						<Col sm={10} md={10}>Stage 2 - {this.state.label.Team2.milestone2}
-					      	<ProgressBar>
-						    <ProgressBar bsStyle="success" now={this.state.label.Team2.milestone2genesiscompleted} key={7} label={`${this.state.label.Team2.milestone2genesiscompleted}%`}/>
-						    <ProgressBar bsStyle="warning" now={this.state.label.Team2.milestone2genesisassigned} key={8} label={`${this.state.label.Team2.milestone2genesisassigned}%`}/>
-						    <ProgressBar active bsStyle="info" now={this.state.label.Team2.milestone2genesisunassigned} key={9} label={`${this.state.label.Team2.milestone2genesisunassigned}%`}/>
-					    </ProgressBar> 
-					    <ProgressBar>
-				      	    <ProgressBar bsStyle="success" now={this.state.label.Team2.milestone2leviticuscompleted} key={11} label={`${this.state.label.Team2.milestone2leviticuscompleted}%`}/> 
-						    <ProgressBar bsStyle="warning" now={this.state.label.Team2.milestone2leviticusassigned} key={12} label={`${this.state.label.Team2.milestone2leviticusassigned}%`}/>
-							<ProgressBar active bsStyle="info" now={this.state.label.Team2.milestone2leviticusunassigned} key={13} label={`${this.state.label.Team2.milestone2leviticusunassigned}%`}/> 	
-						  </ProgressBar>
-					        </Col>
-					    <Col sm={3} md={9}>
-					  	</Col>
-				    </Row>
-				</Grid>
+				<div>{progressComponents}</div>
 		    </div>
 		)
 	}       

@@ -85,7 +85,7 @@ class Form extends React.Component {
             console.log(filedata);            
             fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
-                console.log('The "data to append" was appended to file!');
+            console.log('The "data to append" was appended to file!');
             }); 
         })
     }
@@ -94,7 +94,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
             var filedata = JSON.parse(data);
                 for (var n = 0 ; n < filedata.length ; n++) {
-                if (filedata[n].id == row.id) {
+                if (filedata[n].TeamName == row.TeamName) {
                   var removedObject = filedata.splice(n,1);
                   console.log(removedObject);
                   removedObject = null;
@@ -175,8 +175,8 @@ class Form extends React.Component {
         let obj8 = this.state.project.label; 
         let obj9 = "Pending";
         let progressobject =  [{table:{}}];                      
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
-        progressobject = ({teamname : obj4,Chapters:obj2, Milestones:obj3, Book:obj1, Project:obj8, isCompleted: obj9  })
+        obj = ({ TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
+        progressobject = ({project : obj8, milestone:obj3, book:obj1, isCompleted: obj9  })
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -341,7 +341,7 @@ class Form extends React.Component {
                     </ButtonToolbar>
                 </Panel>
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                    <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="TeamName" isKey={true} >Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
                     <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>

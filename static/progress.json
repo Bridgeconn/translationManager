@@ -1,24 +1,28 @@
 {
-	"Team1": {
-		"milestone1":"50",
-		"milestone1genesis": "50",
-		"milestone1leviticus": "100",
-		"milestone1genesisassigned": "20",
-		"milestone1leviticusassigned": "70",
-		"milestone1genesisunassigned":"60",
-		"milestone1leviticusunassigned":"20",
-		"milestone1genesiscompleted":"20",
-		"milestone1leviticuscompleted":"10"
+	"Project1": {
+		"project1":"Hindi",
+		"milestone1":"Stage 1 , 10",
+		"milestone2":"Stage 2 , 20",
+		"bookName1":"Genesis",
+		"bookName2":"Leviticus",
+		"milestone1progress":"60",
+		"milestone2progress":"70",
+		"milestone1book1progress": "5",
+		"milestone2book1progress":"15",
+        "milestone1book2progress": "4",
+		"milestone2book2progress":"19"
 	},
-	"Team2": {
-		"milestone2":"50",
-		"milestone2genesis": "50",
-		"milestone2leviticus": "100",
-		"milestone2genesisassigned": "20",
-		"milestone2leviticusassigned": "20",
-		"milestone2genesisunassigned":"50",
-		"milestone2leviticusunassigned":"10",
-		"milestone2genesiscompleted":"30",
-	    "milestone2leviticuscompleted":"70"
+	"Project2": {
+		"project2":"Punjabi",
+		"milestone1":"Community-check , 8",
+		"milestone2":"Self-check , 6",
+		"bookName1":"Exodus",
+		"bookName2":"Numbers",
+		"milestone1progress":"60",
+		"milestone2progress":"70",
+		"milestone1book1progress": "6",
+		"milestone2book1progress":"4",
+        "milestone1book2progress": "1",
+		"milestone2book2progress":"6"
 	}
 }

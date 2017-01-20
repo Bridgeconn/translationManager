@@ -1,14 +1,1 @@
-{
-	"books": {
-		"book1": "Genesis",
-		"book2": "Exodus",
-		"book3": "Leviticus",
-		"book4": "Deutronomy"
-	},
-	"chapters": {
-		"genesis": "50",
-		"exodus": "50",
-		"leviticus": "50",
-		"deutronomy": "50"
-	}
-}
+{"id":"Dev ","Book":"Numbers","Chapters":"4","Milestones":" nmnmnm","StartDate":"2017-01-16T09:48:00.109Z","EndDate":"2017-01-16T09:48:00.109Z","CompleteDate":"","Project":"demo","isCompleted":"Done","percent":11.11111111111111}
