@@ -106,7 +106,6 @@ class Form extends React.Component {
             fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
-                window.location.reload();
             }); 
         })
           

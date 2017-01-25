@@ -81,28 +81,23 @@ class Progressbar extends React.Component {
 	}
 
 	render() {
-		 
-		var projectComponent = this.state.projectLabel.map(function(item,i){
-			console.log(item);
-			return( <div><Grid><Row className="show-grid">
+
+		    var progressComponents = this.state.label.map(function(item,i){
+            return <div key={item.Milestone}><Grid>
+				    <Row className="show-grid">
 				      	<Col sm={2} md={2}> 
 						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}><h4>{item.Project}&nbsp;</h4></Col>
-							<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.BookName}&nbsp;</Col>
+						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.BookName}&nbsp;</Col>
 						</Col>
-				</Row></Grid></div>
-			)	
-		})
-
-		var progressComponent = this.state.label.map(function(element,i){
-		    return <Col sm={2} md={2}> 	  	
-			{element.Milestone}
-			<ProgressBar bsStyle="success" now={element.progress} key={3} label={`${element.progress}%`}></ProgressBar>
-	       </Col>
-		})
-
-		return (
+				      	<Col sm={10} md={5}>{item.Milestone}
+						<ProgressBar bsStyle="success" now={item.progress} key={1} label={`${item.progress}%`}></ProgressBar>
+				       </Col>
+				    </Row>
+					</Grid></div>;
+				})      
+						return (
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
-				<div>{projectComponent}{progressComponent}</div>
+				<div>{progressComponents}</div>
 		    </div>
 		)
 	}       
