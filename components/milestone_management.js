@@ -8,6 +8,8 @@ const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
+
+const { TableHeaderColumn, InsertButton } = require('react-bootstrap-table');
 const file = ('./static/milestones.json');
 const projectfile = ('./static/projects.json');
 const milestonefile = ('./static/milestones.json');
@@ -43,11 +45,10 @@ class MilestoneManagement extends React.Component {
 	    let obj1 = this.state.input1;
 	    let obj2 = this.state.project.label;
 	    let obj3 = this.state.input2;
-	    
 	    obj =({name: obj3 , project: obj2 , description: obj1});
 	    var result = this.refs.table.handleAddRow(obj);
 	    if(result){  
-	      alert(result);
+			alert(result);
 	    }
 	    else{
 	        fs.readFile(file, (err, data) => {
@@ -59,6 +60,7 @@ class MilestoneManagement extends React.Component {
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
+            window.location.reload();
 	    }
 	};
 
@@ -66,7 +68,7 @@ class MilestoneManagement extends React.Component {
 	    fs.readFile(file, (err, data) => {
 	        var filedata = JSON.parse(data);
 	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].id == row.id) {
+	        if (filedata[n].name == row.name) {
 	          var removedObject = filedata.splice(n,1);
 	          console.log(removedObject);
 	          removedObject = null;
@@ -96,7 +98,7 @@ class MilestoneManagement extends React.Component {
 
 	onDeleteRow(rows) {
 	    fs.readFile(file, (err, data) => {
-	    var filedata = JSON.parse(data);
+		    var filedata = JSON.parse(data);
 	        for (var n = 0 ; n < filedata.length ; n++) {
 	        if (filedata[n].name == rows) {
 	          var removedObject = filedata.splice(n,1);
@@ -106,9 +108,10 @@ class MilestoneManagement extends React.Component {
 	    }
 	    if (err) throw err;
 	    fs.writeFile(file, JSON.stringify(filedata), function(err){
-	    if (err) throw err;
-	        console.log('The "data to append" was appended to file!');
-	    }); 
+		    if (err) throw err;
+		        console.log('The "data to append" was appended to file!');
+                window.location.reload();
+		    }); 
 	    })
 	}
 
@@ -128,7 +131,8 @@ class MilestoneManagement extends React.Component {
 
 	    const options = {
 	        //onRowDoubleClick: this.onRowDoubleClick,
-	        onDeleteRow: this.onDeleteRow
+	        onDeleteRow: this.onDeleteRow,
+	        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
 	    };
 
 	    return  (
@@ -143,16 +147,16 @@ class MilestoneManagement extends React.Component {
 	                            return { label: project.name, value: project.name };
 	                        })
 	                    }
-	                    value = { this.state.project }  
+	                      
 	                    onValueChange = { function(project) {
 	                            teamsize.setState ({project: project, model: undefined})
 	                    }}/> 
 	                    <FormGroup controlId="formInlineName">
 	                        <ControlLabel>Milestone Name</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Name" ref="table" value={this.state.input2} 
+	                        <FormControl type="text" placeholder="Enter the Milestone Name" 
 	                        onChange={this.handleInputChange.bind(this, 'input2')}/>
 	                        <ControlLabel>Description</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Description" ref="table" value={this.state.input1} 
+	                        <FormControl type="text" placeholder="Enter the Milestone Description"  
 	                        onChange={this.handleInputChange.bind(this, 'input1')}/>
 	                    </FormGroup>
 	                </Form>
@@ -161,7 +165,7 @@ class MilestoneManagement extends React.Component {
 	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
 	                <TableHeaderColumn dataField="name" isKey={true}>Milestone Name</TableHeaderColumn>
 	                <TableHeaderColumn dataField="description">Description</TableHeaderColumn>
-	                <TableHeaderColumn dataField="project">Project</TableHeaderColumn>
+	                <TableHeaderColumn dataField="project" >Project</TableHeaderColumn>
 	            </BootstrapTable>                 
 	        </div>
 	    );

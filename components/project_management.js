@@ -46,6 +46,7 @@ class ProjectManagement extends React.Component {
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
+            window.location.reload();
 	    }	
 	};
 
@@ -83,19 +84,20 @@ class ProjectManagement extends React.Component {
 
 	onDeleteRow(rows) {
 	    fs.readFile(projectfile, (err, data) => {
-	    var filedata = JSON.parse(data);
-	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].name == rows) {
-	          var removedObject = filedata.splice(n,1);
-	          removedObject = null;
-	          break;
-	        }
-	    }
-	    if (err) throw err;
-	    fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
-	    if (err) throw err;
-	        console.log('The "data to append" was appended to file!');
-	    }); 
+		    var filedata = JSON.parse(data);
+		        for (var n = 0 ; n < filedata.length ; n++) {
+		        if (filedata[n].name == rows) {
+		          var removedObject = filedata.splice(n,1);
+		          removedObject = null;
+		          break;
+		        }
+		    }
+		    if (err) throw err;
+		    fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
+			    if (err) throw err;
+			    console.log('The "data to append" was appended to file!');
+	            window.location.reload();
+			}); 
 	    })
 	}
 

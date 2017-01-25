@@ -75,7 +75,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].id == rows) {
+            if (filedata[n].TeamName == rows) {
               var removedObject = filedata.splice(n,1);
               removedObject = null;
               break;
@@ -86,7 +86,8 @@ class Form extends React.Component {
             fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
             console.log('The "data to append" was appended to file!');
-            }); 
+            window.location.reload();
+            });
         })
     }
 
@@ -105,6 +106,7 @@ class Form extends React.Component {
             fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
+                window.location.reload();
             }); 
         })
           
@@ -200,6 +202,7 @@ class Form extends React.Component {
                     console.log('The "data to append" was appended to PROGRESS file!');
                 }); 
             })
+            window.location.reload();
         }
     };
 

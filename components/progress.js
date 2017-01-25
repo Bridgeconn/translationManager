@@ -21,23 +21,10 @@ const _ = require('lodash');
 class Progressbar extends React.Component {
 	constructor(props) {
         super(props);
-			    var resultdata = JSON.parse(fs.readFileSync(resultfile, 'utf8'));
-
-	    //var bookdata = JSON.parse(fs.readFileSync(booksfile, 'utf8'));
-	    //var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
-		//var prog = JSON.parse(fs.readFileSync(progfile, 'utf8'));
-	    //var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
-	   	this.state = { label:resultdata };
-	}
-
-	componentWillMount() {
 		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
-	    var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));	
-   	    var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));	    
-    
-		//console.log(assignmentdata);
-		var result1 = assignmentdata.map(function(a) {return a.Project;}); 
-    	//console.log(result1);
+		var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));	
+		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));	    
+
    		var result = 
    			_.chain(assignmentdata)
 		    .groupBy("Project")
@@ -46,65 +33,76 @@ class Progressbar extends React.Component {
 		        return _.zipObject(["Project", "details"], currentItem);
 		    })
 		    .value();
-		
 
-		//console.log(result);
 		var finalOutput=[];
 		for (var n = 0 ; n < result.length ; n++) {
 			var output = [];
 			var doneAssignments = _.filter(result[n].details,  { 'isCompleted': 'Done' });
-			var milestones = _.map(result[n].details, 'Milestones');
-			//console.log(doneAssignments);
-			//console.log(milestones);
 
 			for (var i = 0 ; i < doneAssignments.length ; i++){
 				var temp = {};
-				//console.log(doneAssignments[i].Book+'====================='+doneAssignments[i].Milestones);
 				if (typeof doneAssignments[i].Milestones !== 'undefined') {
-
-				temp['BookName'] = doneAssignments[i].Book;
-				temp['Milestone'] = doneAssignments[i].Milestones;
-				var book = doneAssignments[i].Book;
-				var bookChapters = chaptersdata[book];
-				temp['progress'] = 1/bookChapters*100;
-				output.push(temp);
-				//console.log(output);
-			}		
+					temp['BookName'] = doneAssignments[i].Book;
+					temp['Milestone'] = doneAssignments[i].Milestones;
+					temp['Project'] = doneAssignments[i].Project;
+					var book = doneAssignments[i].Book;
+					var bookChapters = chaptersdata[book];
+					temp['progress'] = 1/bookChapters*100;
+					var z = (_.findIndex(output, { 'BookName': doneAssignments[i].Book , 'Milestone': doneAssignments[i].Milestones }));
+					if( z > -1 ){
+						output[z].progress = output[z].progress + 1/bookChapters*100;
+					}else{
+						output.push(temp);
+					}	
+				}
+				var groups = _.groupBy(output, 'BookName');
+			}
+			finalOutput.push(output);
 		}
 		
-			finalOutput[result[n].Project] = output;
-			console.log(finalOutput);
-	}
-		/*fs.writeFileSync(outputfile, JSON.stringify(obj), function(err){
-            if (err) throw err;
-            console.log('The "data to append" was appended to PROGRESS file!');
-        });*/
-		//var data = JSON.parse(fs.readFileSync(outputfile, 'utf8'));
+		var arrProgress = [];
+		var count = 0;
+		finalOutput.forEach(
+		    function outerFunc(value) { 
+		    	value.forEach(	
+			    	function innerFunc(item) { 
+			    		arrProgress[count++] = item;
+					}
+				);				
+			}
+		);
 
-}
+		console.log(arrProgress);
+		fs.writeFileSync(resultfile, JSON.stringify(arrProgress),'utf8');
+                
+		var resultdata = JSON.parse(fs.readFileSync(resultfile, 'utf8'));
+		var projectData = _.uniqBy(resultdata, 'BookName');	
+		this.state = { label: resultdata, projectLabel: projectData };
+	}
+
 	render() {
-		   var progressComponents = this.state.label.map(function(item){
-		   	//console.log(item);
-            return <div><Grid>
-				    <Row className="show-grid">
+		 
+		var projectComponent = this.state.projectLabel.map(function(item,i){
+			console.log(item);
+			return( <div><Grid><Row className="show-grid">
 				      	<Col sm={2} md={2}> 
 						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}><h4>{item.Project}&nbsp;</h4></Col>
-						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.details[0].Book}&nbsp;</Col>
+							<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.BookName}&nbsp;</Col>
 						</Col>
-				      	<Col sm={10} md={5}>{item.details[0].Milestones}
-					    <ProgressBar active bsStyle="success" now={item.details[0].ProjectProgress} key={9} label={`${item.details[0].ProjectProgress}%`}></ProgressBar>					 
-						<ProgressBar bsStyle="success" now={item.details[0].PercentProgress} key={1} label={`${item.details[0].PercentProgress}%`}></ProgressBar>
-				       </Col>
-				       <Col sm={10} md={5}>{item.details[0].Milestones}
-					    <ProgressBar active bsStyle="success" now={item.details[0].ProjectProgress} key={9} label={`${item.details[0].ProjectProgress}%`}></ProgressBar>					 
-						<ProgressBar bsStyle="success" now={item.details[0].PercentProgress} key={1} label={`${item.details[0].PercentProgress}%`}></ProgressBar>
-				       </Col>
-				    </Row>
-					</Grid></div>;
-        	})
+				</Row></Grid></div>
+			)	
+		})
+
+		var progressComponent = this.state.label.map(function(element,i){
+		    return <Col sm={2} md={2}> 	  	
+			{element.Milestone}
+			<ProgressBar bsStyle="success" now={element.progress} key={3} label={`${element.progress}%`}></ProgressBar>
+	       </Col>
+		})
+
 		return (
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
-				<div>{progressComponents}</div>
+				<div>{projectComponent}{progressComponent}</div>
 		    </div>
 		)
 	}       
