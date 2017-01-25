@@ -75,6 +75,7 @@ class TeamManagement extends React.Component {
                         global.team = JSON.parse(data);
                         console.log(team);
                         //this.setState({teamData: team})
+                        window.location.reload();
                     }) 
                 }, 100);
             }

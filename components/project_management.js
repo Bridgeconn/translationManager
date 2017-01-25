@@ -7,18 +7,15 @@ const ControlLabel = require('react-bootstrap/lib/ControlLabel');
 const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const ReactBsTable = require("react-bootstrap-table");
-var file = ('./static/projects.json');
+var projectfile = ('./static/projects.json');
 //var milestoneData = require('../static/milestones.json');
 //var projectData = require('../static/projects.json');
 
 class ProjectManagement extends React.Component {
 	constructor(props) {
 	    super(props);
-	    var json = JSON.parse(fs.readFileSync(file, 'utf8'));
-	    console.log(json);
-	    global.fileData = json
-		console.log(fileData);
-	    this.state = {projectData:fileData};
+	    var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
+	    this.state = {projectData:projectdata};
 	}
       
 	handleInputChange(name, e) {
@@ -40,20 +37,21 @@ class ProjectManagement extends React.Component {
 	      alert(result);
 	    }
 	    else{
-	        fs.readFile(file, (err, data) => {
+	        fs.readFile(projectfile, (err, data) => {
 	            if (err) throw err;
 	            let filedata = JSON.parse(data);
 	            filedata.push(obj);
-	            fs.writeFile(file, JSON.stringify(filedata), function(err){
+	            fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
 	                if (err) throw err;
 	                console.log('The "data to append" was appended to file!');
 	            }); 
 	        });
+            window.location.reload();
 	    }	
 	};
 
 	afterSaveCell(row, cellName, cellValue) {
-	    fs.readFile(file, (err, data) => {
+	    fs.readFile(projectfile, (err, data) => {
 	        var filedata = JSON.parse(data);
 	        for (var n = 0 ; n < filedata.length ; n++) {
 	        if (filedata[n].id == row.id) {
@@ -65,7 +63,7 @@ class ProjectManagement extends React.Component {
 	    }
 	       if (err) throw err;
 	        console.log(filedata);            
-	        fs.writeFile(file, JSON.stringify(filedata), function(err){
+	        fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
 	        if (err) throw err;
 	        }); 
 		})
@@ -73,11 +71,11 @@ class ProjectManagement extends React.Component {
 	        let obj =  [{table:{}}];           
 	        obj = row;
 	        console.log(obj);
-	        fs.readFile(file, (err, data) => {
+	        fs.readFile(projectfile, (err, data) => {
 	            if (err) throw err;
 	            let filedata = JSON.parse(data);
 	            filedata.push(obj);
-	            fs.writeFile(file, JSON.stringify(filedata), function(err){
+	            fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
 	                if (err) throw err;
 	                console.log('The "data to append" was appended to file!');
 	            });              
@@ -85,20 +83,21 @@ class ProjectManagement extends React.Component {
 	};
 
 	onDeleteRow(rows) {
-	    fs.readFile(file, (err, data) => {
-	    var filedata = JSON.parse(data);
-	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].name == rows) {
-	          var removedObject = filedata.splice(n,1);
-	          removedObject = null;
-	          break;
-	        }
-	    }
-	    if (err) throw err;
-	    fs.writeFile(file, JSON.stringify(filedata), function(err){
-	    if (err) throw err;
-	        console.log('The "data to append" was appended to file!');
-	    }); 
+	    fs.readFile(projectfile, (err, data) => {
+		    var filedata = JSON.parse(data);
+		        for (var n = 0 ; n < filedata.length ; n++) {
+		        if (filedata[n].name == rows) {
+		          var removedObject = filedata.splice(n,1);
+		          removedObject = null;
+		          break;
+		        }
+		    }
+		    if (err) throw err;
+		    fs.writeFile(projectfile, JSON.stringify(filedata), function(err){
+			    if (err) throw err;
+			    console.log('The "data to append" was appended to file!');
+	            window.location.reload();
+			}); 
 	    })
 	}
 

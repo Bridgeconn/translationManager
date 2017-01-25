@@ -15,6 +15,8 @@ const projectfile = ('./static/projects.json');
 const teamfile = ('./static/team.json');
 const milestonefile = ('./static/milestones.json');
 const assignmentfile = ('./static/assignment.json');
+const progfile = ('./static/progress_screen.json');
+
 var chapters = require('../static/chapters_bookwise.json');
 
 class Form extends React.Component {
@@ -73,7 +75,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].id == rows) {
+            if (filedata[n].TeamName == rows) {
               var removedObject = filedata.splice(n,1);
               removedObject = null;
               break;
@@ -83,8 +85,9 @@ class Form extends React.Component {
             console.log(filedata);            
             fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
-                console.log('The "data to append" was appended to file!');
-            }); 
+            console.log('The "data to append" was appended to file!');
+            window.location.reload();
+            });
         })
     }
 
@@ -92,7 +95,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
             var filedata = JSON.parse(data);
                 for (var n = 0 ; n < filedata.length ; n++) {
-                if (filedata[n].id == row.id) {
+                if (filedata[n].TeamName == row.TeamName) {
                   var removedObject = filedata.splice(n,1);
                   console.log(removedObject);
                   removedObject = null;
@@ -159,7 +162,7 @@ class Form extends React.Component {
     }
 
     handleSubmit(e) {
-        let obj =  [{table:{}}];           
+        let obj =  [{table:{}}];
         let obj1 = this.state.book.label;        
         let obj2 = this.state.chapter.label;
         let obj3 = this.state.mile.label;
@@ -172,7 +175,9 @@ class Form extends React.Component {
         }
         let obj8 = this.state.project.label; 
         let obj9 = "Pending";
-        obj = ({ id: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: "Pending" });
+        let progressobject =  [{table:{}}];                      
+        obj = ({ TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
+        progressobject = ({project : obj8, milestone:obj3, book:obj1, isCompleted: obj9  })
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -186,7 +191,17 @@ class Form extends React.Component {
                     if (err) throw err;
                     console.log('The "data to append" was appended to file!');
                 }); 
-            })     
+            })
+            fs.readFile(progfile, (err, data) => {
+                if (err) throw err;
+                let filedata = JSON.parse(data);
+                filedata.push(progressobject);
+                fs.writeFile(progfile, JSON.stringify(filedata), function(err){
+                    if (err) throw err;
+                    console.log('The "data to append" was appended to PROGRESS file!');
+                }); 
+            })
+            window.location.reload();
         }
     };
 
@@ -328,7 +343,7 @@ class Form extends React.Component {
                     </ButtonToolbar>
                 </Panel>
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                    <TableHeaderColumn dataField="id" isKey={true} >Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="TeamName" isKey={true} >Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
                     <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
