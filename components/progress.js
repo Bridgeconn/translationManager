@@ -8,13 +8,9 @@ const Label = require('react-bootstrap/lib/Label');
 const Grid = require('react-bootstrap/lib/Grid');
 const Row = require('react-bootstrap/lib/Row');
 const Col = require('react-bootstrap/lib/Col');
-const progressfile = ('./static/progress.json');
-const booksfile = ('./static/books_progress.json');
 const assignmentfile = ('./static/assignment.json');
 const milestonefile = ('./static/milestones.json');
 const chapterfile = ('./static/chapters.json');
-const progfile = ('./static/progress_screen.json');
-const outputfile = ('./static/output.json');
 const resultfile = ('./static/result.json');
 const _ = require('lodash');
 
@@ -81,9 +77,8 @@ class Progressbar extends React.Component {
 	}
 
 	render() {
-
 		    var progressComponents = this.state.label.map(function(item,i){
-            return <div key={item.Milestone}><Grid>
+            return <div key={i}><Grid>
 				    <Row className="show-grid">
 				      	<Col sm={2} md={2}> 
 						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}><h4>{item.Project}&nbsp;</h4></Col>
@@ -95,11 +90,12 @@ class Progressbar extends React.Component {
 				    </Row>
 					</Grid></div>;
 				})      
-						return (
+					return (
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
 				<div>{progressComponents}</div>
 		    </div>
 		)
+		
 	}       
 };
 
