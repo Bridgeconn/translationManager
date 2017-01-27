@@ -48,13 +48,12 @@ class TeamManagement extends React.Component {
         let obj =  [{table:{}}];                   
         let obj1 = this.state.input1;
         let obj4 = this.state.project.label;
-        let obj3 = this.state.teamsizes.label;
         if ( typeof multiselectName === 'undefined'){
             alert("Please select the name");
         }
         else{
             let obj2 = multiselectName;
-            obj =({id: obj1 , membername: obj2 , teamsize: obj3, project: obj4});
+            obj =({id: obj1 , membername: obj2 , project: obj4});
             var result = this.refs.table.handleAddRow(obj);
             if(result){  
               alert(result);
@@ -126,9 +125,9 @@ class TeamManagement extends React.Component {
         if (err) throw err;
         console.log(filedata);            
         fs.writeFile(file, JSON.stringify(filedata), function(err){
-        if (err) throw err;
-            console.log('The "data to append" was appended to file!');
-        }); 
+            if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            }); 
         })
     };
 
@@ -182,19 +181,6 @@ class TeamManagement extends React.Component {
                         <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
                         onChange={this.handleInputChange.bind(this, 'input1')}/>
                         </FormGroup>
-                         <div><label> Teamsize </label>
-                            <SimpleSelect placeholder = "Select Teamsize"
-                            options = {
-                                this.state.teams.map(function(teamsizes) {
-                                    return { label: teamsizes.label, value: teamsizes.id };
-                                })
-                            }
-                            value = { this.state.teamsizes }  
-                            onValueChange = { function(teamsizes) {
-                                    teamsize.setState ({teamsizes: teamsizes, model: undefined}
-                                )
-                            }}
-                        /> </div>
                     </Form>
                 </div>
 

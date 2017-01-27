@@ -163,8 +163,8 @@ class MilestoneManagement extends React.Component {
 	            </div>
 	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Milestone</Button>
 	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-	                <TableHeaderColumn dataField="name" isKey={true}>Milestone Name</TableHeaderColumn>
-	                <TableHeaderColumn dataField="description">Description</TableHeaderColumn>
+	                <TableHeaderColumn dataField="name" >Milestone Name</TableHeaderColumn>
+	                <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
 	                <TableHeaderColumn dataField="project" >Project</TableHeaderColumn>
 	            </BootstrapTable>                 
 	        </div>
