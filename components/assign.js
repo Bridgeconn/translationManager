@@ -35,7 +35,7 @@ class Form extends React.Component {
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
         this.afterSaveCell = this.afterSaveCell.bind(this);
-        this.priorityValidator = this.priorityValidator.bind(this);
+        this.characterValidator = this.characterValidator.bind(this);
         this.handleChangeDate = this.handleChangeDate.bind(this);
     }
 
@@ -75,7 +75,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].TeamName == rows) {
+            if (filedata[n].id == rows) {
               var removedObject = filedata.splice(n,1);
               removedObject = null;
               break;
@@ -95,7 +95,7 @@ class Form extends React.Component {
         fs.readFile(assignmentfile, (err, data) => {
             var filedata = JSON.parse(data);
                 for (var n = 0 ; n < filedata.length ; n++) {
-                if (filedata[n].TeamName == row.TeamName) {
+                if (filedata[n].id == row.id) {
                   var removedObject = filedata.splice(n,1);
                   console.log(removedObject);
                   removedObject = null;
@@ -131,7 +131,8 @@ class Form extends React.Component {
         })
     }
 
-    priorityValidator(value) {
+    //Character Validation Check - Checks if length < 5 and cant be left blank.
+    characterValidator(value) {
         const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
         if (!value) {
             response.isValid = false;
@@ -147,6 +148,7 @@ class Form extends React.Component {
         return response;           
     }
 
+    //Integer Validation Check - Checks if Number is entered and cant be left blank.
     integerValidator(value) {
         const nan = isNaN(parseInt(value, 10));
         if (nan) {
@@ -163,21 +165,26 @@ class Form extends React.Component {
 
     handleSubmit(e) {
         let obj =  [{table:{}}];
-        let obj1 = this.state.book.label;        
-        let obj2 = this.state.chapter.label;
-        let obj3 = this.state.mile.label;
-        let obj4 = this.state.teamName.label;
-        let obj5 = this.state.startDate;
-        let obj6 = this.state.endDate;
-        let obj7 = this.state.Date;
-        if (typeof obj7 === 'undefined'){
-             obj7 = "";
+        //const startId = this.state.assignmentData.length;
+        for (let i = 1; i <= this.state.assignmentData.length; i++) {
+            let obj0 =  i+1;
+            let obj1 = this.state.book.label;        
+            let obj2 = this.state.chapter.label;
+            let obj3 = this.state.mile.label;
+            let obj4 = this.state.teamName.label;
+            let obj5 = this.state.startDate;
+            let obj6 = this.state.endDate;
+            let obj7 = this.state.Date;
+            if (typeof obj7 === 'undefined'){
+                obj7 = "";
+            }
+            let obj8 = this.state.project.label; 
+            let obj9 = "Pending";
+            let progressobject =  [{table:{}}];                      
+            obj = ({id:obj0, TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
+            progressobject = ({project : obj8, milestone:obj3, book:obj1, isCompleted: obj9  })
         }
-        let obj8 = this.state.project.label; 
-        let obj9 = "Pending";
-        let progressobject =  [{table:{}}];                      
-        obj = ({ TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
-        progressobject = ({project : obj8, milestone:obj3, book:obj1, isCompleted: obj9  })
+
         var result = this.refs.table.handleAddRow(obj);
         if(result){  
           alert(result);
@@ -247,6 +254,7 @@ class Form extends React.Component {
                             }}
                     />
                 </div>
+
                 <div>
                     <label>Project Name</label>
                     <SimpleSelect placeholder = "Select Project "
@@ -311,6 +319,7 @@ class Form extends React.Component {
                         opacity: !!this.state.book ? 1 : 0.5
                     }}/>        
                 </div>
+
                 <div>
                     <label> Milestone </label>
                     <SimpleSelect
@@ -343,9 +352,10 @@ class Form extends React.Component {
                     </ButtonToolbar>
                 </Panel>
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                    <TableHeaderColumn dataField="TeamName" isKey={true} >Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.priorityValidator } }>Milestone</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Book" editable={ { validator: this.priorityValidator } }>Book</TableHeaderColumn>
+                    <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
+                    <TableHeaderColumn dataField="TeamName">Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
                     <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
                     <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  

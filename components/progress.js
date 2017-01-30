@@ -94,8 +94,7 @@ class Progressbar extends React.Component {
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
 				<div>{progressComponents}</div>
 		    </div>
-		)
-		
+		)	
 	}       
 };
 
