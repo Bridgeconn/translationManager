@@ -166,7 +166,7 @@ class Form extends React.Component {
     handleSubmit(e) {
         let obj =  [{table:{}}];
         //const startId = this.state.assignmentData.length;
-        for (let i = 1; i <= this.state.assignmentData.length; i++) {
+        for (let i = 0; i <= this.state.assignmentData.length; i++) {
             let obj0 =  i+1;
             let obj1 = this.state.book.label;        
             let obj2 = this.state.chapter.label;
@@ -301,7 +301,7 @@ class Form extends React.Component {
                 </div>
 
                 <div>
-                    <label> Chapters </label>
+                    <label> Chapter </label>
                     <SimpleSelect
                     ref = "chapters"
                     placeholder = "Select a chapter"
