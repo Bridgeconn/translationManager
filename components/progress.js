@@ -71,10 +71,8 @@ class Progressbar extends React.Component {
 		);
 
 		for (var i = 0; i < arrProgress.length; i++) {
-			console.log(arrProgress[i].Milestone);
 			var x = arrProgress.filter(function(value){ 
 			return value.Milestone === arrProgress[i].Milestone && value.Project === arrProgress[i].Project }).length;
-			console.log(x);
 			if (arrProgress[i].Count > 1) {
 				arrProgress[i].totalProgress = arrProgress[i].Count/1189*100;
 			}else{
@@ -86,8 +84,7 @@ class Progressbar extends React.Component {
 		fs.writeFileSync(resultfile, JSON.stringify(arrProgress),'utf8');               
 		var resultdata = JSON.parse(fs.readFileSync(resultfile, 'utf8'));
 		var projectData = _.uniq(resultdata);
-		var xyz =  _.uniqBy(projectData,'Milestone');
-		console.log(xyz);
+		var xyz =  _.uniq(projectData);
 		this.state = { label: resultdata, projectLabel: xyz };
 	}
 
