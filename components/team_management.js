@@ -188,7 +188,6 @@ class TeamManagement extends React.Component {
                 <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn> 
                     <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
                 </BootstrapTable>   
                 </div>              
