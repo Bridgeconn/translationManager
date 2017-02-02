@@ -127,6 +127,7 @@ class TeamManagement extends React.Component {
         fs.writeFile(file, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
+                window.location.reload();
             }); 
         })
     };
@@ -188,7 +189,6 @@ class TeamManagement extends React.Component {
                 <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="teamsize">Teamsize</TableHeaderColumn> 
                     <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
                 </BootstrapTable>   
                 </div>              

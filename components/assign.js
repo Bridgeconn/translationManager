@@ -10,18 +10,20 @@ const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
-const bookData = require('../static/books.json');
+const bookfile = ('./static/books.json');
 const projectfile = ('./static/projects.json');
 const teamfile = ('./static/team.json');
 const milestonefile = ('./static/milestones.json');
 const assignmentfile = ('./static/assignment.json');
 const progfile = ('./static/progress_screen.json');
 
-var chapters = require('../static/chapters_bookwise.json');
+var chaptersfile = ('./static/chapters_bookwise.json');
 
 class Form extends React.Component {
     constructor(props) {
         super(props);
+        var bookData = JSON.parse(fs.readFileSync(bookfile, 'utf8'));
+        var chapters = JSON.parse(fs.readFileSync(chaptersfile, 'utf8'));
         var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
         var teamdata = JSON.parse(fs.readFileSync(teamfile, 'utf8'));
         var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
@@ -220,7 +222,7 @@ class Form extends React.Component {
         var endDate = this;
         var projects = this;
         self = this;
-        chapters = !!this.state.book ? this.state.chapters[this.state.book.label] : [];
+        var chapters = !!this.state.book ? this.state.chapters[this.state.book.label] : [];
 
         const options = {
             //onRowDoubleClick: this.onRowDoubleClick,
