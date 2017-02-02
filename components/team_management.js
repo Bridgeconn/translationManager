@@ -127,6 +127,7 @@ class TeamManagement extends React.Component {
         fs.writeFile(file, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
+                window.location.reload();
             }); 
         })
     };

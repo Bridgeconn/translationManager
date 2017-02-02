@@ -4,6 +4,7 @@ const fs = require('fs');
 const Nav = require('react-bootstrap/lib/Nav');
 const ProgressBar = require('react-bootstrap/lib/ProgressBar');
 const Button = require('react-bootstrap/lib/Button');
+const Table = require('react-bootstrap/lib/Table');
 const Label = require('react-bootstrap/lib/Label');
 const Grid = require('react-bootstrap/lib/Grid');
 const Row = require('react-bootstrap/lib/Row');
@@ -84,41 +85,41 @@ class Progressbar extends React.Component {
 		fs.writeFileSync(resultfile, JSON.stringify(arrProgress),'utf8');               
 		var resultdata = JSON.parse(fs.readFileSync(resultfile, 'utf8'));
 		var projectData = _.uniq(resultdata);
-		var xyz =  _.uniq(projectData);
+		console.log(projectData);
+		var xyz =  _.uniqBy(projectData,'project');
+		//var xyz = _.find(objects, _.matchesProperty('a', 4));
 		this.state = { label: resultdata, projectLabel: xyz };
 	}
 
 	render() {
 		    var progressComponents = this.state.label.map(function(item,i){
-            return <div key={i}  style={{ border: '1px solid #ccc' }}>
-            			<Row className="show-grid">
-				      	<Col sm={2} md={4}> 
-						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}><h4>{item.Project}&nbsp;</h4></Col>
-						  	<Col sm={12} md={12} style={{ marginTop: '15px' }}>{item.BookName}&nbsp;</Col>
-						</Col>
-				      	<Col sm={10} md={8}>{item.Milestone}
-						<ProgressBar bsStyle="success" now={item.progress} key={1} label={`${item.progress}%`}></ProgressBar>
-				       </Col>
-				       </Row>
+            
+            return <div key={i}>
+					<Table striped bordered condensed hover>
+					    <thead>
+					      <tr>
+					        <th>Project</th>
+					        <th>{item.Milestone}</th>
+					      </tr>
+					    </thead>
+					    <tbody>
+					      <tr>
+					      	<td style={{ width: '350px' }}>{item.Project}</td>
+					        <td><ProgressBar bsStyle="success" now={item.totalProgress} key={1} label={`${item.totalProgress}%`}></ProgressBar></td>
+					      </tr>
+					      <tr>
+					      	<td style={{ width: '350px' }}>{item.BookName}</td>
+					        <td><ProgressBar bsStyle="success" now={item.progress} key={1} label={`${item.progress}%`}></ProgressBar></td>
+					      </tr>
+					    </tbody>
+					</Table>
 					</div>;
 				})   
-
-		    var projectComponent = this.state.projectLabel.map(function(element,i){
-            return <div key={i} style={{ border: '1px solid #ccc' }}>
-            		<Row className="show-grid">
-				      	<Col sm={2} md={4}> 
-						  	<Col sm={12} md={12} style={{ marginTop: '0px' }}><h4>{element.Project}&nbsp;</h4></Col>
-						</Col>
-						<Col sm={10} md={8}>{element.Milestone}
-						<ProgressBar bsStyle="success" now={element.totalProgress} key={1} label={`${element.totalProgress}%`}></ProgressBar>
-				       </Col>
-				       </Row>
-					</div>;
-				})     
-					return (
+    
+				return (
 			<div className="container fluid" style={{ marginLeft: '90px' }}>
 				<Grid><Row className="show-grid"><h4><strong>Book Progress</strong></h4>
-				<Col sm={2} md={6}>{progressComponents}</Col><h4><strong>Overall Progress</strong></h4><Col sm={2} md={6}>{projectComponent}</Col></Row></Grid>	
+				<Col sm={6} md={12}>{progressComponents}</Col></Row></Grid>	
 		    </div>
 		)	
 	}       
