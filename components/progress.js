@@ -37,7 +37,6 @@ class Progressbar extends React.Component {
 			projects[project][book][milestone] = initObject(projects[project][book][milestone])
 			projects[project][book][milestone].completed = initArray(projects[project][book][milestone].completed)
 			if (completed) projects[project][book][milestone].completed.push(chapter)
-			console.log(projects)
 		})
 		this.state = {projects: projects}
 	}
@@ -62,7 +61,7 @@ var ProjectsGroup = function(props) {
 		</Table>
 	)
 	return (
-		<div style={{ marginLeft: '100px' }}><h2>View Projects Progress</h2> 
+		<div style={{ marginLeft: '100px' }}><h2>View Projects Progress</h2>
 		{bookGroups}</div>
 	)
 }
@@ -76,20 +75,21 @@ var ProjectMilestoneGroup = function(props) {
 		var book = project[bookName]
 		var _milestoneNames = Object.keys(book)
 		_milestoneNames.forEach(function(milestoneName) {
+			if (complete[milestoneName] === undefined) complete[milestoneName] = 0
 			complete[milestoneName] += project[bookName][milestoneName].completed.length
 		})
 	})
 	var progress = {}
 	var milestoneNames = Object.keys(complete)
 	milestoneNames.forEach(function(milestoneName) {
-		var percent = 0, completed = 0, totalChaptersInBible = 1189
-		percent = completed / totalChaptersInBible
+		var percent = 0, completed = complete[milestoneName], totalChaptersInBible = 1189
+		percent = Math.round(completed / totalChaptersInBible * 1000)/10
 		progress[milestoneName] = percent
 	})
 
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<th key={index} style={style.milestoneName}>
-			<span>{milestoneName}</span> 
+			<span>{milestoneName}</span>
 			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
 		</th>
 	)
@@ -124,12 +124,12 @@ var BookMilestoneGroup = function(props) {
 		var percent = 0
 		var completed = milestones[milestoneName].completed.length
 		var total = chaptersdata[bookName]
-		percent = completed / total * 100
+		percent = Math.round(completed / total * 1000)/10
 		return percent
 	}
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<td key={index} style={style.progressBarContainer}>
-			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span> 
+			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span>
 			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
 			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
 		</td>
