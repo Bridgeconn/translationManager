@@ -1,4 +1,5 @@
 const React = require('react');
+const style = require("./Style");
 const bootstrap = require('react-bootstrap');
 const fs = require('fs');
 const Nav = require('react-bootstrap/lib/Nav');
@@ -8,6 +9,7 @@ const Table = require('react-bootstrap/lib/Table');
 const Label = require('react-bootstrap/lib/Label');
 const Grid = require('react-bootstrap/lib/Grid');
 const Row = require('react-bootstrap/lib/Row');
+const PageHeader = require("react-bootstrap/lib/PageHeader");
 const Col = require('react-bootstrap/lib/Col');
 const assignmentfile = ('./static/assignment.json');
 const milestonefile = ('./static/milestones.json');
@@ -20,12 +22,13 @@ class Progressbar extends React.Component {
     super(props);
 		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
 		var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
-
+		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));
 		var projects = {}
 		assignmentdata.forEach(function(assignment) {
 			var project = assignment.Project, book = assignment.Book,
-					milestone = assignment.Milestones, chapter = assignment.Chapters,
-					completed = assignment.isCompleted === 'Done'
+				milestone = assignment.Milestones, chapter = assignment.Chapters,
+				completed = assignment.isCompleted === 'Done'
+
 			function empty(item) { return item === undefined }
 			function initObject(item) { if (empty(item)) item = {}; return item }
 			function initArray(item) { if (empty(item)) item = []; return item }
@@ -51,22 +54,22 @@ var ProjectsGroup = function(props) {
 	var projectNames = Object.keys(projects)
 
 	const bookGroups = projectNames.map((projectName, index) =>
-		<table style={{ width: '100%' }} key={index}>
+		<Table responsive striped bordered condensed hover key={index}>
 			<tbody>
 				<ProjectMilestoneGroup projectName={projectName} project={projects[projectName]} />
 			</tbody>
 			<BookGroup projectName={projectName} books={projects[projectName]} />
-		</table>
+		</Table>
 	)
 	return (
-		<div style={{ marginLeft: '100px' }}>{bookGroups}</div>
+		<div style={{ marginLeft: '100px' }}><h2>View Projects Progress</h2> 
+		{bookGroups}</div>
 	)
 }
 
 var ProjectMilestoneGroup = function(props) {
 	var projectName= props.projectName
 	var project = props.project
-
 	var complete = {}
 	var bookNames = Object.keys(project)
 	bookNames.forEach(function(bookName) {
@@ -85,14 +88,14 @@ var ProjectMilestoneGroup = function(props) {
 	})
 
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
-		<td key={index}>
-			<span>{milestoneName}</span>
-			<ProgressBar bsStyle="success" now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
-		</td>
+		<th key={index} style={style.milestoneName}>
+			<span>{milestoneName}</span> 
+			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
+		</th>
 	)
 	return (
 		<tr>
-			<td>{projectName}</td>
+			<th style={style.projectName}>{projectName}</th>
 			{progressGroup}
 		</tr>
 	)
@@ -124,15 +127,16 @@ var BookMilestoneGroup = function(props) {
 		percent = completed / total * 100
 		return percent
 	}
-
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
-		<td key={index}>
-			<ProgressBar bsStyle="success" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index} />
+		<td key={index} style={style.progressBarContainer}>
+			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span> 
+			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
+			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
 		</td>
 	)
 	return (
 		<tr>
-			<td>{bookName}</td>
+			<td style={style.bookTitle}><span>{bookName}</span><span style={style.circleGrey}>{chaptersdata[bookName]}</span></td>
 			{progressGroup}
 		</tr>
 	)

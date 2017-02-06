@@ -74,6 +74,80 @@ var style = {
   height: "30px",
   },
 
+  projectName:{
+    margin:"0 auto",
+    textAlign:"center",  
+    width:"20%",
+    paddingTop:"10px",
+    paddingBottom:"10px",
+  },
+
+   milestoneName:{
+    margin:"0 auto",
+    textAlign:"center",  
+  },
+
+  circleGreen:{
+    borderRadius:"34px",
+    backgroundColor:"#51E624",
+    color:"#fff",
+    textAlign:"center",
+    width:"20px",
+    height:"20px",
+    display:"inline-block",
+    lineHeight:"20px",
+    fontSize:"13px",
+    marginBottom:"3px"
+  },
+
+  circlePurple:{
+    borderRadius:"34px",
+    backgroundColor:"#A900FF",
+    color:"#fff",
+    textAlign:"center",
+    width:"20px",
+    height:"20px",
+    display:"inline-block",
+    lineHeight:"20px",
+    fontSize:"13px",
+    marginBottom:"3px"
+  },
+
+  progressBarContainer:{
+    position:"relative",
+    textAlign:"center"
+  },
+
+  circleGrey:{
+    borderRadius:"34px",
+    backgroundColor:"#696969",
+    color:"#fff",
+    textAlign:"center",
+    width:"20px",
+    height:"20px",
+    display:"block",
+    lineHeight:"20px",
+    fontSize:"13px",
+    margin:"0 auto",
+    textAlign:"center",
+  },
+
+  bookTitle:{
+    margin:"0 auto",
+    textAlign:"center"
+  },
+
+  percent:{
+    fontSize:"11px"
+  },
+
+  greenProgressBar:{
+    backgroundColor:"#51E624",
+    marginBottom:"0px"
+  },
+  purpleProgressBar:{
+    backgroundColor:"#A900FF"
+  }
 };
 
 module.exports = style;
