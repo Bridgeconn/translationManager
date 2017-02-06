@@ -23,12 +23,12 @@ class Progressbar extends React.Component {
 		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
 		var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
 		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));
-
 		var projects = {}
 		assignmentdata.forEach(function(assignment) {
 			var project = assignment.Project, book = assignment.Book,
 				milestone = assignment.Milestones, chapter = assignment.Chapters,
 				completed = assignment.isCompleted === 'Done'
+
 			function empty(item) { return item === undefined }
 			function initObject(item) { if (empty(item)) item = {}; return item }
 			function initArray(item) { if (empty(item)) item = []; return item }
