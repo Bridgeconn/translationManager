@@ -243,21 +243,6 @@ class Form extends React.Component {
         return( 
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div>
-                    <label>Team Name</label>
-                    <SimpleSelect
-                    placeholder = "Select a Name"
-                    options = {
-                        this.state.names.map(function(teamName) {
-                            return { label: teamName.id, value: teamName.id };
-                        })
-                    }  
-                    value = { this.state.teamName }    onValueChange = { function(teamName) {
-                                name.setState ({teamName: teamName, chapter: undefined})
-                            }}
-                    />
-                </div>
-
-                <div>
                     <label>Project Name</label>
                     <SimpleSelect placeholder = "Select Project "
                     options = {
@@ -338,6 +323,21 @@ class Form extends React.Component {
                         }} 
                     />
                 </div>
+                 <div>
+                    <label>Team Name</label>
+                    <SimpleSelect
+                    placeholder = "Select a Name"
+                    options = {
+                        this.state.names.map(function(teamName) {
+                            return { label: teamName.id, value: teamName.id };
+                        })
+                    }  
+                    value = { this.state.teamName }    onValueChange = { function(teamName) {
+                                name.setState ({teamName: teamName, chapter: undefined})
+                            }}
+                    />
+                </div>
+
                 <div>    
                     <label>Start Date</label>
                     <DatePicker selected={this.state.startDate} selectsStart  startDate={this.state.startDate}
@@ -358,7 +358,7 @@ class Form extends React.Component {
                     <TableHeaderColumn dataField="TeamName">Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
                     <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapters</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapter</TableHeaderColumn>
                     <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
                     <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
                     <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
