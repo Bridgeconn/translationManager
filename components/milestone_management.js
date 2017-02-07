@@ -43,9 +43,8 @@ class MilestoneManagement extends React.Component {
 	handleSubmit(e) {
 	    let obj =  [{table:{}}];                   
 	    let obj1 = this.state.input1;
-	    let obj2 = this.state.project.label;
 	    let obj3 = this.state.input2;
-	    obj =({name: obj3 , project: obj2 , description: obj1});
+	    obj =({name: obj3 , description: obj1});
 	    var result = this.refs.table.handleAddRow(obj);
 	    if(result){  
 			alert(result);
@@ -140,17 +139,6 @@ class MilestoneManagement extends React.Component {
 	        	Milestone Mangement
 	            <div >
 	                <Form>
-	                    <label> Project </label>
-	                    <SimpleSelect placeholder = "Select Project "
-	                    options = {
-	                        this.state.projectData.map(function(project) {
-	                            return { label: project.name, value: project.name };
-	                        })
-	                    }
-	                      
-	                    onValueChange = { function(project) {
-	                            teamsize.setState ({project: project, model: undefined})
-	                    }}/> 
 	                    <FormGroup controlId="formInlineName">
 	                        <ControlLabel>Milestone Name</ControlLabel>
 	                        <FormControl type="text" placeholder="Enter the Milestone Name" 
@@ -165,7 +153,6 @@ class MilestoneManagement extends React.Component {
 	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
 	                <TableHeaderColumn dataField="name" >Milestone Name</TableHeaderColumn>
 	                <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
-	                <TableHeaderColumn dataField="project" >Project</TableHeaderColumn>
 	            </BootstrapTable>                 
 	        </div>
 	    );

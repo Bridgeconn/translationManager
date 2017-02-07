@@ -10,23 +10,17 @@ const style = require("./Style");
 const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
 const ReactSuperSelect = require('react-super-select');
-const file = ('./static/team.json');
-const teamnameData = require('../static/teamname.json');
-const teamsizeData = require('../static/teamsize.json');
-const projectfile = ('./static/projects.json');
-//const projectData = require('../static/projects.json');
 const teamfile = ('./static/team.json');
-//const teamData = require('../static/team.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 
 class TeamManagement extends React.Component {
     constructor(props) {
         super(props);
-        var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
+        //var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
         var teamdata = JSON.parse(fs.readFileSync(teamfile, 'utf8'));
         //console.log(this.teamData);
-        this.state = {teamData:teamdata, teams: teamsizeData, projectData:projectdata};
+        this.state = {teamData:teamdata};
         //this.handleChange = this.handleChange.bind(this);
     }
 
@@ -36,53 +30,39 @@ class TeamManagement extends React.Component {
       this.setState(change);
     };
 
-    handlerDropdown(options) {
-        let output = [];
-        _.map(options, function(option){
-        output = output.concat([option.name]);
-        global.multiselectName = output
-        })
-    };
-
     handleSubmit(e) {
         let obj =  [{table:{}}];                   
         let obj1 = this.state.input1;
-        let obj4 = this.state.project.label;
-        if ( typeof multiselectName === 'undefined'){
-            alert("Please select the name");
+        let obj2 = this.state.input2;
+        obj =({id: obj1 , membername: obj2 });
+        var result = this.refs.table.handleAddRow(obj);
+        if(result){  
+          alert(result);
         }
         else{
-            let obj2 = multiselectName;
-            obj =({id: obj1 , membername: obj2 , project: obj4});
-            var result = this.refs.table.handleAddRow(obj);
-            if(result){  
-              alert(result);
-            }
-            else{
-                fs.readFile(file, (err, data) => {
+            fs.readFile(teamfile, (err, data) => {
+                if (err) throw err;
+                let filedata = JSON.parse(data);
+                filedata.push(obj);
+                fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
                     if (err) throw err;
-                    let filedata = JSON.parse(data);
-                    filedata.push(obj);
-                    fs.writeFile(file, JSON.stringify(filedata), function(err){
-                        if (err) throw err;
-                        console.log('The "data to append" was appended to file!');
-                    }); 
-                });
-                setTimeout(function() {
-                    fs.readFile(file, (err, data) => {
-                        if (err) throw err;
-                        global.team = JSON.parse(data);
-                        console.log(team);
-                        //this.setState({teamData: team})
-                        window.location.reload();
-                    }) 
-                }, 100);
-            }
+                    console.log('The "data to append" was appended to file!');
+                }); 
+            });
+            setTimeout(function() {
+                fs.readFile(teamfile, (err, data) => {
+                    if (err) throw err;
+                    global.team = JSON.parse(data);
+                    console.log(team);
+                    //this.setState({teamData: team})
+                    window.location.reload();
+                }) 
+            }, 100);
         } 
     };
 
     afterSaveCell(row, cellName, cellValue) {
-        fs.readFile(file, (err, data) => {
+        fs.readFile(teamfile, (err, data) => {
         var filedata = JSON.parse(data);
         for (var n = 0 ; n < filedata.length ; n++) {
         if (filedata[n].id == row.id) {
@@ -93,7 +73,7 @@ class TeamManagement extends React.Component {
         }
     }
         if (err) throw err;
-        fs.writeFile(file, JSON.stringify(filedata), function(err){
+        fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
         if (err) throw err;
             console.log('The "data to append" was appended to file!');
         }); 
@@ -101,11 +81,11 @@ class TeamManagement extends React.Component {
     setTimeout(function() {
         let obj =  [{table:{}}];           
         obj = row;
-        fs.readFile(file, (err, data) => {
+        fs.readFile(teamfile, (err, data) => {
             if (err) throw err;
             let filedata = JSON.parse(data);
             filedata.push(obj);
-            fs.writeFile(file, JSON.stringify(filedata), function(err){
+            fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
                 if (err) throw err;
                 console.log('The "data to append" was appended to file!');
             });        
@@ -113,7 +93,7 @@ class TeamManagement extends React.Component {
     };
 
     onDeleteRow(rows) {
-        fs.readFile(file, (err, data) => {
+        fs.readFile(teamfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
             if (filedata[n].id == rows) {
@@ -123,8 +103,7 @@ class TeamManagement extends React.Component {
             }
         }
         if (err) throw err;
-        console.log(filedata);            
-        fs.writeFile(file, JSON.stringify(filedata), function(err){
+        fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
                 window.location.reload();
@@ -156,32 +135,12 @@ class TeamManagement extends React.Component {
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div>
                     <Form>
-                      <label> Project </label>
-                        <SimpleSelect placeholder = "Select Project "
-                        options = {
-                            this.state.projectData.map(function(project) {
-                                return { label: project.name, value: project.name };
-                            })
-                        }
-                        value = { this.state.project }  
-                        onValueChange = { function(project) {
-                                projects.setState ({project: project, model: undefined}
-                            )
-                        }}/> 
                         <ControlLabel>Members Name</ControlLabel>
-                        <ReactSuperSelect placeholder="Select the name" 
-                          dataSource={teamnameData} 
-                          onChange={this.handlerDropdown} 
-                          multiple={true}
-                          tags={true}
-                          keepOpenOnSelection={true}
-                          clearSearchOnSelection = {true}
-                          />
-                        <FormGroup controlId="formInlineName">
+                        <FormControl id="formControlsText" type="text" label="Text" placeholder="Enter Name" value={this.state.input2} 
+                        onChange={this.handleInputChange.bind(this, 'input2')} />                    
                         <ControlLabel>Team Name</ControlLabel>
                         <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
                         onChange={this.handleInputChange.bind(this, 'input1')}/>
-                        </FormGroup>
                     </Form>
                 </div>
 
@@ -189,7 +148,6 @@ class TeamManagement extends React.Component {
                 <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
                     <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="project">Project</TableHeaderColumn>        
                 </BootstrapTable>   
                 </div>              
         );
