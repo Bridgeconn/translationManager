@@ -135,12 +135,12 @@ class TeamManagement extends React.Component {
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div>
                     <Form>
-                        <ControlLabel>Members Name</ControlLabel>
-                        <FormControl id="formControlsText" type="text" label="Text" placeholder="Enter Name" value={this.state.input2} 
-                        onChange={this.handleInputChange.bind(this, 'input2')} />                    
                         <ControlLabel>Team Name</ControlLabel>
                         <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
                         onChange={this.handleInputChange.bind(this, 'input1')}/>
+                        <ControlLabel>Members Name</ControlLabel>
+                        <FormControl id="formControlsText" type="text" label="Text" placeholder="Enter Name" value={this.state.input2} 
+                        onChange={this.handleInputChange.bind(this, 'input2')} />                    
                     </Form>
                 </div>
 

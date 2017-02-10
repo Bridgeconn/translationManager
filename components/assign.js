@@ -333,11 +333,10 @@ class Form extends React.Component {
                         })
                     }  
                     value = { this.state.teamName }    onValueChange = { function(teamName) {
-                                name.setState ({teamName: teamName, chapter: undefined})
+                                name.setState ({teamName: teamName})
                             }}
                     />
                 </div>
-
                 <div>    
                     <label>Start Date</label>
                     <DatePicker selected={this.state.startDate} selectsStart  startDate={this.state.startDate}
@@ -363,7 +362,7 @@ class Form extends React.Component {
                     <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
                     <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
                     <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
-                    <TableHeaderColumn dataField="isCompleted"  dataAlign="center"  editable={ { type: 'checkbox', options: { values: 'Done:Pending' } } }>Status</TableHeaderColumn>  
+                    <TableHeaderColumn dataField="isCompleted" dataAlign="center" editable={{type: 'checkbox', options: { values: 'Done:Pending' }}}>Status</TableHeaderColumn>  
                 </BootstrapTable>
             </div>
         )
