@@ -7,6 +7,8 @@ const ReactBsTable = require("react-bootstrap-table");
 const DatePicker = require('react-datepicker');
 const Panel = require("react-bootstrap/lib/Panel");
 const ButtonToolbar = require("react-bootstrap/lib/ButtonToolbar");
+const OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
+const Tooltip = require("react-bootstrap/lib/Tooltip");
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
@@ -31,7 +33,7 @@ class Form extends React.Component {
 
         this.state = { names:teamdata, milestones: milestonedata, startDate: moment(),
           endDate: moment(), assignmentData:assignmentdata, selected: [], showModal: false, bookData : bookData,
-          chapters:chapters, projectData:projectdata };
+          chapters:chapters, projectData:projectdata};
         //this.onRowDoubleClick = this.onRowDoubleClick.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
@@ -39,6 +41,8 @@ class Form extends React.Component {
         this.afterSaveCell = this.afterSaveCell.bind(this);
         this.characterValidator = this.characterValidator.bind(this);
         this.handleChangeDate = this.handleChangeDate.bind(this);
+        this.activeFormatter = this.activeFormatter.bind(this);
+        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -99,7 +103,6 @@ class Form extends React.Component {
                 for (var n = 0 ; n < filedata.length ; n++) {
                 if (filedata[n].id == row.id) {
                   var removedObject = filedata.splice(n,1);
-                  console.log(removedObject);
                   removedObject = null;
                   break;
                 }
@@ -111,20 +114,22 @@ class Form extends React.Component {
             }); 
         })
           
-        setTimeout(function() {
-            let obj =  [{table:{}}];           
-            obj = row;
-            console.log(obj);
-                fs.readFile(assignmentfile, (err, data) => {
-                    if (err) throw err;
-                    let filedata = JSON.parse(data);
-                    filedata.push(obj);
-                    fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
-                        if (err) throw err;
-                        console.log('The "data to append" was appended to file!');
-                    });                           
-                })
-        }, 100);
+    setTimeout(function() {
+    let obj =  [{table:{}}];           
+    obj = row;
+    row.isCompleted = (row.isCompleted == "true" ? true : false);
+        fs.readFile(assignmentfile, (err, data) => {
+            if (err) throw err;
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+                if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            });
+            window.location.reload();
+                           
+    })}, 800);
+
     };
 
     handleChangeDate(date) {
@@ -181,10 +186,9 @@ class Form extends React.Component {
                 obj7 = "";
             }
             let obj8 = this.state.project.label; 
-            let obj9 = "Pending";
+            let obj9 = false;
             let progressobject =  [{table:{}}];                      
             obj = ({id:obj0, TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
-            progressobject = ({project : obj8, milestone:obj3, book:obj1, isCompleted: obj9  })
         }
 
         var result = this.refs.table.handleAddRow(obj);
@@ -201,18 +205,19 @@ class Form extends React.Component {
                     console.log('The "data to append" was appended to file!');
                 }); 
             })
-            fs.readFile(progfile, (err, data) => {
-                if (err) throw err;
-                let filedata = JSON.parse(data);
-                filedata.push(progressobject);
-                fs.writeFile(progfile, JSON.stringify(filedata), function(err){
-                    if (err) throw err;
-                    console.log('The "data to append" was appended to PROGRESS file!');
-                }); 
-            })
             window.location.reload();
         }
     };
+
+    handleCheckboxChange(event) {
+        this.setState({isCompleted: this.state.assignmentData});
+    }
+
+    activeFormatter(cell, row, enumObject, index) {
+        return (
+            <input type='checkbox' title="Double Click to edit" key={index} onChange={this.handleCheckboxChange} checked={this.state.assignmentData[index].isCompleted} active={ cell } />
+        )    
+    }
 
     render() {         
         var name = this;
@@ -226,7 +231,9 @@ class Form extends React.Component {
 
         const options = {
             //onRowDoubleClick: this.onRowDoubleClick,
-            onDeleteRow: this.onDeleteRow
+            onDeleteRow: this.onDeleteRow,
+            defaultSortName: 'name',  // default sort column name
+            defaultSortOrder: 'desc'  // default sort order
         };
 
         const cellEdit = {
@@ -240,7 +247,12 @@ class Form extends React.Component {
             clickToSelect: true
         };
 
+        const tooltip = (
+            <Tooltip id="tooltip">Double click the cell to edit</Tooltip>
+        );
+
         return( 
+             
             <div className="container fluid" style={{ marginLeft: '90px' }}>
                 <div>
                     <label>Project Name</label>
@@ -351,10 +363,11 @@ class Form extends React.Component {
                     <ButtonToolbar>
                         <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
                     </ButtonToolbar>
-                </Panel>
+                </Panel>                
+            
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
                     <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
-                    <TableHeaderColumn dataField="TeamName">Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
                     <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapter</TableHeaderColumn>
@@ -362,7 +375,11 @@ class Form extends React.Component {
                     <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
                     <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
                     <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>  
-                    <TableHeaderColumn dataField="isCompleted" dataAlign="center" editable={{type: 'checkbox', options: { values: 'Done:Pending' }}}>Status</TableHeaderColumn>  
+                    <TableHeaderColumn  dataField="isCompleted" dataAlign="center" dataFormat={ this.activeFormatter } editable={{type: 'checkbox', options: { values: 'true:false' }}} >
+                        <OverlayTrigger placement="top" overlay={tooltip}>
+                           <div>Status</div>
+                        </OverlayTrigger>
+                    </TableHeaderColumn>
                 </BootstrapTable>
             </div>
         )
