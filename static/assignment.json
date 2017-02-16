@@ -7,7 +7,7 @@
 	"StartDate": "4/28/2016",
 	"EndDate": "5/23/2016",
 	"CompleteDate": "7/28/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 2,
@@ -18,7 +18,7 @@
 	"StartDate": "7/18/2016",
 	"EndDate": "7/6/2016",
 	"CompleteDate": "6/24/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 3,
@@ -29,7 +29,7 @@
 	"StartDate": "2/3/2017",
 	"EndDate": "1/20/2017",
 	"CompleteDate": "3/15/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 4,
@@ -40,7 +40,7 @@
 	"StartDate": "6/9/2016",
 	"EndDate": "12/20/2016",
 	"CompleteDate": "8/25/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 5,
@@ -51,7 +51,7 @@
 	"StartDate": "10/8/2016",
 	"EndDate": "9/10/2016",
 	"CompleteDate": "1/9/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 6,
@@ -62,7 +62,7 @@
 	"StartDate": "7/4/2016",
 	"EndDate": "12/25/2016",
 	"CompleteDate": "2/5/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 7,
@@ -73,7 +73,7 @@
 	"StartDate": "2/9/2016",
 	"EndDate": "3/3/2016",
 	"CompleteDate": "5/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 8,
@@ -84,7 +84,7 @@
 	"StartDate": "5/18/2016",
 	"EndDate": "8/16/2016",
 	"CompleteDate": "5/5/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 9,
@@ -95,7 +95,7 @@
 	"StartDate": "11/16/2016",
 	"EndDate": "4/6/2016",
 	"CompleteDate": "12/24/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 10,
@@ -106,7 +106,7 @@
 	"StartDate": "6/30/2016",
 	"EndDate": "4/22/2016",
 	"CompleteDate": "7/26/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 11,
@@ -117,7 +117,7 @@
 	"StartDate": "6/22/2016",
 	"EndDate": "11/13/2016",
 	"CompleteDate": "8/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 12,
@@ -128,7 +128,7 @@
 	"StartDate": "5/8/2016",
 	"EndDate": "9/24/2016",
 	"CompleteDate": "4/5/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 13,
@@ -139,7 +139,7 @@
 	"StartDate": "3/5/2016",
 	"EndDate": "8/26/2016",
 	"CompleteDate": "8/7/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 14,
@@ -150,7 +150,7 @@
 	"StartDate": "7/3/2016",
 	"EndDate": "4/24/2016",
 	"CompleteDate": "9/16/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 15,
@@ -161,7 +161,7 @@
 	"StartDate": "8/11/2016",
 	"EndDate": "11/17/2016",
 	"CompleteDate": "4/18/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 16,
@@ -172,7 +172,7 @@
 	"StartDate": "12/19/2016",
 	"EndDate": "3/24/2016",
 	"CompleteDate": "9/7/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 17,
@@ -183,7 +183,7 @@
 	"StartDate": "7/10/2016",
 	"EndDate": "12/11/2016",
 	"CompleteDate": "8/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 18,
@@ -194,7 +194,7 @@
 	"StartDate": "12/19/2016",
 	"EndDate": "6/10/2016",
 	"CompleteDate": "4/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 19,
@@ -205,7 +205,7 @@
 	"StartDate": "12/19/2016",
 	"EndDate": "8/16/2016",
 	"CompleteDate": "7/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 20,
@@ -216,7 +216,7 @@
 	"StartDate": "3/8/2016",
 	"EndDate": "8/15/2016",
 	"CompleteDate": "4/18/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 21,
@@ -227,7 +227,7 @@
 	"StartDate": "7/25/2016",
 	"EndDate": "9/27/2016",
 	"CompleteDate": "5/19/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 22,
@@ -238,7 +238,7 @@
 	"StartDate": "1/19/2017",
 	"EndDate": "1/11/2017",
 	"CompleteDate": "11/20/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 23,
@@ -249,7 +249,7 @@
 	"StartDate": "3/22/2016",
 	"EndDate": "6/6/2016",
 	"CompleteDate": "4/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 24,
@@ -260,7 +260,7 @@
 	"StartDate": "1/6/2017",
 	"EndDate": "4/22/2016",
 	"CompleteDate": "6/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 25,
@@ -271,7 +271,7 @@
 	"StartDate": "2/27/2016",
 	"EndDate": "5/9/2016",
 	"CompleteDate": "2/21/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 26,
@@ -282,7 +282,7 @@
 	"StartDate": "3/4/2016",
 	"EndDate": "11/12/2016",
 	"CompleteDate": "1/13/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 27,
@@ -293,7 +293,7 @@
 	"StartDate": "6/8/2016",
 	"EndDate": "6/15/2016",
 	"CompleteDate": "9/8/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 28,
@@ -304,7 +304,7 @@
 	"StartDate": "11/25/2016",
 	"EndDate": "7/24/2016",
 	"CompleteDate": "9/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 29,
@@ -315,7 +315,7 @@
 	"StartDate": "8/7/2016",
 	"EndDate": "1/19/2017",
 	"CompleteDate": "5/8/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 30,
@@ -326,7 +326,7 @@
 	"StartDate": "8/2/2016",
 	"EndDate": "9/29/2016",
 	"CompleteDate": "12/10/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 31,
@@ -337,7 +337,7 @@
 	"StartDate": "11/29/2016",
 	"EndDate": "10/3/2016",
 	"CompleteDate": "7/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 32,
@@ -348,7 +348,7 @@
 	"StartDate": "12/10/2016",
 	"EndDate": "9/30/2016",
 	"CompleteDate": "7/19/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 33,
@@ -359,7 +359,7 @@
 	"StartDate": "11/10/2016",
 	"EndDate": "2/11/2016",
 	"CompleteDate": "2/26/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 34,
@@ -370,7 +370,7 @@
 	"StartDate": "3/6/2016",
 	"EndDate": "1/25/2017",
 	"CompleteDate": "12/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 35,
@@ -381,7 +381,7 @@
 	"StartDate": "8/18/2016",
 	"EndDate": "3/24/2016",
 	"CompleteDate": "7/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 36,
@@ -392,7 +392,7 @@
 	"StartDate": "3/27/2016",
 	"EndDate": "3/18/2016",
 	"CompleteDate": "3/1/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 37,
@@ -403,7 +403,7 @@
 	"StartDate": "3/3/2016",
 	"EndDate": "8/19/2016",
 	"CompleteDate": "2/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 38,
@@ -414,7 +414,7 @@
 	"StartDate": "7/14/2016",
 	"EndDate": "9/28/2016",
 	"CompleteDate": "10/27/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 39,
@@ -425,7 +425,7 @@
 	"StartDate": "3/20/2016",
 	"EndDate": "6/10/2016",
 	"CompleteDate": "4/15/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 40,
@@ -436,7 +436,7 @@
 	"StartDate": "5/30/2016",
 	"EndDate": "5/9/2016",
 	"CompleteDate": "8/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 41,
@@ -447,7 +447,7 @@
 	"StartDate": "4/11/2016",
 	"EndDate": "2/8/2016",
 	"CompleteDate": "11/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 42,
@@ -458,7 +458,7 @@
 	"StartDate": "12/7/2016",
 	"EndDate": "10/12/2016",
 	"CompleteDate": "7/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 43,
@@ -469,7 +469,7 @@
 	"StartDate": "1/31/2017",
 	"EndDate": "11/28/2016",
 	"CompleteDate": "3/15/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 44,
@@ -480,7 +480,7 @@
 	"StartDate": "2/11/2016",
 	"EndDate": "3/2/2016",
 	"CompleteDate": "1/20/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 45,
@@ -491,7 +491,7 @@
 	"StartDate": "3/13/2016",
 	"EndDate": "10/12/2016",
 	"CompleteDate": "9/16/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 46,
@@ -502,7 +502,7 @@
 	"StartDate": "12/14/2016",
 	"EndDate": "12/3/2016",
 	"CompleteDate": "6/26/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 47,
@@ -513,7 +513,7 @@
 	"StartDate": "3/2/2016",
 	"EndDate": "4/1/2016",
 	"CompleteDate": "5/22/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 48,
@@ -524,7 +524,7 @@
 	"StartDate": "1/3/2017",
 	"EndDate": "12/5/2016",
 	"CompleteDate": "3/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 49,
@@ -535,7 +535,7 @@
 	"StartDate": "4/26/2016",
 	"EndDate": "9/1/2016",
 	"CompleteDate": "7/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 50,
@@ -546,7 +546,7 @@
 	"StartDate": "1/8/2017",
 	"EndDate": "12/9/2016",
 	"CompleteDate": "6/11/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 51,
@@ -557,7 +557,7 @@
 	"StartDate": "9/30/2016",
 	"EndDate": "9/15/2016",
 	"CompleteDate": "4/20/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 52,
@@ -568,7 +568,7 @@
 	"StartDate": "10/2/2016",
 	"EndDate": "4/18/2016",
 	"CompleteDate": "2/19/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 53,
@@ -579,7 +579,7 @@
 	"StartDate": "12/24/2016",
 	"EndDate": "8/20/2016",
 	"CompleteDate": "8/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 54,
@@ -590,7 +590,7 @@
 	"StartDate": "1/8/2017",
 	"EndDate": "2/10/2016",
 	"CompleteDate": "1/12/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 55,
@@ -601,7 +601,7 @@
 	"StartDate": "4/3/2016",
 	"EndDate": "5/24/2016",
 	"CompleteDate": "10/16/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 56,
@@ -612,7 +612,7 @@
 	"StartDate": "1/12/2017",
 	"EndDate": "11/15/2016",
 	"CompleteDate": "9/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 57,
@@ -623,7 +623,7 @@
 	"StartDate": "5/11/2016",
 	"EndDate": "2/12/2016",
 	"CompleteDate": "5/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 58,
@@ -634,7 +634,7 @@
 	"StartDate": "2/17/2016",
 	"EndDate": "9/13/2016",
 	"CompleteDate": "6/10/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 59,
@@ -645,7 +645,7 @@
 	"StartDate": "9/21/2016",
 	"EndDate": "2/5/2017",
 	"CompleteDate": "10/4/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 60,
@@ -656,7 +656,7 @@
 	"StartDate": "11/13/2016",
 	"EndDate": "6/22/2016",
 	"CompleteDate": "9/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 61,
@@ -667,7 +667,7 @@
 	"StartDate": "9/2/2016",
 	"EndDate": "9/5/2016",
 	"CompleteDate": "12/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 62,
@@ -678,7 +678,7 @@
 	"StartDate": "12/29/2016",
 	"EndDate": "8/25/2016",
 	"CompleteDate": "6/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 63,
@@ -689,7 +689,7 @@
 	"StartDate": "10/21/2016",
 	"EndDate": "4/5/2016",
 	"CompleteDate": "7/14/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 64,
@@ -700,7 +700,7 @@
 	"StartDate": "6/21/2016",
 	"EndDate": "4/24/2016",
 	"CompleteDate": "9/24/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 65,
@@ -711,7 +711,7 @@
 	"StartDate": "2/28/2016",
 	"EndDate": "11/5/2016",
 	"CompleteDate": "6/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 66,
@@ -722,7 +722,7 @@
 	"StartDate": "9/10/2016",
 	"EndDate": "8/17/2016",
 	"CompleteDate": "1/6/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 67,
@@ -733,7 +733,7 @@
 	"StartDate": "10/10/2016",
 	"EndDate": "2/28/2016",
 	"CompleteDate": "8/27/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 68,
@@ -744,7 +744,7 @@
 	"StartDate": "1/6/2017",
 	"EndDate": "12/9/2016",
 	"CompleteDate": "5/26/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 69,
@@ -755,7 +755,7 @@
 	"StartDate": "11/12/2016",
 	"EndDate": "6/8/2016",
 	"CompleteDate": "8/13/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 70,
@@ -766,7 +766,7 @@
 	"StartDate": "6/5/2016",
 	"EndDate": "5/10/2016",
 	"CompleteDate": "4/25/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 71,
@@ -777,7 +777,7 @@
 	"StartDate": "9/13/2016",
 	"EndDate": "8/19/2016",
 	"CompleteDate": "2/10/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 72,
@@ -788,7 +788,7 @@
 	"StartDate": "6/8/2016",
 	"EndDate": "11/3/2016",
 	"CompleteDate": "4/11/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 73,
@@ -799,7 +799,7 @@
 	"StartDate": "2/19/2016",
 	"EndDate": "1/28/2017",
 	"CompleteDate": "2/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 74,
@@ -810,7 +810,7 @@
 	"StartDate": "1/26/2017",
 	"EndDate": "5/20/2016",
 	"CompleteDate": "1/21/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 75,
@@ -821,7 +821,7 @@
 	"StartDate": "9/28/2016",
 	"EndDate": "8/14/2016",
 	"CompleteDate": "3/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 76,
@@ -832,7 +832,7 @@
 	"StartDate": "11/26/2016",
 	"EndDate": "4/19/2016",
 	"CompleteDate": "4/23/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 77,
@@ -843,7 +843,7 @@
 	"StartDate": "3/12/2016",
 	"EndDate": "4/8/2016",
 	"CompleteDate": "11/7/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 78,
@@ -854,7 +854,7 @@
 	"StartDate": "12/27/2016",
 	"EndDate": "4/11/2016",
 	"CompleteDate": "12/28/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 79,
@@ -865,7 +865,7 @@
 	"StartDate": "10/26/2016",
 	"EndDate": "9/9/2016",
 	"CompleteDate": "8/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 80,
@@ -876,7 +876,7 @@
 	"StartDate": "7/27/2016",
 	"EndDate": "8/19/2016",
 	"CompleteDate": "5/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 81,
@@ -887,7 +887,7 @@
 	"StartDate": "5/27/2016",
 	"EndDate": "1/11/2017",
 	"CompleteDate": "9/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 82,
@@ -898,7 +898,7 @@
 	"StartDate": "2/16/2016",
 	"EndDate": "8/28/2016",
 	"CompleteDate": "12/15/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 83,
@@ -909,7 +909,7 @@
 	"StartDate": "7/29/2016",
 	"EndDate": "10/5/2016",
 	"CompleteDate": "9/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 84,
@@ -920,7 +920,7 @@
 	"StartDate": "5/30/2016",
 	"EndDate": "5/19/2016",
 	"CompleteDate": "10/22/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 85,
@@ -931,7 +931,7 @@
 	"StartDate": "2/29/2016",
 	"EndDate": "4/17/2016",
 	"CompleteDate": "7/24/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 86,
@@ -942,7 +942,7 @@
 	"StartDate": "3/9/2016",
 	"EndDate": "8/10/2016",
 	"CompleteDate": "9/22/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 87,
@@ -953,7 +953,7 @@
 	"StartDate": "11/11/2016",
 	"EndDate": "8/9/2016",
 	"CompleteDate": "8/12/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 88,
@@ -964,7 +964,7 @@
 	"StartDate": "9/22/2016",
 	"EndDate": "9/3/2016",
 	"CompleteDate": "10/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 89,
@@ -975,7 +975,7 @@
 	"StartDate": "9/18/2016",
 	"EndDate": "3/23/2016",
 	"CompleteDate": "2/18/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 90,
@@ -986,7 +986,7 @@
 	"StartDate": "1/28/2017",
 	"EndDate": "4/13/2016",
 	"CompleteDate": "5/13/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 91,
@@ -997,7 +997,7 @@
 	"StartDate": "8/15/2016",
 	"EndDate": "11/2/2016",
 	"CompleteDate": "8/6/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 92,
@@ -1008,7 +1008,7 @@
 	"StartDate": "8/24/2016",
 	"EndDate": "12/29/2016",
 	"CompleteDate": "7/3/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 93,
@@ -1019,7 +1019,7 @@
 	"StartDate": "1/30/2017",
 	"EndDate": "8/16/2016",
 	"CompleteDate": "2/24/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 94,
@@ -1030,7 +1030,7 @@
 	"StartDate": "12/17/2016",
 	"EndDate": "1/13/2017",
 	"CompleteDate": "10/28/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 95,
@@ -1041,7 +1041,7 @@
 	"StartDate": "4/1/2016",
 	"EndDate": "7/9/2016",
 	"CompleteDate": "11/1/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 96,
@@ -1052,7 +1052,7 @@
 	"StartDate": "11/17/2016",
 	"EndDate": "5/18/2016",
 	"CompleteDate": "4/29/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 97,
@@ -1063,7 +1063,7 @@
 	"StartDate": "4/8/2016",
 	"EndDate": "9/14/2016",
 	"CompleteDate": "4/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 98,
@@ -1074,7 +1074,7 @@
 	"StartDate": "11/8/2016",
 	"EndDate": "12/8/2016",
 	"CompleteDate": "6/17/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }, {
 	"id": 99,
@@ -1085,7 +1085,7 @@
 	"StartDate": "7/31/2016",
 	"EndDate": "1/28/2017",
 	"CompleteDate": "5/15/2016",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "English-ULB"
 }, {
 	"id": 100,
@@ -1096,6 +1096,6 @@
 	"StartDate": "11/14/2016",
 	"EndDate": "8/19/2016",
 	"CompleteDate": "1/19/2017",
-	"isCompleted": "Done",
+	"isCompleted": true,
 	"Project": "Hindi-ULB"
 }]
