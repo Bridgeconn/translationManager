@@ -27,8 +27,7 @@ class Progressbar extends React.Component {
 		assignmentdata.forEach(function(assignment) {
 			var project = assignment.Project, book = assignment.Book,
 				milestone = assignment.Milestones, chapter = assignment.Chapters,
-				completed = assignment.isCompleted === 'Done'
-
+				completed = assignment.isCompleted == true
 			function empty(item) { return item === undefined }
 			function initObject(item) { if (empty(item)) item = {}; return item }
 			function initArray(item) { if (empty(item)) item = []; return item }
@@ -54,9 +53,9 @@ var ProjectsGroup = function(props) {
 
 	const bookGroups = projectNames.map((projectName, index) =>
 		<Table responsive striped bordered condensed hover key={index}>
-			<tbody>
+			<thead>
 				<ProjectMilestoneGroup projectName={projectName} project={projects[projectName]} />
-			</tbody>
+			</thead>
 			<BookGroup projectName={projectName} books={projects[projectName]} />
 		</Table>
 	)
@@ -88,7 +87,7 @@ var ProjectMilestoneGroup = function(props) {
 	})
 
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
-		<th key={index} style={style.milestoneName}>
+		<th key={index} id={milestoneName} style={style.milestoneName}>
 			<span>{milestoneName}</span>
 			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
 		</th>
@@ -127,13 +126,15 @@ var BookMilestoneGroup = function(props) {
 		percent = Math.round(completed / total * 1000)/10
 		return percent
 	}
+
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
-		<td key={index} style={style.progressBarContainer}>
+		<td key={index} headers={milestoneName} style={style.progressBarContainer}>
 			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span>
 			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
 			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
-		</td>
+		</td>	
 	)
+
 	return (
 		<tr>
 			<td style={style.bookTitle}><span>{bookName}</span><span style={style.circleGrey}>{chaptersdata[bookName]}</span></td>
