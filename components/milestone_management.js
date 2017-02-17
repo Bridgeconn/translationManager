@@ -83,10 +83,10 @@ class MilestoneManagement extends React.Component {
 	    setTimeout(function() {
 	        let obj =  [{table:{}}];           
 	        obj = row;
-	        console.log(obj);
 	        fs.readFile(file, (err, data) => {
 	            if (err) throw err;
 	            let filedata = JSON.parse(data);
+	            console.log(filedata)
 	            filedata.push(obj);
 	            fs.writeFile(file, JSON.stringify(filedata), function(err){
 	                if (err) throw err;

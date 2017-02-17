@@ -126,8 +126,7 @@ class Form extends React.Component {
                 if (err) throw err;
                 console.log('The "data to append" was appended to file!');
             });
-            window.location.reload();
-                           
+            window.location.reload();                        
     })}, 800);
 
     };
@@ -368,8 +367,8 @@ class Form extends React.Component {
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
                     <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
                     <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } } dataSort>Milestone</TableHeaderColumn>
+                    <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } } dataSort>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapter</TableHeaderColumn>
                     <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
                     <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>  
