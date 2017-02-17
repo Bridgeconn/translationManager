@@ -232,8 +232,6 @@ class Form extends React.Component {
         const options = {
             //onRowDoubleClick: this.onRowDoubleClick,
             onDeleteRow: this.onDeleteRow,
-            defaultSortName: 'name',  // default sort column name
-            defaultSortOrder: 'desc'  // default sort order
         };
 
         const cellEdit = {
@@ -367,7 +365,7 @@ class Form extends React.Component {
             
                 <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
                     <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
-                    <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
+                    <TableHeaderColumn dataField="TeamName" headerTitle={ true }>Team Name</TableHeaderColumn>
                     <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
                     <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
                     <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapter</TableHeaderColumn>
