@@ -76,15 +76,21 @@ var style = {
 
   projectName:{
     margin:"0 auto",
-    textAlign:"center",  
+    textAlign:"center",
     width:"20%",
     paddingTop:"10px",
-    paddingBottom:"10px",
+    paddingBottom:"25px",
   },
 
    milestoneName:{
     margin:"0 auto",
-    textAlign:"center",  
+    textAlign:"center",
+  },
+
+  progressTableHeader:{
+    margin:"0 auto",
+    textAlign:"center",
+    backgroundColor: "#eee"
   },
 
   circleGreen:{
@@ -146,7 +152,8 @@ var style = {
     marginBottom:"0px"
   },
   purpleProgressBar:{
-    backgroundColor:"#A900FF"
+    backgroundColor:"#A900FF",
+    marginBottom:"0px"
   }
 };
 
