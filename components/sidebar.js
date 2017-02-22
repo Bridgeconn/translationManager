@@ -9,7 +9,6 @@ const  Form  = require('./assign.js');
 const Tooltip = require("react-bootstrap/lib/Tooltip");
 const OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
 
-
 class Sidebar extends React.Component {
     constructor(props) {
         super(props);
