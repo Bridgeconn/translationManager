@@ -17,12 +17,13 @@ const chapterfile = ('./static/chapters.json');
 const resultfile = ('./static/result.json');
 const _ = require('lodash');
 
+var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'))
+
 class Progressbar extends React.Component {
 	constructor(props) {
     super(props);
-		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'));
-		var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
-		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));
+		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'))
+		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'))
 		var projects = {}
 		assignmentdata.forEach(function(assignment) {
 			var project = assignment.Project, book = assignment.Book,
@@ -79,7 +80,10 @@ var ProjectMilestoneGroup = function(props) {
 		})
 	})
 	var progress = {}
-	var milestoneNames = Object.keys(complete)
+	var milestoneNames = []
+	milestonedata.forEach(function(milestone) {
+		milestoneNames.push(milestone.name)
+	})
 	milestoneNames.forEach(function(milestoneName) {
 		var percent = 0, completed = complete[milestoneName], totalChaptersInBible = 1189
 		percent = Math.round(completed / totalChaptersInBible * 1000)/10
@@ -116,7 +120,13 @@ var BookMilestoneGroup = function(props) {
 	var projectName= props.projectName
 	var bookName = props.bookName
 	var milestones = props.milestones
-	var milestoneNames = Object.keys(milestones)
+	var milestoneNames = []
+	milestonedata.forEach(function(milestone) {
+		milestoneNames.push(milestone.name)
+		if (milestones[milestone.name] === undefined) {
+			milestones[milestone.name] = {completed: []}
+		}
+	})
 	var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'));
 
 	function completed(milestoneName) {
@@ -132,7 +142,7 @@ var BookMilestoneGroup = function(props) {
 			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span>
 			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
 			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
-		</td>	
+		</td>
 	)
 
 	return (
