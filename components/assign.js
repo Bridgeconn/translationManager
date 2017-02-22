@@ -409,20 +409,21 @@ class AssignForm extends React.Component {
                     <ButtonToolbar style={{ float: 'right' }} >
                       <Button bsStyle="success" type="submit" onClick={() => this.handleSubmit()}>Save</Button>
                     </ButtonToolbar>
+
                   </Form>
 
                 </Panel>
 
-                <BootstrapTable striped ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+                <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
                   <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
-                  <TableHeaderColumn dataField="TeamName" headerTitle={ true }>Team Name</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } }>Milestone</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } }>Book</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } }>Chapter</TableHeaderColumn>
-                  <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } }>Start Date</TableHeaderColumn>
-                  <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } }>Target Date</TableHeaderColumn>
+                  <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } } dataSort>Milestone</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } } dataSort>Book</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } } dataSort>Chapter</TableHeaderColumn>
+                  <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } } dataSort>Start Date</TableHeaderColumn>
+                  <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } } dataSort>Target Date</TableHeaderColumn>
                   <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>
-                  <TableHeaderColumn dataField="Project">Project</TableHeaderColumn>
+                  <TableHeaderColumn dataField="Project" dataSort>Project</TableHeaderColumn>
                   <TableHeaderColumn  dataField="isCompleted" dataAlign="center" dataFormat={ this.activeFormatter } editable={{type: 'checkbox', options: { values: 'true:false' }}} >
                     <OverlayTrigger placement="top" overlay={tooltip}>
                       <div>Status</div>
