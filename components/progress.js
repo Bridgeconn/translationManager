@@ -67,8 +67,16 @@ var ProjectsGroup = function(props) {
 		</Table>
 	)
 	return (
-		<div style={{ marginLeft: '100px' }}><h2>Progress</h2>
-		{bookGroups}</div>
+		<div className="container fluid" style={{ marginLeft: '90px' }}>
+			<div style={{ height: '80px' }}>
+				<h2 style={{ float: 'left' }}>Progress</h2>
+				<div style={{ height: '100%', width: '100%', textAlign: 'right', paddingTop: '20px' }} >
+					<span style={style.circlePurple}></span> Project
+					<span style={style.circleGreen}></span> Book
+				</div>
+			</div>
+			{bookGroups}
+		</div>
 	)
 }
 

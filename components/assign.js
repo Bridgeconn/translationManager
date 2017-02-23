@@ -258,7 +258,7 @@ class AssignForm extends React.Component {
 
           <div className="container fluid" style={{ paddingLeft: '90px' }}>
             <h2 style={{ float: 'left' }} >Assign</h2>
-            <div style={{ height: '100%', width: '100%', textAlign: 'right', paddingTop: '20px', }} >
+            <div style={{ height: '100%', width: '100%', textAlign: 'right', paddingTop: '20px' }} >
               <ButtonToolbar style={{ float: 'right' }} >
                 <Button bsStyle="danger">Delete</Button>
                 <Button bsStyle="info">Edit</Button>
