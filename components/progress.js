@@ -52,17 +52,31 @@ var ProjectsGroup = function(props) {
 	var projects = props.projects
 	var projectNames = Object.keys(projects)
 
+	var milestoneNames = []
+	milestonedata.forEach(function(milestone) {
+		milestoneNames.push(milestone.name)
+	})
+
 	const bookGroups = projectNames.map((projectName, index) =>
 		<Table responsive striped bordered condensed hover key={index}>
 			<thead>
+				<TableHeader milestoneNames={milestoneNames} />
 				<ProjectMilestoneGroup projectName={projectName} project={projects[projectName]} />
 			</thead>
 			<BookGroup projectName={projectName} books={projects[projectName]} />
 		</Table>
 	)
 	return (
-		<div style={{ marginLeft: '100px' }}><h2>View Projects Progress</h2>
-		{bookGroups}</div>
+		<div className="container fluid" style={{ marginLeft: '90px' }}>
+			<div style={{ height: '80px' }}>
+				<h2 style={{ float: 'left' }}>Progress</h2>
+				<div style={{ height: '100%', width: '100%', textAlign: 'right', paddingTop: '20px' }} >
+					<span style={style.circlePurple}></span> Project
+					<span style={style.circleGreen}></span> Book
+				</div>
+			</div>
+			{bookGroups}
+		</div>
 	)
 }
 
@@ -92,14 +106,29 @@ var ProjectMilestoneGroup = function(props) {
 
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<th key={index} id={milestoneName} style={style.milestoneName}>
-			<span>{milestoneName}</span>
-			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
+			<span style={style.circlePurple}>{complete[milestoneName]}</span>
+			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label="." key={index} />
+			<span style={style.percent}>{`${progress[milestoneName]}%`}</span>
 		</th>
 	)
 	return (
 		<tr>
 			<th style={style.projectName}>{projectName}</th>
 			{progressGroup}
+		</tr>
+	)
+}
+
+var TableHeader = function(props) {
+	const milestoneHeaders = props.milestoneNames.map((milestoneName, index) =>
+		<th key={index} id={milestoneName} style={style.progressTableHeader}>
+			{milestoneName}
+		</th>
+	)
+	return (
+		<tr>
+			<th style={style.progressTableHeader}>Project</th>
+			{milestoneHeaders}
 		</tr>
 	)
 }
@@ -140,7 +169,7 @@ var BookMilestoneGroup = function(props) {
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<td key={index} headers={milestoneName} style={style.progressBarContainer}>
 			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span>
-			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
+			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label="." key={index}></ProgressBar>
 			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
 		</td>
 	)
