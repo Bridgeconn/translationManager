@@ -35,33 +35,45 @@ class TeamManagement extends React.Component {
         let obj1 = this.state.input1;
         let obj2 = this.state.input2;
         obj =({id: obj1 , membername: obj2 });
-        var result = this.refs.table.handleAddRow(obj);
-        if(result){  
-          alert(result);
-        }
-        else{
-            fs.readFile(teamfile, (err, data) => {
+        
+        fs.readFile(teamfile, (err, data) => {
+            if (err) throw err;
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
                 if (err) throw err;
-                let filedata = JSON.parse(data);
-                filedata.push(obj);
-                fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
-                    if (err) throw err;
-                    console.log('The "data to append" was appended to file!');
-                }); 
-            });
-            setTimeout(function() {
-                fs.readFile(teamfile, (err, data) => {
-                    if (err) throw err;
-                    global.team = JSON.parse(data);
-                    console.log(team);
-                    //this.setState({teamData: team})
-                    window.location.reload();
-                }) 
-            }, 100);
-        } 
+                console.log('The "data to append" was appended to file!');
+            }); 
+            this.setState({teamData: filedata, input1:'', input2:''})
+
+        });      
     };
 
-    afterSaveCell(row, cellName, cellValue) {
+    
+    render() {
+        return  (
+            <div className="container fluid" style={{ marginLeft: '90px' }}>
+                <div>
+                    <Form>
+                        <ControlLabel>Team Name</ControlLabel>
+                        <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
+                        onChange={this.handleInputChange.bind(this, 'input1')}/>
+                        <ControlLabel>Members Name</ControlLabel>
+                        <FormControl id="formControlsText" type="text" label="Text" placeholder="Enter Name" value={this.state.input2} 
+                        onChange={this.handleInputChange.bind(this, 'input2')} />                    
+                    </Form>
+                </div>
+
+                <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
+                <TeamTable project={this.state.teamData} />      
+            </div>              
+        );
+    }
+};
+
+var TeamTable = function(props) {
+
+    function afterSaveCell(row, cellName, cellValue) {
         fs.readFile(teamfile, (err, data) => {
         var filedata = JSON.parse(data);
         for (var n = 0 ; n < filedata.length ; n++) {
@@ -92,7 +104,7 @@ class TeamManagement extends React.Component {
         })}, 100);
     };
 
-    onDeleteRow(rows) {
+    function onDeleteRow(rows) {
         fs.readFile(teamfile, (err, data) => {
         var filedata = JSON.parse(data);
             for (var n = 0 ; n < filedata.length ; n++) {
@@ -106,52 +118,38 @@ class TeamManagement extends React.Component {
         fs.writeFile(teamfile, JSON.stringify(filedata), function(err){
             if (err) throw err;
                 console.log('The "data to append" was appended to file!');
-                window.location.reload();
             }); 
         })
     };
 
-    render() {
-        var teamsize = this;
-        var projects = this;
 
-        const cellEdit = {
-            mode: 'dbclick',
-            blurToSave: true,
-            afterSaveCell: this.afterSaveCell
-        };  
+    const cellEdit = {
+        mode: 'dbclick',
+        blurToSave: true,
+        afterSaveCell: afterSaveCell
+    };  
 
-        const selectRow = {
-            mode: 'radio',
-            clickToSelect: true
-        };
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true
+    };
 
-        const options = {
-            //onRowDoubleClick: this.onRowDoubleClick,
-            onDeleteRow: this.onDeleteRow
-        };
+    const options = {
+        //onRowDoubleClick: this.onRowDoubleClick,
+        onDeleteRow: onDeleteRow,
+        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
+    };
 
-        return  (
-            <div className="container fluid" style={{ marginLeft: '90px' }}>
-                <div>
-                    <Form>
-                        <ControlLabel>Team Name</ControlLabel>
-                        <FormControl type="text" placeholder="Enter the Name" ref="table" value={this.state.input1} 
-                        onChange={this.handleInputChange.bind(this, 'input1')}/>
-                        <ControlLabel>Members Name</ControlLabel>
-                        <FormControl id="formControlsText" type="text" label="Text" placeholder="Enter Name" value={this.state.input2} 
-                        onChange={this.handleInputChange.bind(this, 'input2')} />                    
-                    </Form>
-                </div>
-
-                <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Team</Button>
-                <BootstrapTable ref="table" data={ this.state.teamData} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
-                    <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
-                </BootstrapTable>   
-                </div>              
-        );
-    }
-};
+    const bootstrapTable =  
+         <BootstrapTable data={props.project} cellEdit={ cellEdit } options={ options } selectRow={selectRow} deleteRow>
+            <TableHeaderColumn dataField="id" isKey={true}>Team Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="membername">Members Name</TableHeaderColumn>
+        </BootstrapTable>               
+        return (
+            <div>
+            {bootstrapTable}
+            </div>
+        )
+    }   
 
 module.exports = TeamManagement

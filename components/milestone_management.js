@@ -8,13 +8,10 @@ const FormControl = require('react-bootstrap/lib/FormControl');
 const Button = require('react-bootstrap/lib/Button');
 const _ = require('lodash');
 const ReactBsTable = require("react-bootstrap-table");
-
 const { TableHeaderColumn, InsertButton } = require('react-bootstrap-table');
 const file = ('./static/milestones.json');
 const projectfile = ('./static/projects.json');
 const milestonefile = ('./static/milestones.json');
-//const milestoneData = require('../static/milestones.json');
-//const projectData = require('../static/projects.json');
 const ReactSelectize = require("react-selectize");
 const SimpleSelect = ReactSelectize.SimpleSelect;
 
@@ -23,7 +20,7 @@ class MilestoneManagement extends React.Component {
 	    super(props);
 	    var projectdata = JSON.parse(fs.readFileSync(projectfile, 'utf8'));
   	    var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'));
-	    this.state = {projectData:projectdata, milestoneData:milestonedata};
+	    this.state = {milestoneData:milestonedata};
 	}
 	        
 	handleInputChange(name, e) {
@@ -32,42 +29,71 @@ class MilestoneManagement extends React.Component {
 		this.setState(change);
 	}
 
-	handlerDropdown(options) {
-		let output = [];
-		_.map(options, function(option){
-		output = output.concat([option.name]);
-		global.multiselectName = output
-		})
-	};
-
 	handleSubmit(e) {
 	    let obj =  [{table:{}}];                   
 	    let obj1 = this.state.input1;
 	    let obj3 = this.state.input2;
 	    obj =({name: obj3 , description: obj1});
-	    var result = this.refs.table.handleAddRow(obj);
-	    if(result){  
-			alert(result);
-	    }
-	    else{
-	        fs.readFile(file, (err, data) => {
-	            if (err) throw err;
-	            let filedata = JSON.parse(data);
-	            filedata.push(obj);
-	            fs.writeFile(file, JSON.stringify(filedata), function(err){
-	                if (err) throw err;
-	                console.log('The "data to append" was appended to file!');
-	            }); 
-	        });
-            window.location.reload();
-	    }
+        fs.readFile(file, (err, data) => {
+            if (err) throw err;
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(file, JSON.stringify(filedata), function(err){
+                if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            }); 
+   	        this.setState({milestoneData:filedata, input1:'', input2:''})
+        });
 	};
 
-	afterSaveCell(row, cellName, cellValue) {
+	render() {
+	    return  (
+	        <div className="container fluid" style={{ marginLeft: '90px' }}>
+	        	Milestone Mangement
+	            <div >
+	                <Form>
+	                    <FormGroup controlId="formInlineName">
+	                        <ControlLabel>Milestone Name</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the Milestone Name" 
+	                        onChange={this.handleInputChange.bind(this, 'input2')}/>
+	                        <ControlLabel>Description</ControlLabel>
+	                        <FormControl type="text" placeholder="Enter the Milestone Description"  
+	                        onChange={this.handleInputChange.bind(this, 'input1')}/>
+	                    </FormGroup>
+	                </Form>
+	            </div>
+	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Milestone</Button>
+	            <MilestoneTable project={this.state.milestoneData} />      
+	        </div>
+	    );
+	}
+}
+
+	var MilestoneTable = function(props) {
+
+	function onDeleteRow(rows) {
+	    fs.readFile(file, (err, data) => {
+		    var filedata = JSON.parse(data);
+	        for (var n = 0 ; n < filedata.length ; n++) {
+	        if (filedata[n].description == rows) {
+	          var removedObject = filedata.splice(n,1);
+	          removedObject = null;
+	          break;
+	        }
+	    }
+	    if (err) throw err;
+	    fs.writeFile(file, JSON.stringify(filedata), function(err){
+		    if (err) throw err;
+		        console.log('The "data to append" was appended to file!');
+		    }); 
+	    })
+	}
+
+	function afterSaveCell(row, cellName, cellValue) {
 	    fs.readFile(file, (err, data) => {
 	        var filedata = JSON.parse(data);
 	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].name == row.name) {
+	        if (filedata[n].description == row.description) {
 	          var removedObject = filedata.splice(n,1);
 	          console.log(removedObject);
 	          removedObject = null;
@@ -95,68 +121,33 @@ class MilestoneManagement extends React.Component {
 	    })}, 100);
 	};
 
-	onDeleteRow(rows) {
-	    fs.readFile(file, (err, data) => {
-		    var filedata = JSON.parse(data);
-	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].name == rows) {
-	          var removedObject = filedata.splice(n,1);
-	          removedObject = null;
-	          break;
-	        }
-	    }
-	    if (err) throw err;
-	    fs.writeFile(file, JSON.stringify(filedata), function(err){
-		    if (err) throw err;
-		        console.log('The "data to append" was appended to file!');
-                window.location.reload();
-		    }); 
-	    })
-	}
+	const cellEdit = {
+        mode: 'dbclick',
+        blurToSave: true,
+        afterSaveCell: afterSaveCell
+    };  
 
-	render() {
-	    var teamsize = this;
+    const selectRow = {
+        mode: 'radio',
+        clickToSelect: true
+    };
 
-	    const cellEdit = {
-	        mode: 'dbclick',
-	        blurToSave: true,
-	        afterSaveCell: this.afterSaveCell
-	    };  
+    const options = {
+        //onRowDoubleClick: this.onRowDoubleClick,
+        onDeleteRow: onDeleteRow,
+        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
+    };
 
-	    const selectRow = {
-	        mode: 'radio',
-	        clickToSelect: true
-	    };
-
-	    const options = {
-	        //onRowDoubleClick: this.onRowDoubleClick,
-	        onDeleteRow: this.onDeleteRow,
-	        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
-	    };
-
-	    return  (
-	        <div className="container fluid" style={{ marginLeft: '90px' }}>
-	        	Milestone Mangement
-	            <div >
-	                <Form>
-	                    <FormGroup controlId="formInlineName">
-	                        <ControlLabel>Milestone Name</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Name" 
-	                        onChange={this.handleInputChange.bind(this, 'input2')}/>
-	                        <ControlLabel>Description</ControlLabel>
-	                        <FormControl type="text" placeholder="Enter the Milestone Description"  
-	                        onChange={this.handleInputChange.bind(this, 'input1')}/>
-	                    </FormGroup>
-	                </Form>
-	            </div>
-	            <Button type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add New Milestone</Button>
-	            <BootstrapTable ref="table" data={this.state.milestoneData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-	                <TableHeaderColumn dataField="name" >Milestone Name</TableHeaderColumn>
-	                <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
-	            </BootstrapTable>                 
-	        </div>
-	    );
-	}
-};
+	const bootstrapTable =  
+		<BootstrapTable data={props.project} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+	        <TableHeaderColumn dataField="name">Milestone Name</TableHeaderColumn>
+	        <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
+	    </BootstrapTable>            
+		return (
+			<div>
+				{bootstrapTable}
+		    </div>
+		)
+	}	
 
 module.exports = MilestoneManagement
