@@ -69,85 +69,85 @@ class MilestoneManagement extends React.Component {
 	}
 }
 
-	var MilestoneTable = function(props) {
+		var MilestoneTable = function(props) {
 
-	function onDeleteRow(rows) {
-	    fs.readFile(file, (err, data) => {
-		    var filedata = JSON.parse(data);
-	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].description == rows) {
-	          var removedObject = filedata.splice(n,1);
-	          removedObject = null;
-	          break;
-	        }
-	    }
-	    if (err) throw err;
-	    fs.writeFile(file, JSON.stringify(filedata), function(err){
+		function onDeleteRow(rows) {
+		    fs.readFile(file, (err, data) => {
+			    var filedata = JSON.parse(data);
+		        for (var n = 0 ; n < filedata.length ; n++) {
+		        if (filedata[n].description == rows) {
+		          var removedObject = filedata.splice(n,1);
+		          removedObject = null;
+		          break;
+		        }
+		    }
 		    if (err) throw err;
-		        console.log('The "data to append" was appended to file!');
-		    }); 
-	    })
-	}
+		    fs.writeFile(file, JSON.stringify(filedata), function(err){
+			    if (err) throw err;
+			        console.log('The "data to append" was appended to file!');
+			    }); 
+		    })
+		}
 
-	function afterSaveCell(row, cellName, cellValue) {
-	    fs.readFile(file, (err, data) => {
-	        var filedata = JSON.parse(data);
-	        for (var n = 0 ; n < filedata.length ; n++) {
-	        if (filedata[n].description == row.description) {
-	          var removedObject = filedata.splice(n,1);
-	          console.log(removedObject);
-	          removedObject = null;
-	          break;
-	        }
-	    }
-	       if (err) throw err;
-	        console.log(filedata);            
-	        fs.writeFile(file, JSON.stringify(filedata), function(err){
-	        if (err) throw err;
-	        }); 
-		})
-	    setTimeout(function() {
-	        let obj =  [{table:{}}];           
-	        obj = row;
-	        fs.readFile(file, (err, data) => {
-	            if (err) throw err;
-	            let filedata = JSON.parse(data);
-	            console.log(filedata)
-	            filedata.push(obj);
-	            fs.writeFile(file, JSON.stringify(filedata), function(err){
-	                if (err) throw err;
-	                console.log('The "data to append" was appended to file!');
-	            });              
-	    })}, 100);
-	};
+		function afterSaveCell(row, cellName, cellValue) {
+		    fs.readFile(file, (err, data) => {
+		        var filedata = JSON.parse(data);
+		        for (var n = 0 ; n < filedata.length ; n++) {
+		        if (filedata[n].description == row.description) {
+		          var removedObject = filedata.splice(n,1);
+		          console.log(removedObject);
+		          removedObject = null;
+		          break;
+		        }
+		    }
+		       if (err) throw err;
+		        console.log(filedata);            
+		        fs.writeFile(file, JSON.stringify(filedata), function(err){
+		        if (err) throw err;
+		        }); 
+			})
+		    setTimeout(function() {
+		        let obj =  [{table:{}}];           
+		        obj = row;
+		        fs.readFile(file, (err, data) => {
+		            if (err) throw err;
+		            let filedata = JSON.parse(data);
+		            console.log(filedata)
+		            filedata.push(obj);
+		            fs.writeFile(file, JSON.stringify(filedata), function(err){
+		                if (err) throw err;
+		                console.log('The "data to append" was appended to file!');
+		            });              
+		    })}, 100);
+		};
 
-	const cellEdit = {
-        mode: 'dbclick',
-        blurToSave: true,
-        afterSaveCell: afterSaveCell
-    };  
+		const cellEdit = {
+	        mode: 'dbclick',
+	        blurToSave: true,
+	        afterSaveCell: afterSaveCell
+	    };  
 
-    const selectRow = {
-        mode: 'radio',
-        clickToSelect: true
-    };
+	    const selectRow = {
+	        mode: 'radio',
+	        clickToSelect: true
+	    };
 
-    const options = {
-        //onRowDoubleClick: this.onRowDoubleClick,
-        onDeleteRow: onDeleteRow,
-        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
-    };
+	    const options = {
+	        //onRowDoubleClick: this.onRowDoubleClick,
+	        onDeleteRow: onDeleteRow,
+	        //afterInsertRow: this.onAfterInsertRow   // A hook for after insert rows
+	    };
 
-	const bootstrapTable =  
-		<BootstrapTable data={props.project} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-	        <TableHeaderColumn dataField="name">Milestone Name</TableHeaderColumn>
-	        <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
-	    </BootstrapTable>            
-		return (
-			<div>
-				{bootstrapTable}
-		    </div>
-		)
-	}	
+		const bootstrapTable =  
+			<BootstrapTable data={props.project} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+		        <TableHeaderColumn dataField="name">Milestone Name</TableHeaderColumn>
+		        <TableHeaderColumn dataField="description" isKey={true}>Description</TableHeaderColumn>
+		    </BootstrapTable>            
+			return (
+				<div>
+					{bootstrapTable}
+			    </div>
+			)
+		}	
 
 module.exports = MilestoneManagement

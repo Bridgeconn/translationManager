@@ -38,11 +38,7 @@ class Form extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.handleChangeStart = this.handleChangeStart.bind(this);
         this.handleChangeEnd = this.handleChangeEnd.bind(this);
-        this.afterSaveCell = this.afterSaveCell.bind(this);
-        this.characterValidator = this.characterValidator.bind(this);
         this.handleChangeDate = this.handleChangeDate.bind(this);
-        this.activeFormatter = this.activeFormatter.bind(this);
-        this.handleCheckboxChange = this.handleCheckboxChange.bind(this);
     }
 
     handleChange({ startDate, endDate }) {
@@ -65,109 +61,10 @@ class Form extends React.Component {
         this.handleChange({ endDate })
     }
 
-   // Double click function to get the value of that row. 
-/*
-    onRowDoubleClick(row) {
-        console.log(row);
-        this.setState({ showModal: true  });
-         if (this.didSwitchParentObject)
-        {
-            this.didSwitchParentObject= false;
-            this.refs.myTextInput.label = row;
-        }
-    }
-*/
-    onDeleteRow(rows) {
-        fs.readFile(assignmentfile, (err, data) => {
-        var filedata = JSON.parse(data);
-            for (var n = 0 ; n < filedata.length ; n++) {
-            if (filedata[n].id == rows) {
-              var removedObject = filedata.splice(n,1);
-              removedObject = null;
-              break;
-            }
-        }
-            if (err) throw err;
-            console.log(filedata);            
-            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
-            if (err) throw err;
-            console.log('The "data to append" was appended to file!');
-            window.location.reload();
-            });
-        })
-    }
-
-    afterSaveCell(row, cellName, cellValue) {
-        fs.readFile(assignmentfile, (err, data) => {
-            var filedata = JSON.parse(data);
-                for (var n = 0 ; n < filedata.length ; n++) {
-                if (filedata[n].id == row.id) {
-                  var removedObject = filedata.splice(n,1);
-                  removedObject = null;
-                  break;
-                }
-            }
-            if (err) throw err;
-            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
-            if (err) throw err;
-                console.log('The "data to append" was appended to file!');
-            }); 
-        })
-          
-    setTimeout(function() {
-    let obj =  [{table:{}}];           
-    obj = row;
-    row.isCompleted = (row.isCompleted == "true" ? true : false);
-        fs.readFile(assignmentfile, (err, data) => {
-            if (err) throw err;
-            let filedata = JSON.parse(data);
-            filedata.push(obj);
-            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
-                if (err) throw err;
-                console.log('The "data to append" was appended to file!');
-            });
-            window.location.reload();
-                           
-    })}, 800);
-
-    };
-
     handleChangeDate(date) {
         this.setState({
           Date: date
         })
-    }
-
-    //Character Validation Check - Checks if length < 5 and cant be left blank.
-    characterValidator(value) {
-        const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
-        if (!value) {
-            response.isValid = false;
-            response.notification.type = 'error';
-            response.notification.msg = 'Value must be inserted';
-            response.notification.title = 'Requested Value';
-        } else if (value.length < 5) {
-            response.isValid = false;
-            response.notification.type = 'error';
-            response.notification.msg = 'Value must have 5+ characters';
-            response.notification.title = 'Invalid Value';
-        }
-        return response;           
-    }
-
-    //Integer Validation Check - Checks if Number is entered and cant be left blank.
-    integerValidator(value) {
-        const nan = isNaN(parseInt(value, 10));
-        if (nan) {
-        return 'Must be a integer!';
-        }
-        else if (!value) {
-            response.isValid = false;
-            response.notification.type = 'error';
-            response.notification.msg = 'Value must be inserted';
-            response.notification.title = 'Requested Value';
-            }
-        return true;
     }
 
     handleSubmit(e) {
@@ -190,34 +87,16 @@ class Form extends React.Component {
             let progressobject =  [{table:{}}];                      
             obj = ({id:obj0, TeamName: obj4 , Book: obj1, Chapters:obj2, Milestones:obj3, StartDate: obj5 , EndDate: obj6, CompleteDate:obj7, Project:obj8, isCompleted: obj9 });
         }
-
-        var result = this.refs.table.handleAddRow(obj);
-        if(result){  
-          alert(result);
-        }
-        else{
-            fs.readFile(assignmentfile, (err, data) => {
+        fs.readFile(assignmentfile, (err, data) => {
+            if (err) throw err;
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
                 if (err) throw err;
-                let filedata = JSON.parse(data);
-                filedata.push(obj);
-                fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
-                    if (err) throw err;
-                    console.log('The "data to append" was appended to file!');
-                }); 
-            })
-            window.location.reload();
-        }
+                console.log('The "data to append" was appended to file!');
+            });
+        })
     };
-
-    handleCheckboxChange(event) {
-        this.setState({isCompleted: this.state.assignmentData});
-    }
-
-    activeFormatter(cell, row, enumObject, index) {
-        return (
-            <input type='checkbox' title="Double Click to edit" key={index} onChange={this.handleCheckboxChange} checked={this.state.assignmentData[index].isCompleted} active={ cell } />
-        )    
-    }
 
     render() {         
         var name = this;
@@ -228,26 +107,6 @@ class Form extends React.Component {
         var projects = this;
         self = this;
         var chapters = !!this.state.book ? this.state.chapters[this.state.book.label] : [];
-
-        const options = {
-            //onRowDoubleClick: this.onRowDoubleClick,
-            onDeleteRow: this.onDeleteRow,
-        };
-
-        const cellEdit = {
-            mode: 'dbclick',
-            blurToSave: true,
-            afterSaveCell: this.afterSaveCell
-        };    
-
-        const selectRow = {
-            mode: 'radio',
-            clickToSelect: true
-        };
-
-        const tooltip = (
-            <Tooltip id="tooltip">Double click the cell to edit</Tooltip>
-        );
 
         return( 
              
@@ -328,9 +187,9 @@ class Form extends React.Component {
                     }
                     value = { this.state.mile } 
                     onValueChange = { function(mile) {
-                            milesstone.setState ({mile: mile, model: undefined}
-                            )
-                        }} 
+                        milesstone.setState ({mile: mile, model: undefined}
+                        )
+                    }} 
                     />
                 </div>
                  <div>
@@ -342,9 +201,9 @@ class Form extends React.Component {
                             return { label: teamName.id, value: teamName.id };
                         })
                     }  
-                    value = { this.state.teamName }    onValueChange = { function(teamName) {
-                                name.setState ({teamName: teamName})
-                            }}
+                    value = { this.state.teamName } onValueChange = { function(teamName) {
+                        name.setState ({teamName: teamName})
+                    }}
                     />
                 </div>
                 <div>    
@@ -362,26 +221,184 @@ class Form extends React.Component {
                         <Button bsStyle="default" type="submit" style={{ position: 'left' }} onClick={() => this.handleSubmit()}>Add Assignment</Button>
                     </ButtonToolbar>
                 </Panel>                
-            
-                <BootstrapTable striped  ref="table" data={this.state.assignmentData} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
-                    <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
-                    <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Milestones" editable={ { validator: this.characterValidator } } dataSort>Milestone</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Book" editable={ { validator: this.characterValidator } } dataSort>Book</TableHeaderColumn>
-                    <TableHeaderColumn dataField="Chapters" editable={ { validator: this.integerValidator } } dataSort>Chapter</TableHeaderColumn>
-                    <TableHeaderColumn dataField="StartDate" editable={ { validator: this.integerValidator } } dataSort>Start Date</TableHeaderColumn>
-                    <TableHeaderColumn dataField="EndDate" editable={ { validator: this.integerValidator } } dataSort>Target Date</TableHeaderColumn>  
-                    <TableHeaderColumn dataField="CompleteDate" editable={ { validator: this.integerValidator } } hidden>Complete Date</TableHeaderColumn>  
-                    <TableHeaderColumn dataField="Project" dataSort>Project</TableHeaderColumn>  
-                    <TableHeaderColumn  dataField="isCompleted" dataAlign="center" dataFormat={ this.activeFormatter } editable={{type: 'checkbox', options: { values: 'true:false' }}} >
-                        <OverlayTrigger placement="top" overlay={tooltip}>
-                           <div>Status</div>
-                        </OverlayTrigger>
-                    </TableHeaderColumn>
-                </BootstrapTable>
+                <AssignTable project={this.state.assignmentData} />                      
             </div>
         )
     }
-};  
+}; 
+
+var AssignTable = function(props) {
+
+    //Onchange checkbox function
+    function handleCheckboxChange(row) {
+         fs.readFile(assignmentfile, (err, data) => {
+            var filedata = JSON.parse(data);
+                for (var n = 0 ; n < filedata.length ; n++) {
+                if (filedata[n].id == row.id) {
+                  var removedObject = filedata.splice(n,1);
+                  removedObject = null;
+                  break;
+                }
+            }
+            if (err) throw err;
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            }); 
+        })
+          
+    setTimeout(function() {
+    let obj =  [{table:{}}];           
+    obj = row;
+    row.isCompleted = (row.isCompleted == "true" ? true : false);
+    fs.readFile(assignmentfile, (err, data) => {
+        if (err) throw err;
+        let filedata = JSON.parse(data);
+        filedata.push(obj);
+        fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+        });
+        window.location.reload();                           
+    })}, 800);
+    };
+    
+  
+    //Column for Checkbox
+    function activeFormatter(cell, row, enumObject, index) {
+        console.log(props.project[index].isCompleted);
+        return (
+            <input type='checkbox' title="Double Click to edit" key={index} onChange={handleCheckboxChange.bind(this,row)} checked={props.project[index].isCompleted} active={ cell } />
+        )    
+    }
+
+    //Delete function on the basis of Key Column and row index
+    function onDeleteRow(rows) {
+        fs.readFile(assignmentfile, (err, data) => {
+        var filedata = JSON.parse(data);
+            for (var n = 0 ; n < filedata.length ; n++) {
+            if (filedata[n].id == rows) {
+              var removedObject = filedata.splice(n,1);
+              removedObject = null;
+              break;
+            }
+        }
+            if (err) throw err;
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+            });
+        })
+    }
+
+    //Edit function on the basis of 
+    function afterSaveCell(row, cellName, cellValue) {
+        fs.readFile(assignmentfile, (err, data) => {
+            var filedata = JSON.parse(data);
+                for (var n = 0 ; n < filedata.length ; n++) {
+                if (filedata[n].id == row.id) {
+                  var removedObject = filedata.splice(n,1);
+                  removedObject = null;
+                  break;
+                }
+            }
+            if (err) throw err;
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            }); 
+        })
+          
+    setTimeout(function() {
+    let obj =  [{table:{}}];           
+    obj = row;
+    row.isCompleted = (row.isCompleted == "true" ? true : false);
+    fs.readFile(assignmentfile, (err, data) => {
+        if (err) throw err;
+        let filedata = JSON.parse(data);
+        filedata.push(obj);
+        fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+            if (err) throw err;
+            console.log('The "data to append" was appended to file!');
+        });                           
+    })}, 800);
+    };
+
+
+    //Character Validation Check - Checks if length < 5 and cant be left blank.
+    function characterValidator(value) {
+        const response = { isValid: true, notification: { type: 'success', msg: '', title: '' } };
+        if (!value) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must be inserted';
+            response.notification.title = 'Requested Value';
+        } else if (value.length < 5) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must have 5+ characters';
+            response.notification.title = 'Invalid Value';
+        }
+        return response;           
+    }
+
+    //Integer Validation Check - Checks if Number is entered and cant be left blank.
+    function integerValidator(value) {
+        const nan = isNaN(parseInt(value, 10));
+        if (nan) {
+        return 'Must be a integer!';
+        }
+        else if (!value) {
+            response.isValid = false;
+            response.notification.type = 'error';
+            response.notification.msg = 'Value must be inserted';
+            response.notification.title = 'Requested Value';
+            }
+        return true;
+    }
+
+    const options = {
+            //onRowDoubleClick: this.onRowDoubleClick,
+            onDeleteRow: onDeleteRow,
+        };
+
+        const cellEdit = {
+            mode: 'dbclick',
+            blurToSave: true,
+            afterSaveCell: afterSaveCell
+        };    
+
+        const selectRow = {
+            mode: 'radio',
+            clickToSelect: true
+        };
+
+        const tooltip = (
+            <Tooltip id="tooltip">Double click the cell to edit</Tooltip>
+        );
+
+    const bootstrapTable =  
+       <BootstrapTable striped data={props.project} cellEdit={ cellEdit } selectRow={selectRow} options={ options } deleteRow>
+            <TableHeaderColumn dataField="id" hidden isKey>id</TableHeaderColumn>
+            <TableHeaderColumn dataField="TeamName" headerTitle={ true } dataSort>Team Name</TableHeaderColumn>
+            <TableHeaderColumn dataField="Milestones" editable={ { validator: characterValidator } } dataSort>Milestone</TableHeaderColumn>
+            <TableHeaderColumn dataField="Book" editable={ { validator: characterValidator } } dataSort>Book</TableHeaderColumn>
+            <TableHeaderColumn dataField="Chapters" editable={ { validator: integerValidator } } dataSort>Chapter</TableHeaderColumn>
+            <TableHeaderColumn dataField="StartDate" editable={ { validator: integerValidator } } dataSort>Start Date</TableHeaderColumn>
+            <TableHeaderColumn dataField="EndDate" editable={ { validator: integerValidator } } dataSort>Target Date</TableHeaderColumn>  
+            <TableHeaderColumn dataField="CompleteDate" editable={ { validator: integerValidator } } hidden>Complete Date</TableHeaderColumn>  
+            <TableHeaderColumn dataField="Project" dataSort>Project</TableHeaderColumn>  
+            <TableHeaderColumn dataField="isCompleted" dataAlign="center" dataFormat={ activeFormatter } editable={ false } >
+                <OverlayTrigger placement="top" overlay={tooltip}>
+                   <div>Status</div>
+                </OverlayTrigger>
+            </TableHeaderColumn>
+        </BootstrapTable>
+        return (
+            <div>
+                {bootstrapTable}
+            </div>
+        )
+    }    
 
 module.exports = Form
