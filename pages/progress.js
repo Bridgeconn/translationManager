@@ -62,7 +62,9 @@ var ProjectsGroup = function(props) {
 	)
 	return (
 		<div>
-			<h2>Progress</h2>
+			<PageHeader>
+				Progress
+			</PageHeader>
 			{bookGroups}
 		</div>
 	)

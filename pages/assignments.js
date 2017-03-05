@@ -77,7 +77,7 @@ class Assignments extends React.Component {
         <PageHeader>
           Assignments
           <Button style={{float: 'right'}} onClick={() => this.props.actions.openModal('New Assignment', form)}>
-            add
+            Add
           </Button>
         </PageHeader>
         <CleanTable fields={fields} filename={filename} callback={this.actions.reload} data={this.state.data} callback={this.actions.reload} />

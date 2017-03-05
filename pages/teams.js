@@ -40,7 +40,7 @@ class Teams extends React.Component {
 				<PageHeader>
           Teams
 					<Button style={{float: 'right'}} onClick={()=> this.props.actions.openModal('New Milestone', form)}>
-						add
+						Add
 					</Button>
 				</PageHeader>
 				<CleanTable fields={fields} filename={filename} callback={this.actions.reload} data={this.state.data} callback={this.actions.reload} />

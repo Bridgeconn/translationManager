@@ -41,7 +41,7 @@ class Projects extends React.Component {
 				<PageHeader>
 					Projects
 					<Button style={{float: 'right'}} onClick={()=> this.props.actions.openModal('New Project', form)}>
-						add
+						Add
 					</Button>
 				</PageHeader>
 				<CleanTable fields={fields} filename={filename} callback={this.actions.reload} data={this.state.data} callback={this.actions.reload} />
