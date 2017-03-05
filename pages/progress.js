@@ -1,8 +1,6 @@
 const React = require('react');
-const style = require("../components/style");
 const bootstrap = require('react-bootstrap');
-const fs = require('fs');
-const Nav = require('react-bootstrap/lib/Nav');
+
 const ProgressBar = require('react-bootstrap/lib/ProgressBar');
 const Button = require('react-bootstrap/lib/Button');
 const Table = require('react-bootstrap/lib/Table');
@@ -11,6 +9,11 @@ const Grid = require('react-bootstrap/lib/Grid');
 const Row = require('react-bootstrap/lib/Row');
 const PageHeader = require("react-bootstrap/lib/PageHeader");
 const Col = require('react-bootstrap/lib/Col');
+
+const style = require("../components/style");
+const Nav = require('react-bootstrap/lib/Nav');
+
+const fs = require('fs');
 const assignmentfile = ('./static/assignment.json');
 const milestonefile = ('./static/milestones.json');
 const chapterfile = ('./static/chapters.json');
@@ -19,7 +22,7 @@ const _ = require('lodash');
 
 var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'))
 
-class Progress extends React.Component {
+class Progressbar extends React.Component {
 	constructor(props) {
     super(props);
 		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'))
@@ -52,9 +55,15 @@ var ProjectsGroup = function(props) {
 	var projects = props.projects
 	var projectNames = Object.keys(projects)
 
+	var milestoneNames = []
+	milestonedata.forEach(function(milestone) {
+		milestoneNames.push(milestone.name)
+	})
+
 	const bookGroups = projectNames.map((projectName, index) =>
 		<Table responsive striped bordered condensed hover key={index}>
 			<thead>
+				<TableHeader milestoneNames={milestoneNames} />
 				<ProjectMilestoneGroup projectName={projectName} project={projects[projectName]} />
 			</thead>
 			<BookGroup projectName={projectName} books={projects[projectName]} />
@@ -64,6 +73,10 @@ var ProjectsGroup = function(props) {
 		<div>
 			<PageHeader>
 				Progress
+				<small style={{ height: '100%', width: '100%', textAlign: 'right', display:'block', marginTop:'-30px' }} >
+					<span style={style.circlePurple}></span> Project
+					<span style={style.circleGreen}></span> Book
+				</small>
 			</PageHeader>
 			{bookGroups}
 		</div>
@@ -96,14 +109,29 @@ var ProjectMilestoneGroup = function(props) {
 
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<th key={index} id={milestoneName} style={style.milestoneName}>
-			<span>{milestoneName}</span>
-			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label={`${progress[milestoneName]}%`} key={index} />
+			<span style={style.circlePurple}>{complete[milestoneName]}</span>
+			<ProgressBar style={style.purpleProgressBar} bsClass="purpleProgressBar" active now={progress[milestoneName]} label="." key={index} />
+			<span style={style.percent}>{`${progress[milestoneName]}%`}</span>
 		</th>
 	)
 	return (
 		<tr>
 			<th style={style.projectName}>{projectName}</th>
 			{progressGroup}
+		</tr>
+	)
+}
+
+var TableHeader = function(props) {
+	const milestoneHeaders = props.milestoneNames.map((milestoneName, index) =>
+		<th key={index} id={milestoneName} style={style.progressTableHeader}>
+			{milestoneName}
+		</th>
+	)
+	return (
+		<tr>
+			<th style={style.progressTableHeader}>Project</th>
+			{milestoneHeaders}
 		</tr>
 	)
 }
@@ -144,7 +172,7 @@ var BookMilestoneGroup = function(props) {
 	const progressGroup = milestoneNames.map((milestoneName,index) =>
 		<td key={index} headers={milestoneName} style={style.progressBarContainer}>
 			<span style={style.circleGreen}>{milestones[milestoneName].completed.length}</span>
-			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label={`${completed(milestoneName)}%`} key={index}></ProgressBar>
+			<ProgressBar style={style.greenProgressBar} bsClass="greenProgressBar" now={completed(milestoneName)} label="." key={index}></ProgressBar>
 			<span style={style.percent}>{`${completed(milestoneName)}%`}</span>
 		</td>
 	)
@@ -157,4 +185,4 @@ var BookMilestoneGroup = function(props) {
 	)
 }
 
-module.exports = Progress
+module.exports = Progressbar
