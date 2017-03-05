@@ -76,7 +76,7 @@ var style = {
 
   projectName:{
     margin:"0 auto",
-    textAlign:"center",  
+    textAlign:"center",
     width:"20%",
     paddingTop:"10px",
     paddingBottom:"10px",
@@ -84,7 +84,7 @@ var style = {
 
    milestoneName:{
     margin:"0 auto",
-    textAlign:"center",  
+    textAlign:"center",
   },
 
   circleGreen:{

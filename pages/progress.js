@@ -1,5 +1,5 @@
 const React = require('react');
-const style = require("./Style");
+const style = require("../components/style");
 const bootstrap = require('react-bootstrap');
 const fs = require('fs');
 const Nav = require('react-bootstrap/lib/Nav');
@@ -19,15 +19,15 @@ const _ = require('lodash');
 
 var milestonedata = JSON.parse(fs.readFileSync(milestonefile, 'utf8'))
 
-class Progressbar extends React.Component {
+class Progress extends React.Component {
 	constructor(props) {
     super(props);
 		var assignmentdata = JSON.parse(fs.readFileSync(assignmentfile, 'utf8'))
 		var chaptersdata = JSON.parse(fs.readFileSync(chapterfile, 'utf8'))
 		var projects = {}
 		assignmentdata.forEach(function(assignment) {
-			var project = assignment.Project, book = assignment.Book,
-				milestone = assignment.Milestones, chapter = assignment.Chapters,
+			var project = assignment.project, book = assignment.book,
+				milestone = assignment.milestone, chapter = assignment.chapter,
 				completed = assignment.isCompleted == true
 			function empty(item) { return item === undefined }
 			function initObject(item) { if (empty(item)) item = {}; return item }
@@ -61,8 +61,10 @@ var ProjectsGroup = function(props) {
 		</Table>
 	)
 	return (
-		<div style={{ marginLeft: '100px' }}><h2>View Projects Progress</h2>
-		{bookGroups}</div>
+		<div>
+			<h2>Progress</h2>
+			{bookGroups}
+		</div>
 	)
 }
 
@@ -153,4 +155,4 @@ var BookMilestoneGroup = function(props) {
 	)
 }
 
-module.exports = Progressbar
+module.exports = Progress
