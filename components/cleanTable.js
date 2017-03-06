@@ -13,6 +13,11 @@ class CleanTable extends React.Component {
     super(props)
     this.state = {}
 
+		let keyField
+		props.fields.forEach(function(field) {
+			if (field.isKey) keyField = field.key
+		})
+
 		let that = this
 		this.actions = {
 			writeFile: function(filename, filedata, callback) {
@@ -21,13 +26,12 @@ class CleanTable extends React.Component {
 					callback()
 				})
 			},
-			onDeleteRow: function(rows) {
+			onDeleteRow: function(key) {
 				fs.readFile(props.filename, (err, data) => {
 					var filedata = JSON.parse(data)
 					for (var n=0; n < filedata.length; n++) {
-						if (filedata[n].name == rows) {
+						if (filedata[n][keyField] == key) {
 							var removedObject = filedata.splice(n,1)
-							removedObject = null
 							break
 						}
 					}
@@ -39,7 +43,7 @@ class CleanTable extends React.Component {
 				fs.readFile(props.filename, (err, data) => {
 					var filedata = JSON.parse(data)
 					for (var n=0; n < filedata.length; n++) {
-						if (filedata[n].name == row.name) {
+						if (filedata[n][keyField] == row[keyField]) {
 							filedata[n][cellName] = cellValue
 							break
 						}
