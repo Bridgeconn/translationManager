@@ -231,7 +231,7 @@ var AssignTable = function(props) {
 
     //Onchange checkbox function
     function handleCheckboxChange(row) {
-         fs.readFile(assignmentfile, (err, data) => {
+        fs.readFile(assignmentfile, (err, data) => {
             var filedata = JSON.parse(data);
                 for (var n = 0 ; n < filedata.length ; n++) {
                 if (filedata[n].id == row.id) {
@@ -246,24 +246,23 @@ var AssignTable = function(props) {
                 console.log('The "data to append" was appended to file!');
             }); 
         })
-          
-    setTimeout(function() {
-    let obj =  [{table:{}}];           
-    obj = row;
-    row.isCompleted = (row.isCompleted == "true" ? true : false);
-    fs.readFile(assignmentfile, (err, data) => {
-        if (err) throw err;
-        let filedata = JSON.parse(data);
-        filedata.push(obj);
-        fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+              
+        setTimeout(function() {
+        let obj =  [{table:{}}];           
+        obj = row;
+        row.isCompleted = (row.isCompleted == true ? true : false);
+        fs.readFile(assignmentfile, (err, data) => {
             if (err) throw err;
-            console.log('The "data to append" was appended to file!');
-        });
-        window.location.reload();                           
-    })}, 800);
+            let filedata = JSON.parse(data);
+            filedata.push(obj);
+            fs.writeFile(assignmentfile, JSON.stringify(filedata), function(err){
+                if (err) throw err;
+                console.log('The "data to append" was appended to file!');
+            });
+            window.location.reload();                           
+        })}, 800);
     };
     
-  
     //Column for Checkbox
     function activeFormatter(cell, row, enumObject, index) {
         console.log(props.project[index].isCompleted);
