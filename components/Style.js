@@ -1,7 +1,7 @@
 var style = {
   container:{
       backgroundColor: "#333333",
-      width: "85px",
+      width: "100px",
       height: "100vh",
       marginLeft: "0px",
       display: "inline-block",
@@ -47,6 +47,15 @@ var style = {
     paddingTop: "18px",
     paddingBottom: "18px"
 
+  },
+  image:{
+    height: "40px",
+    width: "40px",
+    display: "block",
+    padding: "5px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "5px",
   },
 
   logo:{
