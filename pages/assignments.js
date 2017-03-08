@@ -20,7 +20,8 @@ class Assignments extends React.Component {
     super(props);
 
     this.state = {
-      data: JSON.parse(fs.readFileSync(filename, 'utf8'))
+      data: JSON.parse(fs.readFileSync(filename, 'utf8')),
+      book: undefined
     }
 
     this.projectsData = JSON.parse(fs.readFileSync(projectsFile, 'utf8'))
@@ -60,18 +61,19 @@ class Assignments extends React.Component {
     })
 
     const fields = [
-        { key: 'id', label: 'id', type: 'integer', hidden: true, isKey: true, default: this.state.data[this.state.data.length-1].id+1 },
-        { key: 'project', label: 'Project', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Project', options: projectOptions, sort: true},
-        { key: 'book', label: 'Book', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Book', options: bookOptions, blocked: 'project', sort: true},
-        { key: 'chapter', label: 'Chapter', type: 'SimpleSelect', validation: 'integer', placeholder: 'Select Chapter', options: chapterOptions, blocked: 'book', sort: true, filter: 'book'},
-        { key: 'milestone', label: 'Milestone', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Milestone', options: milestoneOptions, blocked: 'chapter', sort: true,},
-        { key: 'team', label: 'Team', type: 'SimpleSelect', validation: 'character', placeholder: 'Select Team', options: teamOptions, blocked: 'milestone', sort: true},
-        { key: 'startDate', label: 'Start Date', type: 'DatePicker', validation: 'integer', selects: 'start', startKey: 'startDate', endKey: 'endDate', sort: true },
-        { key: 'endDate', label: 'End Date', type: 'DatePicker', validation: 'integer', selects: 'end', startKey: 'startDate', endKey: 'endDate', sort: true },
-        { key: 'isCompleted', label: 'Completed', type: 'boolean', align: 'center', sort: true },
-        { key: 'completedDate', label: 'Completed Date', hidden: true, validation: 'integer', type: 'DatePicker', startKey: 'startDate', endKey: 'completedDate', sort: true }
+
+      { key: 'id', label: 'id', type: 'integer', hidden: true, isKey: true, default: this.state.data[this.state.data.length-1].id+1 },
+      { key: 'project', label: 'Project', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Project', options: projectOptions, sort: true},
+      { key: 'book', label: 'Book', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Book', options: bookOptions, blocked: 'project', sort: true},
+      { key: 'chapter', label: 'Chapter', type: 'SimpleSelect', validation: 'integer', placeholder: 'Select Chapter', options: this.chaptersData, optionsKey: 'book', blocked: 'book', sort: true, filter: 'book'},
+      { key: 'milestone', label: 'Milestone', type: 'SimpleSelect', validation: 'text', placeholder: 'Select Milestone', options: milestoneOptions, blocked: 'chapter', sort: true},
+      { key: 'team', label: 'Team', type: 'SimpleSelect', validation: 'character', placeholder: 'Select Team', options: teamOptions, blocked: 'milestone', sort: true},
+      { key: 'startDate', label: 'Start Date', type: 'DatePicker', selects: 'start', startKey: 'startDate', endKey: 'endDate', sort: true },
+      { key: 'endDate', label: 'End Date', type: 'DatePicker', selects: 'end', startKey: 'startDate', endKey: 'endDate', sort: true },
+      { key: 'isCompleted', label: 'Completed', type: 'boolean', align: 'center', sort: true },
+      { key: 'completedDate', label: 'Completed Date', hidden: true, type: 'DatePicker', startKey: 'startDate', endKey: 'completedDate', sort: true }
     ]
-    const form = <CleanForm fields={fields} filename={filename} callback={this.actions.reload} />
+    const form = <CleanForm actions={this.actions} state={this.state} fields={fields} filename={filename} callback={this.actions.reload} />
     return(
       <div>
         <PageHeader>

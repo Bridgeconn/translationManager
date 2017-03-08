@@ -31,8 +31,8 @@ class Milestones extends React.Component {
 
 	render() {
 		const fields = [
-			{ key: 'name', label: 'Name', type: 'text', placeholder: 'Enter the Name', isKey: true },
-			{ key: 'description', label: 'Description', type: 'text', placeholder: 'Enter the Description' }
+			{ key: 'name', label: 'Name', type: 'text', placeholder: 'Enter the Name', isKey: true, sort: true },
+			{ key: 'description', label: 'Description', type: 'text', placeholder: 'Enter the Description', sort: true }
 		]
 		const form = <CleanForm fields={fields} filename={filename} callback={this.actions.reload} />
     return  (

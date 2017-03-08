@@ -16,50 +16,77 @@ class CleanForm extends React.Component {
 	constructor(props) {
     super(props)
     this.state = {}
+
+		let that = this
+		this.actions = {
+			handleSubmit: function(e) {
+				fs.readFile(that.props.filename, (err, data) => {
+					if (err) throw err
+					let filedata = JSON.parse(data)
+					filedata.push(that.state)
+					fs.writeFile(that.props.filename, JSON.stringify(filedata), function(err){
+						if (err) throw err
+						console.log('The "data to append" was appended to file!')
+						that.props.callback()
+					})
+					that.setState({})
+				})
+			},
+			onChange: function(key, option, callback) {
+				let newState = that.state
+				newState[key] = option
+				that.setState(newState)
+				if (typeof callback != "undefined") {
+					callback(option.value)
+				}
+			}
+		}
 	}
 
-  handleInputChange(key, e) {
-    let newState = this.state
-    newState[key] = e.target.value
-    this.setState(newState)
-  }
-
-  handleSubmit(e) {
-    let that = this
-		fs.readFile(that.props.filename, (err, data) => {
-			if (err) throw err
-			let filedata = JSON.parse(data)
-			filedata.push(that.state)
-			fs.writeFile(that.props.filename, JSON.stringify(filedata), function(err){
-				if (err) throw err
-				console.log('The "data to append" was appended to file!')
-        that.props.callback()
-			})
-			that.setState({})
-		})
-	}
 
   render() {
 		let that = this
-		let newState = this.state
 		const fields = this.props.fields.map(function(field) {
+
+			// this section abstracts filtering based on another key as filter
+			let options
+			if (field.options !== undefined && field.options.constructor === Array) {
+				options = field.options
+			} else {
+				let _options = field.options
+				let optionsKey
+				if (field.optionsKey !== undefined) {
+					optionsKey = that.state[field.optionsKey]
+					if (optionsKey !== undefined) {
+						_options = field.options[optionsKey]
+					}
+				}
+				if (_options === undefined || optionsKey === undefined) _options = []
+				options = _options.map(function(option) {
+					return { label: option, value: option}
+				})
+			}
+
 			let formField
-			console.log(field)
 			switch(field.type) {
 				case 'SimpleSelect':
-					formField = <SimpleSelect placeholder={field.placeholder} value={that.state[field.key]} options={field.options}
-						onValueChange={ function(value) { newState[field.key] = value; that.setState(newState) } }
+					let value
+					if (that.state[field.key] !== undefined) {
+						value = { label: that.state[field.key], value: that.state[field.key] }
+					}
+					formField = <SimpleSelect placeholder={field.placeholder} value={ value } options={options}
+						onValueChange={ function(option){ that.actions.onChange(field.key, option.value, field.callback) }}
 						disabled={field.blocked !== undefined && that.state[field.blocked] === undefined}
 					/>
 					break
 				case 'DatePicker':
 					formField = <DatePicker selected={that.state.startDate} selectsStart  startDate={that.state[field.startKey]}
-						endDate={that.state[field.endKey]} onChange={that.handleInputChange.bind(that, field.key)}
+						endDate={that.state[field.endKey]} onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
 					/>
 					break
 				default:
 					formField = <FormControl type={field.type} placeholder={field.placeholder} value={field.default}
-            onChange={that.handleInputChange.bind(that, field.key)}
+            onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
 					/>
 			}
 			return (
@@ -77,7 +104,7 @@ class CleanForm extends React.Component {
     return (
       <Form horizontal>
         {fields}
-        <Button onClick={() => this.handleSubmit()}>Save</Button>
+        <Button onClick={() => that.actions.handleSubmit()}>Save</Button>
       </Form>
     )
   }

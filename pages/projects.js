@@ -44,7 +44,7 @@ class Projects extends React.Component {
 						Add
 					</Button>
 				</PageHeader>
-				<CleanTable fields={fields} filename={filename} callback={this.actions.reload} data={this.state.data} callback={this.actions.reload} />
+				<CleanTable fields={fields} filename={filename} callback={this.actions.reload} data={this.state.data} />
 			</div>
     )
 	}
