@@ -1,16 +1,5 @@
 const React = require('react');
 const ReactDOM = require('react-dom');
-const NavBar = require('./components/navbar.js');
-const Sidebar = require('./components/sidebar.js');
+const Page = require('./pages/page.js');
 
-class Assign extends React.Component {
-  render() {
-    return (
-        <div><NavBar /><Sidebar /></div>
-    );
-  }
-};
-
-// ========================================
-
-ReactDOM.render(<Assign />, document.getElementById('container'));
+ReactDOM.render(<Page />, document.getElementById('container'));

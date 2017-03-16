@@ -1,0 +1,12 @@
+body{
+	background-color:#EFF2F6;
+}
+.customHeader .container{
+width:100%!important;
+}
+.customHeader{
+	border-radius:0px !important;
+}
+.customHeader .container span.pagetitle{
+	color:#fff; font-size:20px; display: inline-block; margin:15px 0 0 0;
+}
