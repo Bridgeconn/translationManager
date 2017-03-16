@@ -1,49 +1,24 @@
 const React = require('react');
 const bootstrap = require('react-bootstrap');
-const Tooltip = require("react-bootstrap/lib/Tooltip");
-const OverlayTrigger = require("react-bootstrap/lib/OverlayTrigger");
+
 const Glyphicon = require("react-bootstrap/lib/Glyphicon");
+const SideBarButton = require("./sidebarbutton");
 
 const style = require("./Style");
 
 class Sidebar extends React.Component {
-  render() {
-    const projecttooltip = (
-        <Tooltip id="tooltip">Add/Update Translation Project Detail</Tooltip>
-    );
-    const milestonetooltip = (
-        <Tooltip id="tooltip"> Configure / set Milestones for your projects</Tooltip>
-    );
-    const teamtooltip = (
-        <Tooltip id="tooltip">Add/Edit Teams and Members</Tooltip>
-    );
-    const assigntooltip = (
-        <Tooltip id="tooltip">Assign Chapters to a team in a particular milestone</Tooltip>
-    );
-    const progresstooltip = (
-        <Tooltip id="tooltip">View Progress of Each Project by Milestone and Book</Tooltip>
-    );
 
+  render() {
+   
     return (
       <div>
-        <div style={style.container}>
-          <img src="images/TC_Icon_logo.png" style={style.logo}/>
+        <div style={style.sidebarContainer}>
           <ul style={style.ul}>
-            <OverlayTrigger placement="right" overlay={projecttooltip}>
-              <li style={style.li} onClick={() => this.props.actions.showPage('Projects')}>Projects</li>
-            </OverlayTrigger>
-            <OverlayTrigger placement="right" overlay={milestonetooltip}>
-              <li style={style.li} onClick={() => this.props.actions.showPage('Milestones')}>Milestones</li>
-            </OverlayTrigger>
-            <OverlayTrigger placement="right" overlay={teamtooltip}>
-              <li style={style.li} onClick={() => this.props.actions.showPage('Teams')}>Teams</li>
-            </OverlayTrigger>
-            <OverlayTrigger placement="right" overlay={assigntooltip}>
-              <li style={style.li} onClick={() => this.props.actions.showPage('Assignments')}>Assignments</li>
-            </OverlayTrigger>
-            <OverlayTrigger placement="right" overlay={progresstooltip}>
-              <li style={style.li} onClick={() => this.props.actions.showPage('Progress')}>Progress</li>
-            </OverlayTrigger>
+            <SideBarButton handleButtonClick={() => this.props.actions.showPage('Projects')} imageName={"images/assign@3xwhite.png"} hoverImage={"images/assign@3x.png"} style={style.image} value={"Projects"} />
+            <SideBarButton handleButtonClick={() => this.props.actions.showPage('Milestones')} imageName={"images/assign@3xwhite.png"} hoverImage={"images/assign@3x.png"} style={style.image} value={"Milestones"}/>
+            <SideBarButton handleButtonClick={() => this.props.actions.showPage('Teams')} imageName={"images/teams@3x.png"} hoverImage={"images/teams@3x.png"} style={style.image} value={"Teams"}/>
+            <SideBarButton handleButtonClick={() => this.props.actions.showPage('Assignments')} imageName={"images/assign@3xwhite.png"} hoverImage={"images/assign@3x.png"} style={style.image} value={"Assignments"}/>
+            <SideBarButton handleButtonClick={() => this.props.actions.showPage('Progress')} imageName={"images/stats@3xwhite.png"} hoverImage={"images/stats@3x.png"} style={style.image} value={"Progress"}/>
           </ul>
         </div>
       </div>

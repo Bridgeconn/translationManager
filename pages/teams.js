@@ -4,7 +4,7 @@ const PageHeader = require('react-bootstrap/lib/PageHeader')
 
 const CleanForm = require('../components/cleanForm')
 const CleanTable = require('../components/cleanTable')
-
+const style = require('../components/Style')
 const _ = require('lodash')
 const fs = require('fs')
 const filename = ('./static/teams.json')
@@ -38,8 +38,8 @@ class Teams extends React.Component {
     return  (
 			<div>
 				<PageHeader>
-          Teams
-					<Button style={{float: 'right'}} onClick={()=> this.props.actions.openModal('New Milestone', form)}>
+          			Teams
+					<Button bsStyle="success" style={style.addButton} onClick={()=> this.props.actions.openModal('New Milestone', form)}>
 						Add
 					</Button>
 				</PageHeader>

@@ -5,13 +5,14 @@ const BootstrapTable = ReactBSTable.BootstrapTable;
 const TableHeaderColumn = ReactBSTable.TableHeaderColumn;
 const Tooltip = require('react-bootstrap/lib/Tooltip')
 const OverlayTrigger = require('react-bootstrap/lib/OverlayTrigger');
-
+const moment = require('moment');
 const fs = require('fs')
 
 class CleanTable extends React.Component {
 	constructor(props) {
     super(props)
     this.state = {}
+            //this.createCustomDeleteButton = this.createCustomDeleteButton.bind(this);
 
 		let keyField
 		props.fields.forEach(function(field) {
@@ -81,11 +82,28 @@ class CleanTable extends React.Component {
 					response.notification.title = 'Requested Value';
 				}
 				return true;
-			}
+			},
+
+			handleCheckboxChange:function (row,cell) {
+				fs.readFile(props.filename, (err, data) => {
+					var filedata = JSON.parse(data)
+					for (var n=0; n < filedata.length; n++) {
+						if (filedata[n][keyField] == row[keyField]) {
+							filedata[n].isCompleted = !filedata[n].isCompleted 
+							filedata[n].completedDate = moment(); 
+							break
+						}
+					}
+					if (err) throw err
+					that.actions.writeFile(props.filename, filedata, props.callback)
+				})
+			},
 		}
 	}
+			
 
 	render() {
+
 		let that = this
 		const cellEdit = {
 			mode: 'dbclick',
@@ -102,12 +120,12 @@ class CleanTable extends React.Component {
 		const tooltip = (
 			<Tooltip id="tooltip">Double click the cell to edit</Tooltip>
 		)
+
 		function activeFormatter(cell, row, enumObject, index) {
-			console.log(row.isCompleted);
 			return (
-				<input type='checkbox' title="Click to edit" key={index} onChange={that.actions.afterSaveCell.bind(this,row)} checked={row.isCompleted} active={ cell } />
+				<input type='checkbox' title="Click to edit" key={index} onChange={that.actions.handleCheckboxChange.bind(this,row,cell)} checked={row.isCompleted} active={ cell } />
 			)
-		}
+		}  
 
 		const headers = that.props.fields.map(function(field) {
 			let editable = {}
@@ -122,26 +140,28 @@ class CleanTable extends React.Component {
 				editable = false
 				break
 				default:
-				editable = { }
+				editable = {}
 			}
 			let dataFormat
 			switch(field.type) {
 				case 'boolean':
-				dataFormat = activeFormatter
+				dataFormat = activeFormatter,
+				editable = false 
 				break
 				default:
 				dataFormat = undefined
 			}
+
 			return (
-					<TableHeaderColumn key={field.key} dataField={field.key} hidden={field.hidden} isKey={field.isKey}
-						editable={editable} dataSort={field.sort} dataAlign={field.align} dataFormat={dataFormat}>
-						{field.label}
-					</TableHeaderColumn>
+				<TableHeaderColumn key={field.key} dataField={field.key} hidden={field.hidden} isKey={field.isKey}
+					editable={editable} dataSort={field.sort} dataAlign={field.align} dataFormat={dataFormat}>
+					{field.label}
+				</TableHeaderColumn>
 			)
 		})
 
 		return (
-			<BootstrapTable responsive striped data={that.props.data} cellEdit={cellEdit} selectRow={selectRow} options={options} deleteRow>
+			<BootstrapTable responsive striped data={that.props.data} cellEdit={cellEdit} selectRow={selectRow} options={options} headerStyle={ { background: '#D5DBE4' } } deleteRow>
 				{headers}
 			</BootstrapTable>
 		)

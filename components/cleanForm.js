@@ -9,7 +9,6 @@ const ReactSelectize = require('react-selectize');
 const SimpleSelect = ReactSelectize.SimpleSelect;
 const MultiSelect = ReactSelectize.MultiSelect;
 const DatePicker = require('react-datepicker');
-
 const fs = require('fs')
 
 class CleanForm extends React.Component {
@@ -43,11 +42,9 @@ class CleanForm extends React.Component {
 		}
 	}
 
-
   render() {
 		let that = this
 		const fields = this.props.fields.map(function(field) {
-
 			// this section abstracts filtering based on another key as filter
 			let options
 			if (field.options !== undefined && field.options.constructor === Array) {
@@ -84,9 +81,14 @@ class CleanForm extends React.Component {
 						endDate={that.state[field.endKey]} onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
 					/>
 					break
+				case 'DatePickerEnd':
+					formField = <DatePicker selected={that.state.endDate} selectsEnd  startDate={that.state[field.startKey]}
+						endDate={that.state[field.endKey]} onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
+					/>
+					break
 				default:
 					formField = <FormControl type={field.type} placeholder={field.placeholder} value={field.default}
-            onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
+            		onChange={ function(option){ that.actions.onChange(field.key, option, field.callback) }}
 					/>
 			}
 			return (

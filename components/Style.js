@@ -1,8 +1,8 @@
 var style = {
-  container:{
+  sidebarContainer:{
       backgroundColor: "#333333",
       width: "100px",
-      height: "100vh",
+      height: "100%",
       marginLeft: "0px",
       display: "inline-block",
       position: "fixed",
@@ -10,6 +10,7 @@ var style = {
       left: "0px",
       fontSize: "12px",
       overflowY: "auto",
+      top:"55px"
   },
 
   ul: {
@@ -48,6 +49,7 @@ var style = {
     paddingBottom: "18px"
 
   },
+
   image:{
     height: "40px",
     width: "40px",
@@ -59,13 +61,16 @@ var style = {
   },
 
   logo:{
-    height: "60px",
-    width: "55px",
+    height: "auto",
+    width: "50px",
     display: "block",
     padding: "5px",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "5px",
+    paddingLeft:"10px",
+    float:"left",
+
   },
 
   glyphiconOffline:{
@@ -160,10 +165,24 @@ var style = {
     backgroundColor:"#51E624",
     marginBottom:"0px"
   },
+
   purpleProgressBar:{
     backgroundColor:"#A900FF",
     marginBottom:"0px"
-  }
+  },
+
+  addButton:{
+    borderRadius: '40px', 
+    float: 'right', 
+    width:'150px'
+  },
+
+  box:{ 
+    margin:'5% 1% 5% 9%', 
+    backgroundColor:'#fff', 
+    boxShadow:'0px 0px 2px #888888',
+    width:"90%"
+  } 
 };
 
 module.exports = style;

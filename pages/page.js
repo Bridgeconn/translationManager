@@ -23,7 +23,7 @@ class Page extends React.Component {
     var that = this
     this.actions = {
       showPage: function(page) {
-        that.setState({currentPage: page})
+        that.setState({currentPage: page, hover:true})
       },
       openModal: function(title, content) {
         let newState = that.state
@@ -65,14 +65,14 @@ class Page extends React.Component {
     }
 
     return (
-      <div>
-        <NavBar actions={this.actions} />
-        <Sidebar actions={this.actions} />
-        <CleanModal actions={this.actions} show={modal.show} title={modal.title} content={modal.content} />
-        <div className="container fluid" style={{ paddingLeft: '90px' }}>
-          {currentPage}
+        <div>
+            <NavBar actions={this.actions} />
+            <Sidebar actions={this.actions} />
+            <CleanModal actions={this.actions} show={modal.show} title={modal.title} content={modal.content} />
+            <div className="container fluid" style={style.box}>
+              {currentPage}
+            </div>
         </div>
-      </div>
     )
   }
 }

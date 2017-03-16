@@ -4,6 +4,7 @@ const Button = require('react-bootstrap/lib/Button')
 
 const CleanForm = require('../components/cleanForm')
 const CleanTable = require('../components/cleanTable')
+const style = require('../components/Style')
 
 const fs = require('fs')
 const filename = ('./static/projects.json')
@@ -40,7 +41,7 @@ class Projects extends React.Component {
 			<div>
 				<PageHeader>
 					Projects
-					<Button style={{float: 'right'}} onClick={()=> this.props.actions.openModal('New Project', form)}>
+					<Button bsStyle="success" style={style.addButton} onClick={()=> this.props.actions.openModal('New Project', form)}>
 						Add
 					</Button>
 				</PageHeader>

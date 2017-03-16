@@ -1,6 +1,7 @@
 const React = require('react')
 const Button = require('react-bootstrap/lib/Button')
 const PageHeader = require('react-bootstrap/lib/PageHeader')
+const style = require('../components/Style')
 
 const CleanForm = require('../components/cleanForm')
 const CleanTable = require('../components/cleanTable')
@@ -39,7 +40,7 @@ class Milestones extends React.Component {
 			<div>
 				<PageHeader>
 					Milestones
-					<Button style={{float: 'right'}} onClick={()=> this.props.actions.openModal('New Milestone', form)}>
+					<Button bsStyle="success" style={style.addButton} onClick={()=> this.props.actions.openModal('New Milestone', form)}>
 						Add
 					</Button>
 				</PageHeader>
